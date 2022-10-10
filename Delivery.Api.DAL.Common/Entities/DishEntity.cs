@@ -10,7 +10,8 @@ namespace Delivery.Api.DAL.Common.Entities
         public double Price { get; set; }
         public string Allergens { get; set; } //TODO: What about enum??
         public string? ImageUrl { get; set; }
-        
+        public ICollection<RestaurantEntity> Restaurants { get; set; } = new List<RestaurantEntity>();
+
         public DishEntity(Guid id, string name, string description, double price, string allergens, string? imageUrl = null) : base(id)
         {
             Name = name;

@@ -1,17 +1,23 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>25a3d491-7485-4893-ae1d-7597ced55658</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0-preview.6.22329.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Delivery.App.DAL.Common\Delivery.App.DAL.Common.csproj" />
+    <ProjectReference Include="..\Delivery.Api.DAL.Common\Delivery.Api.DAL.Common.csproj" />
+    <ProjectReference Include="..\Delivery.Api.DAL.EF\Delivery.Api.DAL.EF.csproj" />
   </ItemGroup>
 
 </Project>

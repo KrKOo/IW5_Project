@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Delivery.App.DAL.Common\Delivery.App.DAL.Common.csproj" />
+    <ProjectReference Include="..\Delivery.Api.DAL.Common\Delivery.Api.DAL.Common.csproj" />
     <ProjectReference Include="..\Delivery.Common\Delivery.Common.csproj" />
   </ItemGroup>
 
