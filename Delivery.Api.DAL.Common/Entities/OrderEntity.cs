@@ -1,6 +1,4 @@
-﻿using System;
-using Delivery.Common.Enums;
-//using AutoMapper;
+﻿using Delivery.Common.Enums;
 
 namespace Delivery.Api.DAL.Common.Entities
 {
