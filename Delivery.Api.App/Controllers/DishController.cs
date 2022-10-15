@@ -1,4 +1,4 @@
-using Delivery.Api.DAL.Common.Entities;
+﻿using Delivery.Api.DAL.Common.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Delivery.Api.App.Controllers
@@ -18,7 +18,7 @@ namespace Delivery.Api.App.Controllers
         public IEnumerable<DishEntity> Get()
         {
             return Enumerable.Range(1, 2).Select(index => new DishEntity(
-                  default, "Apple", "Fruit", 0.85, "nothing")
+                  default, "Apple", "Fruit", 0.85, Guid.NewGuid())
             );
         }
     }

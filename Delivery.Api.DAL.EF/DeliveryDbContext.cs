@@ -1,4 +1,4 @@
-using Delivery.Api.DAL.Common.Entities;
+﻿using Delivery.Api.DAL.Common.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Delivery.Api.DAL.EF
@@ -17,9 +17,9 @@ namespace Delivery.Api.DAL.EF
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<DishEntity>()
-                .HasMany(dishEntity => dishEntity.Restaurants)
-                .WithMany(restaurantEntity => restaurantEntity.Dishes);
+            //modelBuilder.Entity<DishEntity>()
+            //    .HasMany(dishEntity => dishEntity.Restaurant)
+            //    .WithMany(restaurantEntity => restaurantEntity.Dishes);
 
             modelBuilder.Entity<OrderEntity>()
                 .HasMany(orderEntity => orderEntity.DishAmounts)
@@ -31,9 +31,9 @@ namespace Delivery.Api.DAL.EF
                 .WithOne(orderEntity => orderEntity.Restaurant)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<RestaurantEntity>()
-                .HasMany(restaurantEntity => restaurantEntity.Dishes)
-                .WithMany(dishEntity => dishEntity.Restaurants);
+            //modelBuilder.Entity<RestaurantEntity>()
+            //    .HasMany(restaurantEntity => restaurantEntity.Dishes)
+            //    .WithMany(dishEntity => dishEntity.Restaurant);
         }
     }
 }

@@ -13,12 +13,12 @@ namespace Delivery.Api.DAL.Common.Entities
 
         public ICollection<DishAmountEntity> DishAmounts { get; set; } = new List<DishAmountEntity>();
 
-        public OrderEntity(Guid id, string address, TimeSpan deliveryTime, string note, OrderStates state, Guid restaurantId) : base(id)
+        public OrderEntity(Guid id, string address, TimeSpan deliveryTime, string note, Guid restaurantId) : base(id)
         {
             Address = address;
             DeliveryTime = deliveryTime;
             Note = note;
-            State = state;
+            State = OrderStates.Created;
             RestaurantId = restaurantId;
         }
     }

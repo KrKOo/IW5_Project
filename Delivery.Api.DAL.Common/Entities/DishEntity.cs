@@ -1,5 +1,6 @@
 ﻿using System;
-//using AutoMapper;
+using Delivery.Common.Enums;
+using AutoMapper;
 
 namespace Delivery.Api.DAL.Common.Entities
 {
@@ -8,25 +9,26 @@ namespace Delivery.Api.DAL.Common.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public double Price { get; set; }
-        public string Allergens { get; set; } //TODO: What about enum??
+        public Guid RestaurantId { get; set; }
+        public RestaurantEntity? Restaurant { get; set; }
         public string? ImageUrl { get; set; }
-        public ICollection<RestaurantEntity> Restaurants { get; set; } = new List<RestaurantEntity>();
+        public ICollection<Allergen> Allergens { get; set; } = new List<Allergen>();
 
-        public DishEntity(Guid id, string name, string description, double price, string allergens, string? imageUrl = null) : base(id)
+        public DishEntity(Guid id, string name, string description, double price, Guid restaurantId, string? imageUrl = null) : base(id)
         {
             Name = name;
             Description = description;
             Price = price;
-            Allergens = allergens;
+            RestaurantId = restaurantId;
             ImageUrl = imageUrl;
         }
     }
 
-    //public class RecipeEntityMapperProfile : Profile
-    //{
-    //    public RecipeEntityMapperProfile()
-    //    {
-    //        CreateMap<RecipeEntity, RecipeEntity>();
-    //    }
-    //}
+    public class DishEntityMapperProfile : Profile
+    {
+        public DishEntityMapperProfile()
+        {
+            CreateMap<DishEntity, DishEntity>();
+        }
+    }
 }

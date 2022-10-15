@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Delivery.Api.DAL.Common.Entities;
 using Delivery.Common.Enums;
+using Delivery.Common.Structures;
 
 namespace Delivery.Api.DAL.Memory
 {
@@ -50,15 +51,15 @@ namespace Delivery.Api.DAL.Memory
 
         private void SeedOrders()
         {
-            Orders.Add(new OrderEntity(orderGuids[0], "94364 Rice Forest", TimeSpan.FromMinutes(40), "Faster please", OrderStates.Created, restaurantGuids[0]));
-            Orders.Add(new OrderEntity(orderGuids[1], "5575 Nicolas Roads", TimeSpan.FromMinutes(10), "No salad!", OrderStates.Accepted, restaurantGuids[0]));
-            Orders.Add(new OrderEntity(orderGuids[2], "303 Okuneva Passage", TimeSpan.FromMinutes(25), "Have a nice day!", OrderStates.Created, restaurantGuids[1]));
+            Orders.Add(new OrderEntity(orderGuids[0], "94364 Rice Forest", TimeSpan.FromMinutes(40), "Faster please", restaurantGuids[0]));
+            Orders.Add(new OrderEntity(orderGuids[1], "5575 Nicolas Roads", TimeSpan.FromMinutes(10), "No salad!", restaurantGuids[0]));
+            Orders.Add(new OrderEntity(orderGuids[2], "303 Okuneva Passage", TimeSpan.FromMinutes(25), "Have a nice day!", restaurantGuids[1]));
         }
 
         private void SeedDishes()
         {
-            Dishes.Add(new DishEntity(dishGuids[0], "Hod dog", "With ketchup", 3.49, "1, 3"));
-            Dishes.Add(new DishEntity(dishGuids[1], "Tacos", "Beef tacos", 5.19, "8, 1, 6"));
+            Dishes.Add(new DishEntity(dishGuids[0], "Hod dog", "With ketchup", 3.49, restaurantGuids[0]));
+            Dishes.Add(new DishEntity(dishGuids[1], "Tacos", "Beef tacos", 5.19, restaurantGuids[1]));
         }
 
         private void SeedDishAmounts()
@@ -76,8 +77,8 @@ namespace Delivery.Api.DAL.Memory
 
         private void SeedRestaurants()
         {
-            Restaurants.Add(new RestaurantEntity(restaurantGuids[0], "The Pub", "Just pub", "4104 Eichmann Plains", "13.67733, 163.20345", 151.4));
-            Restaurants.Add(new RestaurantEntity(restaurantGuids[0], "Tacos Truck", "FoodTruck", "5368 Champlin Summit", "78.531199, 15.549264", 382.1));
+            Restaurants.Add(new RestaurantEntity(restaurantGuids[0], "The Pub", "Just pub", "4104 Eichmann Plains", new GPS(13.67733, 163.20345)));
+            Restaurants.Add(new RestaurantEntity(restaurantGuids[0], "Tacos Truck", "FoodTruck", "5368 Champlin Summit", new GPS(78.531199, 15.549264)));
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Delivery.Api.DAL.Common.Repositories
 {
-    public interface IIngredientRepository : IApiRepository<RestaurantEntity>
+    public interface IRestaurantRepository : IApiRepository<RestaurantEntity>
     {
     }
 }
