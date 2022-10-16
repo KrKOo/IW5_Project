@@ -11,4 +11,8 @@
     <ProjectReference Include="..\Delivery.Common\Delivery.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Facades\" />
+  </ItemGroup>
+
 </Project>
