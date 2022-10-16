@@ -15,9 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Delivery.Api.DAL.Integratio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Delivery.Api.DAL.Memory", "Delivery.Api.DAL.Memory\Delivery.Api.DAL.Memory.csproj", "{1A1E0771-C295-491F-A5A2-4B5CBF6AB439}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delivery.Api.BL", "Delivery.Api.BL\Delivery.Api.BL.csproj", "{4074CC61-5234-4800-BE8C-3DF76A14FFD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Delivery.Api.BL", "Delivery.Api.BL\Delivery.Api.BL.csproj", "{4074CC61-5234-4800-BE8C-3DF76A14FFD6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delivery.Common.BL", "Delivery.Common.BL\Delivery.Common.BL.csproj", "{D0C0A4DB-0B0F-4D3C-BB3D-99CEAEF6C516}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Delivery.Common.BL", "Delivery.Common.BL\Delivery.Common.BL.csproj", "{D0C0A4DB-0B0F-4D3C-BB3D-99CEAEF6C516}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delivery.Common.Models", "Delivery.Common.Models\Delivery.Common.Models.csproj", "{9D0A140A-7E4A-41C2-8F4D-79409D8224DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{D0C0A4DB-0B0F-4D3C-BB3D-99CEAEF6C516}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0C0A4DB-0B0F-4D3C-BB3D-99CEAEF6C516}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0C0A4DB-0B0F-4D3C-BB3D-99CEAEF6C516}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D0A140A-7E4A-41C2-8F4D-79409D8224DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D0A140A-7E4A-41C2-8F4D-79409D8224DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D0A140A-7E4A-41C2-8F4D-79409D8224DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D0A140A-7E4A-41C2-8F4D-79409D8224DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
