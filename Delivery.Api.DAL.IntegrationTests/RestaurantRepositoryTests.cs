@@ -29,26 +29,7 @@ public class RestaurantRepositoryTests
         //assert
         Assert.Equal(2, restaurantsCount);
     }
-    
-    [Fact]
-    public void Update_Restaurant()
-    {
-        //arrange
-        var restaurantRepository = _dbFixture.GetRestaurantRepository();
 
-        var restaurantId = _dbFixture.DishGuids[0];
-        var restaurant = _dbFixture.GetRestaurantDirectly(restaurantId);
-        
-        //act
-        restaurant.Name = "Just Pub";
-        restaurantRepository.Update(restaurant);
-
-        //assert
-        var restaurantFromDb = _dbFixture.GetRestaurantDirectly(restaurantId);
-        Assert.NotNull(restaurantFromDb);
-        Assert.Equal(restaurant.Name, restaurantFromDb.Name);
-    }
-    
     [Fact]
     public void Insert_Restaurant()
     {

@@ -93,14 +93,12 @@ public class OrderRepositoryTests
 
         //act
         order.DishAmounts.Add(newDishAmount);
-        //order.State = OrderStates.Delivered;  TODO!!
         orderRepository.Update(order);
 
         //assert
         var orderFromDb = _dbFixture.GetOrderDirectly(orderId);
         Assert.NotNull(orderFromDb);
         Assert.Single(orderFromDb.DishAmounts.Where(t => t.Id == dishAmountId));
-        //Assert.Equal(OrderStates.Delivered, orderFromDb.State); TODO!!
 
         var dishAmountFromDb = _dbFixture.GetDishAmountDirectly(dishAmountId);
         Assert.NotNull(dishAmountFromDb);
@@ -120,13 +118,11 @@ public class OrderRepositoryTests
 
         //act
         dishAmount.Amount = 8;
-        //order.State = OrderStates.Delivered;  TODO!!
         orderRepository.Update(order);
 
         //assert
         var orderFromDb = _dbFixture.GetOrderDirectly(orderId);
         Assert.NotNull(orderFromDb);
-        //Assert.Equal(OrderStates.Delivered, orderFromDb.State);  TODO!!
         var dishAmountFromDb = orderFromDb.DishAmounts.First();
         Assert.Equal(dishAmount.Id, dishAmountFromDb.Id);
         Assert.Equal(dishAmount.Amount, dishAmountFromDb.Amount);

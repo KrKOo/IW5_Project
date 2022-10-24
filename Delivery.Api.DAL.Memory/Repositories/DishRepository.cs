@@ -46,7 +46,7 @@ namespace Delivery.Api.DAL.Memory.Repositories
             {
                 mapper.Map(entity, dishExisting);
             }
-
+            
             return dishExisting?.Id;
         }
 
