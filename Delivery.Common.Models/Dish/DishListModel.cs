@@ -1,6 +1,4 @@
-﻿using Delivery.Common.Enums;
-
-namespace Delivery.Common.Models.Dish
+﻿namespace Delivery.Common.Models.Dish
 {
     public record DishListModel : IWithId
     {

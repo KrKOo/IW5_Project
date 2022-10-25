@@ -1,3 +1,4 @@
+using System.Web;
 using Delivery.Api.BL.Facades;
 using Delivery.Api.DAL.Common.Entities;
 using Delivery.Common.Models.Dish;
@@ -25,10 +26,41 @@ namespace Delivery.Api.App.Controllers
             return _restaurantFacade.GetAll();
         }
 
+        [HttpGet("{id:guid}")]
+        public ActionResult<RestaurantDetailModel> Get(Guid id)
+        {
+            var restaurant = _restaurantFacade.GetById(id);
+            if (restaurant == null)
+            {
+                return NotFound();
+            }
+
+            return restaurant;
+        }
+
         [HttpPost]
-        public ActionResult<Guid> Create(RestaurantDetailModel restaurant)
+        public ActionResult<Guid> Create(RestaurantCreateModel restaurant)
         {
             return _restaurantFacade.Create(restaurant);
+        }
+
+        [HttpPatch]
+        public ActionResult<Guid> Update(RestaurantCreateModel restaurant)
+        {
+            var updatedRestaurant = _restaurantFacade.Update(restaurant);
+            if (updatedRestaurant == null)
+            {
+                return NotFound();
+            }
+
+            return updatedRestaurant;
+        }
+
+        [HttpDelete]
+        public ActionResult Delete(Guid id)
+        {
+            _restaurantFacade.Delete(id);
+            return Ok();
         }
     }
 }

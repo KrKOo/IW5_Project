@@ -7,6 +7,7 @@ using AutoMapper;
 using Delivery.Api.DAL.Common.Entities;
 using Delivery.Api.DAL.Common.Repositories;
 using Delivery.Common.Models.Order;
+using Delivery.Common.Models.OrderDish;
 
 namespace Delivery.Api.BL.Facades
 {
@@ -17,18 +18,18 @@ namespace Delivery.Api.BL.Facades
 
         public OrderFacade(IOrderRepository orderRepository, IMapper mapper)
         {
-            this.orderRepository = orderRepository; 
+            this.orderRepository = orderRepository;
             this.mapper = mapper;
         }
 
-        public Guid Create(OrderDetailModel orderModel)
+        public Guid Create(OrderCreateModel orderModel)
         {
             MergeDishAmounts(orderModel);
             var orderEntity = mapper.Map<OrderEntity>(orderModel);
             return orderRepository.Insert(orderEntity);
         }
 
-        public Guid CreateOrUpdate(OrderDetailModel orderModel)
+        public Guid CreateOrUpdate(OrderCreateModel orderModel)
         {
             return orderRepository.Exists(orderModel.Id)
                 ? Update(orderModel)!.Value
@@ -52,30 +53,30 @@ namespace Delivery.Api.BL.Facades
             return mapper.Map<OrderDetailModel>(orderEntity);
         }
 
-        public Guid? Update(OrderDetailModel orderModel)
+        public Guid? Update(OrderCreateModel orderModel)
         {
             MergeDishAmounts(orderModel);
 
             var orderEntity = mapper.Map<OrderEntity>(orderModel);
-            orderEntity.DishAmounts = orderModel.DishAmounts.Select(t => 
+            orderEntity.DishAmounts = orderModel.DishAmounts.Select(t =>
                 new DishAmountEntity
                 (
                     t.Id,
                     t.Amount,
-                    t.Dish.Id,
+                    t.DishId,
                     orderEntity.Id
                 )).ToList();
-                
+
             var result = orderRepository.Update(orderEntity);
             return result;
         }
 
-        public void MergeDishAmounts(OrderDetailModel order)
+        public void MergeDishAmounts(OrderCreateModel order)
         {
-            var result = new List<OrderDetailDishModel>();
-            var orderAmountGroups = order.DishAmounts.GroupBy(t => $"{t.Dish.Id}");
+            var result = new List<OrderDishCreateModel>();
+            var orderAmountGroups = order.DishAmounts.GroupBy(t => $"{t.DishId}");
 
-            foreach(var orderAmountGroup in orderAmountGroups)
+            foreach (var orderAmountGroup in orderAmountGroups)
             {
                 var orderAmountFirst = orderAmountGroup.First();
                 var totalAmount = orderAmountGroup.Sum(t => t.Amount);

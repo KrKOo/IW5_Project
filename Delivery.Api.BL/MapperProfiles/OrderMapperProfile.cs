@@ -12,9 +12,9 @@ namespace Delivery.Api.BL.MapperProfiles
             CreateMap<OrderEntity, OrderListModel>();
             CreateMap<OrderEntity, OrderDetailModel>();
 
-            CreateMap<OrderDetailModel, OrderEntity>()
-                .Ignore(dst => dst.Restaurant)
-                .Ignore(dst => dst.DishAmounts);
+            CreateMap<OrderCreateModel, OrderEntity>()
+            .Ignore(dst => dst.Restaurant)
+            .Ignore(dst => dst.DishAmounts);
         }
     }
 }

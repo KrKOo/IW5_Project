@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using Delivery.Api.DAL.Common.Entities;
 using Delivery.Api.DAL.Common.Repositories;
-using Delivery.Common.Models.Dish;
-using Delivery.Common.Models.Order;
 using Delivery.Common.Models.Restaurant;
 
 namespace Delivery.Api.BL.Facades
@@ -18,15 +16,13 @@ namespace Delivery.Api.BL.Facades
             this.mapper = mapper;
         }
 
-        public Guid Create(RestaurantDetailModel restaurantModel)
+        public Guid Create(RestaurantCreateModel restaurantModel)
         {
-            //MergeOrders(restaurantModel);
-            //MergeDishes(restaurantModel);
             var restaurantEntity = mapper.Map<RestaurantEntity>(restaurantModel);
             return restaurantRepository.Insert(restaurantEntity);
         }
 
-        public Guid CreateOrUpdate(RestaurantDetailModel restaurantModel)
+        public Guid CreateOrUpdate(RestaurantCreateModel restaurantModel)
         {
             return restaurantRepository.Exists(restaurantModel.Id)
                 ? Update(restaurantModel)!.Value
@@ -50,68 +46,12 @@ namespace Delivery.Api.BL.Facades
             return mapper.Map<RestaurantDetailModel>(restaurantEntity);
         }
 
-        public Guid? Update(RestaurantDetailModel restaurantModel)
+        public Guid? Update(RestaurantCreateModel restaurantModel)
         {
-            //MergeOrders(restaurantModel);
-            //MergeDishes(restaurantModel);
-
             var restaurantEntity = mapper.Map<RestaurantEntity>(restaurantModel);
-            // restaurantEntity.Orders = restaurantModel.Orders.Select(t =>
-            //     new OrderEntity
-            //     (
-            //         t.Id,
-            //         t.Address,
-            //         t.DeliveryTime,
-            //         t.Note,
-            //         restaurantEntity.Id
-            //     )).ToList();
-
-            // restaurantEntity.Dishes = restaurantModel.Dishes.Select(t =>
-            //     new DishEntity(
-            //             t.Id,
-            //             t.Name,
-            //             t.Description,
-            //             t.Price,
-            //             restaurantEntity.Id,
-            //             t.ImageUrl
-            //         )).ToList();
 
             var result = restaurantRepository.Update(restaurantEntity);
             return result;
         }
-
-        /*public void MergeOrders(RestaurantDetailModel restaurant)
-        {
-            var result = new List<OrderDetailModel>();
-            var ordersGroups = restaurant.Orders.GroupBy(t => $"{t.Id}");
-
-            foreach(var orderGroup in ordersGroups)
-            {
-                var order = orderGroup.First();
-                if(order.RestaurantId == restaurant.Id)
-                {
-                    result.Add(order);
-                }
-            }
-
-            restaurant.Orders = result;
-        }
-
-        public void MergeDishes(RestaurantDetailModel restaurant)
-        {
-            var result = new List<DishDetailModel>();
-            var dishesGroups = restaurant.Dishes.GroupBy(t => $"{t.Id}");
-
-            foreach(var dishGroup in dishesGroups)
-            {
-                var dish = dishGroup.First();
-                if(dish.Restaurant == restaurant)
-                {
-                    result.Add(dish);
-                }
-            }
-
-            restaurant.Dishes = result;
-        }*/
     }
 }

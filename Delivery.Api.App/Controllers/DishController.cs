@@ -24,10 +24,41 @@ namespace Delivery.Api.App.Controllers
             return _dishFacade.GetAll();
         }
 
+        [HttpGet("{id:guid}")]
+        public ActionResult<DishDetailModel> Get(Guid id)
+        {
+            var dish = _dishFacade.GetById(id);
+            if (dish == null)
+            {
+                return NotFound();
+            }
+
+            return dish;
+        }
+
         [HttpPost]
-        public ActionResult<Guid> Create(DishDetailModel dish)
+        public ActionResult<Guid> Create(DishCreateModel dish)
         {
             return _dishFacade.Create(dish);
+        }
+
+        [HttpPatch]
+        public ActionResult<Guid> Update(DishCreateModel dish)
+        {
+            var updatedDish = _dishFacade.Update(dish);
+            if (updatedDish == null)
+            {
+                return NotFound();
+            }
+
+            return updatedDish;
+        }
+
+        [HttpDelete]
+        public ActionResult Delete(Guid id)
+        {
+            _dishFacade.Delete(id);
+            return Ok();
         }
     }
 }

@@ -24,10 +24,42 @@ namespace Delivery.Api.App.Controllers
             return _orderFacade.GetAll();
         }
 
+        [HttpGet("{id:guid}")]
+        public ActionResult<OrderDetailModel> Get(Guid id)
+        {
+            var order = _orderFacade.GetById(id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            return order;
+        }
+
         [HttpPost]
-        public ActionResult<Guid> Create(OrderDetailModel order)
+        public ActionResult<Guid> Create(OrderCreateModel order)
         {
             return _orderFacade.Create(order);
         }
+
+        [HttpPatch]
+        public ActionResult<Guid> Update(OrderCreateModel order)
+        {
+            var updatedOrder = _orderFacade.Update(order);
+            if (updatedOrder == null)
+            {
+                return NotFound();
+            }
+
+            return updatedOrder;
+        }
+
+        [HttpDelete]
+        public ActionResult Delete(Guid id)
+        {
+            _orderFacade.Delete(id);
+            return Ok();
+        }
     }
+
 }

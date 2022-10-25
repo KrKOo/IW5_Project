@@ -7,9 +7,9 @@ namespace Delivery.Api.BL.Facades
     {
         List<OrderListModel> GetAll();
         OrderDetailModel? GetById(Guid id);
-        Guid CreateOrUpdate(OrderDetailModel orderModel);
-        Guid Create(OrderDetailModel orderModel);
-        Guid? Update(OrderDetailModel orderModel);
+        Guid CreateOrUpdate(OrderCreateModel orderModel);
+        Guid Create(OrderCreateModel orderModel);
+        Guid? Update(OrderCreateModel orderModel);
         void Delete(Guid id);
     }
 }

@@ -7,9 +7,9 @@ namespace Delivery.Api.BL.Facades
     {
         List<DishListModel> GetAll();
         DishDetailModel? GetById(Guid id);
-        Guid CreateOrUpdate(DishDetailModel dishModel);
-        Guid Create(DishDetailModel dishModel);
-        Guid? Update(DishDetailModel dishModel);
+        Guid CreateOrUpdate(DishCreateModel dishModel);
+        Guid Create(DishCreateModel dishModel);
+        Guid? Update(DishCreateModel dishModel);
         void Delete(Guid id);
     }
 }

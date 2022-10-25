@@ -16,13 +16,13 @@ namespace Delivery.Api.BL.Facades
             this.mapper = mapper;
         }
 
-        public Guid Create(DishDetailModel dishModel)
+        public Guid Create(DishCreateModel dishModel)
         {
             var dishEntity = mapper.Map<DishEntity>(dishModel);
             return dishRepository.Insert(dishEntity);
         }
 
-        public Guid CreateOrUpdate(DishDetailModel dishModel)
+        public Guid CreateOrUpdate(DishCreateModel dishModel)
         {
             return dishRepository.Exists(dishModel.Id)
                 ? Update(dishModel)!.Value
@@ -45,10 +45,10 @@ namespace Delivery.Api.BL.Facades
             return mapper.Map<DishDetailModel>(dishEntity);
         }
 
-        public Guid? Update(DishDetailModel dishModel)
+        public Guid? Update(DishCreateModel dishModel)
         {
             var dishEntity = mapper.Map<DishEntity>(dishModel);
-            return dishRepository.Update(dishEntity);   
+            return dishRepository.Update(dishEntity);
         }
     }
 }
