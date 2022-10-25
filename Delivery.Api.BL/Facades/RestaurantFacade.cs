@@ -15,7 +15,7 @@ namespace Delivery.Api.BL.Facades
         public RestaurantFacade(IRestaurantRepository restaurantRepository, IMapper mapper)
         {
             this.restaurantRepository = restaurantRepository;
-            this.mapper = mapper;   
+            this.mapper = mapper;
         }
 
         public Guid Create(RestaurantDetailModel restaurantModel)
@@ -35,7 +35,7 @@ namespace Delivery.Api.BL.Facades
 
         public void Delete(Guid id)
         {
-           restaurantRepository.Remove(id);
+            restaurantRepository.Remove(id);
         }
 
         public List<RestaurantListModel> GetAll()
@@ -56,25 +56,25 @@ namespace Delivery.Api.BL.Facades
             //MergeDishes(restaurantModel);
 
             var restaurantEntity = mapper.Map<RestaurantEntity>(restaurantModel);
-            restaurantEntity.Orders = restaurantModel.Orders.Select(t =>
-                new OrderEntity
-                (
-                    t.Id,
-                    t.Address,
-                    t.DeliveryTime,
-                    t.Note,
-                    restaurantEntity.Id
-                )).ToList();
+            // restaurantEntity.Orders = restaurantModel.Orders.Select(t =>
+            //     new OrderEntity
+            //     (
+            //         t.Id,
+            //         t.Address,
+            //         t.DeliveryTime,
+            //         t.Note,
+            //         restaurantEntity.Id
+            //     )).ToList();
 
-            restaurantEntity.Dishes = restaurantModel.Dishes.Select(t =>
-                new DishEntity(
-                        t.Id,
-                        t.Name,
-                        t.Description,
-                        t.Price,
-                        restaurantEntity.Id,
-                        t.ImageUrl
-                    )).ToList();
+            // restaurantEntity.Dishes = restaurantModel.Dishes.Select(t =>
+            //     new DishEntity(
+            //             t.Id,
+            //             t.Name,
+            //             t.Description,
+            //             t.Price,
+            //             restaurantEntity.Id,
+            //             t.ImageUrl
+            //         )).ToList();
 
             var result = restaurantRepository.Update(restaurantEntity);
             return result;

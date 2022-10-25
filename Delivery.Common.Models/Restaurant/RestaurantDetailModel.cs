@@ -19,14 +19,10 @@ namespace Delivery.Common.Models.Restaurant
         public required string Address { get; set; }
 
         [Required(ErrorMessageResourceName = nameof(RestaurantDetailModelResources.Gps_Required_ErrorMessage), ErrorMessageResourceType = typeof(RestaurantDetailModelResources))]
-        public required string Gps { get; set; }
-
-        [Required(ErrorMessageResourceName = nameof(RestaurantDetailModelResources.Revenue_Required_ErrorMessage), ErrorMessageResourceType = typeof(RestaurantDetailModelResources))]
-        public required double Revenue { get; set; }
-
+        public required double Latitude { get; set; }
+        public required double Longitude { get; set; }
         public string? LogoUrl { get; set; }
-
-        public IList<DishDetailModel> Dishes { get; set; } = new List<DishDetailModel>();
-        public IList<OrderDetailModel> Orders { get; set; } = new List<OrderDetailModel>();
+        // public IList<DishDetailModel> Dishes { get; set; } = new List<DishDetailModel>();
+        // public IList<OrderDetailModel> Orders { get; set; } = new List<OrderDetailModel>();
     }
 }

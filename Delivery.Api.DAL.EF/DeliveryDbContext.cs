@@ -8,6 +8,7 @@ namespace Delivery.Api.DAL.EF
         public DbSet<DishEntity> Dishes { get; set; } = null!;
         public DbSet<OrderEntity> Orders { get; set; } = null!;
         public DbSet<RestaurantEntity> Restaurants { get; set; } = null!;
+        public DbSet<DishAmountEntity> DishAmounts { get; set; } = null!;
 
         public DeliveryDbContext(DbContextOptions<DeliveryDbContext> options)
             : base(options)
@@ -17,9 +18,9 @@ namespace Delivery.Api.DAL.EF
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            //modelBuilder.Entity<DishEntity>()
-            //    .HasMany(dishEntity => dishEntity.Restaurant)
-            //    .WithMany(restaurantEntity => restaurantEntity.Dishes);
+            modelBuilder.Entity<DishEntity>()
+               .HasOne(dishEntity => dishEntity.Restaurant)
+               .WithMany(restaurantEntity => restaurantEntity.Dishes);
 
             modelBuilder.Entity<OrderEntity>()
                 .HasMany(orderEntity => orderEntity.DishAmounts)
@@ -29,11 +30,11 @@ namespace Delivery.Api.DAL.EF
             modelBuilder.Entity<RestaurantEntity>()
                 .HasMany(restaurantEntity => restaurantEntity.Orders)
                 .WithOne(orderEntity => orderEntity.Restaurant)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //modelBuilder.Entity<RestaurantEntity>()
-            //    .HasMany(restaurantEntity => restaurantEntity.Dishes)
-            //    .WithMany(dishEntity => dishEntity.Restaurant);
+            modelBuilder.Entity<DishAmountEntity>()
+                .HasOne(dishAmountEntity => dishAmountEntity.Dish)
+                .WithMany(dishEntity => dishEntity.DishAmounts);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
-using Delivery.Common.Enums;
+using System.Collections.ObjectModel;
 using AutoMapper;
+using Delivery.Common.Enums;
 
 namespace Delivery.Api.DAL.Common.Entities
 {
@@ -12,7 +13,8 @@ namespace Delivery.Api.DAL.Common.Entities
         public Guid RestaurantId { get; set; }
         public RestaurantEntity? Restaurant { get; set; }
         public string? ImageUrl { get; set; }
-        public ICollection<Allergen> Allergens { get; set; } = new List<Allergen>();
+        // public ICollection<Allergen> Allergens { get; set; } = new List<Allergen>();
+        public Collection<DishAmountEntity> DishAmounts { get; set; } = new Collection<DishAmountEntity>();
 
         public DishEntity(Guid id, string name, string description, double price, Guid restaurantId, string? imageUrl = null) : base(id)
         {

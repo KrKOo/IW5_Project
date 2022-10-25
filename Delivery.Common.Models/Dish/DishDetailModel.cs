@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using Delivery.Common.Enums;
+using Delivery.Common.Models.Order;
 using Delivery.Common.Models.Resources;
 using Delivery.Common.Models.Restaurant;
 
@@ -20,11 +23,11 @@ namespace Delivery.Common.Models.Dish
         [Required(ErrorMessageResourceName = nameof(DishDetailModelResources.Price_Required_ErrorMessage), ErrorMessageResourceType = typeof(DishDetailModelResources))]
         public required double Price { get; set; }
 
-        [Required(ErrorMessageResourceName = nameof(DishDetailModelResources.Allergens_Required_ErrorMessage), ErrorMessageResourceType = typeof(DishDetailModelResources))]
-        public required string Allergens { get; set; }
+        // [Required(ErrorMessageResourceName = nameof(DishDetailModelResources.Allergens_Required_ErrorMessage), ErrorMessageResourceType = typeof(DishDetailModelResources))]
+        // public required ICollection<Allergen> Allergens { get; set; }
 
         public string? ImageUrl { get; set; }
 
-        public RestaurantDetailModel? Restaurant { get; set; }
+        public Guid? RestaurantId { get; set; }
     }
 }

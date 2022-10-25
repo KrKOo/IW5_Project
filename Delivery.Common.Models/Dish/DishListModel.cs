@@ -1,4 +1,6 @@
-﻿namespace Delivery.Common.Models.Dish
+﻿using Delivery.Common.Enums;
+
+namespace Delivery.Common.Models.Dish
 {
     public record DishListModel : IWithId
     {
@@ -6,7 +8,6 @@
         public required string Name { get; set; }
         public required string Description { get; set; }
         public required double Price { get; set; }
-        public required string Allergens { get; set; }
         public string? ImageUrl { get; set; }
     }
 }

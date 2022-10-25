@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.Internal;
+using CookBook.Common.Extensions;
 using Delivery.Api.BL.Installers;
 using Delivery.Api.DAL.Common.Entities;
 using Delivery.Api.DAL.EF.Extensions;
@@ -40,6 +41,7 @@ void ConfigureDependencies(IServiceCollection serviceCollection, IConfiguration 
     var connectionString = configuration.GetConnectionString("DefaultConnection")
         ?? throw new ArgumentException("The connection string is missing");
     serviceCollection.AddInstaller<ApiDALEFInstaller>(connectionString);
+    serviceCollection.AddInstaller<ApiBLInstaller>();
 }
 
 void ConfigureAutoMapper(IServiceCollection serviceCollection)
