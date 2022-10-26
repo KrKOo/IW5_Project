@@ -112,9 +112,9 @@ public class InMemoryDatabaseFixture : IDatabaseFixture
 
     private void SeedStorage(Storage storage)
     {
-        storage.Dishes.Add(new DishEntity(DishGuids[0], "Pizza", "Salami", 4.20, RestaurantGuids[0]));
-        storage.Dishes.Add(new DishEntity(DishGuids[1], "Pizza", "Funghi", 4.20, RestaurantGuids[0]));
-        storage.Dishes.Add(new DishEntity(DishGuids[2], "Pizza", "Spicy", 4.20, RestaurantGuids[1]));
+        storage.Dishes.Add(new DishEntity(DishGuids[0], "Pizza", "Salami", 4, RestaurantGuids[0]));
+        storage.Dishes.Add(new DishEntity(DishGuids[1], "Pizza", "Funghi", 4, RestaurantGuids[0]));
+        storage.Dishes.Add(new DishEntity(DishGuids[2], "Pizza", "Spicy", 4, RestaurantGuids[1]));
 
         storage.DishAmounts.Add(new DishAmountEntity(DishAmountGuids[0], 2, DishGuids[0], OrderGuids[0]));
         storage.DishAmounts.Add(new DishAmountEntity(DishAmountGuids[1], 1, DishGuids[1], OrderGuids[0]));
@@ -132,7 +132,7 @@ public class InMemoryDatabaseFixture : IDatabaseFixture
             "ForestPub",
             "In forest",
             "842 West Land",
-            new GPS(15.22456, 14.01034))
+            15.22456, 14.01034)
         );
         
         storage.Restaurants.Add(new RestaurantEntity(
@@ -140,7 +140,7 @@ public class InMemoryDatabaseFixture : IDatabaseFixture
             "Tacos Truck",
             "FoodTruck",
             "5368 Champlin Summit",
-            new GPS(78.531199, 15.549264))
+            78.531199, 15.549264)
         );
     }
 }

@@ -1,5 +1,7 @@
-﻿using AutoMapper;
+﻿using System.Diagnostics;
+using AutoMapper;
 using Delivery.Api.BL.Facades;
+using Delivery.Api.BL.UnitTests.Seeds;
 using Delivery.Api.DAL.Common.Entities;
 using Delivery.Api.DAL.Common.Repositories;
 using Delivery.Common.Models.Dish;
@@ -42,35 +44,24 @@ namespace Delivery.Api.BL.UnitTests
         public void Create_Calls_Correct_Method_On_Repository()
         {
             var facade = GetFacadeWithForbiddenDependencyCalls();
+            
             var dishId = Guid.NewGuid();
+            var dish = DishModelSeeds.DishSeeds[0];
 
-            var dish = new DishDetailModel()
-            {
-                Id = dishId,
-                Name = "Test",
-                Description = "Test",
-                Price = 1.00,
-                Allergens = "Test"
-            };
+            facade.Create(dish);
+            var dishFromDb = facade.GetById(dishId);
 
-            Guid returnedId = facade.Create(dish);
-            Assert.Equal(returnedId, dishId);
+            Assert.Equal(dish.Name, dishFromDb.Name);
         }
 
         [Fact]
         public void Update_Calls_Correct_Method_On_Repository()
         {
             var facade = GetFacadeWithForbiddenDependencyCalls();
-            var updatedName = "Updated";
 
-            var dish = new DishDetailModel()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Test",
-                Description = "Test",
-                Price = 1.00,
-                Allergens = "Test"
-            };
+            var updatedName = "UpdatedName";
+            var dishId = Guid.NewGuid();
+            var dish = DishModelSeeds.DishSeeds[1];
 
             facade.Create(dish);
 
@@ -78,7 +69,8 @@ namespace Delivery.Api.BL.UnitTests
 
             facade.Update(dish);
 
-            Assert.Equal(updatedName, dish.Name);
+            var dishFromDb = facade.GetById(dishId);
+            Assert.Equal(updatedName, dishFromDb.Name);
         }
     }
 }

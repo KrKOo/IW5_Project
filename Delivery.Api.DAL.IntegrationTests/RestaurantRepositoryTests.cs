@@ -40,7 +40,7 @@ public class RestaurantRepositoryTests
         
         var restaurantId = Guid.NewGuid();
         var restaurantDishes = new List<DishEntity>(){dishList[0], dishList[2]};
-        var restaurant = new RestaurantEntity(restaurantId, "LuxuryRestaurant", "Expensive", "14 London Road", new GPS(15.74586,84.45612))
+        var restaurant = new RestaurantEntity(restaurantId, "LuxuryRestaurant", "Expensive", "14 London Road", 15.74586, 84.45612)
         {
             Dishes = restaurantDishes
         };
@@ -64,7 +64,7 @@ public class RestaurantRepositoryTests
         
         var restaurantId = Guid.NewGuid();
         var restaurantDishes = new List<DishEntity>(){dishList[1], dishList[2]};
-        var restaurant = new RestaurantEntity(restaurantId, "NormalRestaurant", "NothingSpecial", "16 London Road", new GPS(15.74587,84.45612))
+        var restaurant = new RestaurantEntity(restaurantId, "NormalRestaurant", "NothingSpecial", "16 London Road", 15.74587, 84.45612)
         {
             Dishes = restaurantDishes
         };

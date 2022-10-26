@@ -58,8 +58,8 @@ namespace Delivery.Api.DAL.Memory
 
         private void SeedDishes()
         {
-            Dishes.Add(new DishEntity(dishGuids[0], "Hod dog", "With ketchup", 3.49, restaurantGuids[0]));
-            Dishes.Add(new DishEntity(dishGuids[1], "Tacos", "Beef tacos", 5.19, restaurantGuids[1]));
+            Dishes.Add(new DishEntity(dishGuids[0], "Hod dog", "With ketchup", 3, restaurantGuids[0]));
+            Dishes.Add(new DishEntity(dishGuids[1], "Tacos", "Beef tacos", 5, restaurantGuids[1]));
         }
 
         private void SeedDishAmounts()
@@ -77,8 +77,8 @@ namespace Delivery.Api.DAL.Memory
 
         private void SeedRestaurants()
         {
-            Restaurants.Add(new RestaurantEntity(restaurantGuids[0], "The Pub", "Just pub", "4104 Eichmann Plains", new GPS(13.67733, 163.20345)));
-            Restaurants.Add(new RestaurantEntity(restaurantGuids[0], "Tacos Truck", "FoodTruck", "5368 Champlin Summit", new GPS(78.531199, 15.549264)));
+            Restaurants.Add(new RestaurantEntity(restaurantGuids[0], "The Pub", "Just pub", "4104 Eichmann Plains", 13.67733, 163.20345));
+            Restaurants.Add(new RestaurantEntity(restaurantGuids[0], "Tacos Truck", "FoodTruck", "5368 Champlin Summit", 78.531199, 15.549264));
         }
     }
 }
