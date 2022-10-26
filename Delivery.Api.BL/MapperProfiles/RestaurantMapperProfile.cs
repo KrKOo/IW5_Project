@@ -9,8 +9,11 @@ namespace Delivery.Api.BL.MapperProfiles
     {
         public RestaurantMapperProfile()
         {
-            CreateMap<RestaurantEntity, RestaurantListModel>();
-            CreateMap<RestaurantEntity, RestaurantDetailModel>();
+            CreateMap<RestaurantEntity, RestaurantListModel>()
+                .ForMember(dst => dst.Revenue, expr => expr.MapFrom(src => src.Orders.Sum(x => 10)));
+
+            CreateMap<RestaurantEntity, RestaurantDetailModel>()
+                .ForMember(dst => dst.Revenue, expr => expr.MapFrom(src => src.Orders.Sum(x => x.DishAmounts.Sum(y => y.Dish.Price * y.Amount))));
 
             CreateMap<RestaurantCreateModel, RestaurantEntity>()
                 .Ignore(dst => dst.Dishes)

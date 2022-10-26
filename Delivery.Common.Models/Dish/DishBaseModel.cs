@@ -15,7 +15,7 @@ namespace Delivery.Common.Models.Dish
         public required string Description { get; set; }
 
         [Required(ErrorMessageResourceName = nameof(DishDetailModelResources.Price_Required_ErrorMessage), ErrorMessageResourceType = typeof(DishDetailModelResources))]
-        public required double Price { get; set; }
+        public required Decimal Price { get; set; }
 
         // [Required(ErrorMessageResourceName = nameof(DishDetailModelResources.Allergens_Required_ErrorMessage), ErrorMessageResourceType = typeof(DishDetailModelResources))]
         // public required ICollection<Allergen> Allergens { get; set; }

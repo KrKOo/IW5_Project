@@ -24,6 +24,9 @@ namespace Delivery.Api.DAL.EF.Repositories
         {
             return dbContext.Restaurants
                 .Include(restaurant => restaurant.Dishes)
+                .Include(restaurant => restaurant.Orders)
+                .ThenInclude(order => order.DishAmounts)
+                .ThenInclude(dishAmount => dishAmount.Dish)
                 .SingleOrDefault(entity => entity.Id == id);
         }
 
@@ -36,7 +39,7 @@ namespace Delivery.Api.DAL.EF.Repositories
                     .Single(r => r.Id == restaurant.Id);
 
                 mapper.Map(restaurant, existingRestaurant);
-                
+
                 dbContext.Restaurants.Update(existingRestaurant);
                 dbContext.SaveChanges();
 

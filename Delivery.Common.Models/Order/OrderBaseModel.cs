@@ -19,6 +19,5 @@ namespace Delivery.Common.Models.Order
 
         [Required(ErrorMessageResourceName = nameof(OrderDetailModelResources.State_Required_ErrorMessage), ErrorMessageResourceType = typeof(OrderDetailModelResources))]
         public required OrderStates State { get; set; }
-
     }
 }

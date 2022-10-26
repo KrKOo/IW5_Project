@@ -19,6 +19,10 @@ namespace Delivery.Api.BL.MapperProfiles
                 .Ignore(dst => dst.DishAmounts);
 
             CreateMap<DishAmountEntity, OrderDishDetailModel>();
+            CreateMap<OrderDishCreateModel, DishAmountEntity>().DisableCtorValidation()
+                .ForMember(dst => dst.OrderId, expr => expr.MapFrom(src => src.Id))
+                .Ignore(dst => dst.Dish)
+                .Ignore(dst => dst.Order);
         }
     }
 }

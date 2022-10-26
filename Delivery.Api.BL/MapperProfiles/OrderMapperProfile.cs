@@ -9,12 +9,13 @@ namespace Delivery.Api.BL.MapperProfiles
     {
         public OrderMapperProfile()
         {
-            CreateMap<OrderEntity, OrderListModel>();
-            CreateMap<OrderEntity, OrderDetailModel>();
+            CreateMap<OrderEntity, OrderListModel>()
+                .ForMember(dst => dst.TotalPrice, expr => expr.MapFrom(src => src.DishAmounts.Sum(x => x.Dish!.Price * x.Amount)));
+            CreateMap<OrderEntity, OrderDetailModel>()
+                .ForMember(dst => dst.TotalPrice, expr => expr.MapFrom(src => src.DishAmounts.Sum(x => x.Dish!.Price * x.Amount)));
 
             CreateMap<OrderCreateModel, OrderEntity>()
-            .Ignore(dst => dst.Restaurant)
-            .Ignore(dst => dst.DishAmounts);
+            .Ignore(dst => dst.Restaurant);
         }
     }
 }

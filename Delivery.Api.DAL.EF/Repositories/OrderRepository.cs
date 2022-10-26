@@ -20,9 +20,17 @@ namespace Delivery.Api.DAL.EF.Repositories
             this.mapper = mapper;
         }
 
+        public virtual IList<OrderEntity> GetAll()
+        {
+            return dbContext.Orders
+            .Include(order => order.DishAmounts)
+            .ThenInclude(order => order.Dish).ToList();
+        }
+
         public override OrderEntity? GetById(Guid id)
         {
             return dbContext.Orders
+                .Include(order => order.Restaurant)
                 .Include(order => order.DishAmounts)
                 .ThenInclude(dishAmount => dishAmount.Dish)
                 .SingleOrDefault(entity => entity.Id == id);
@@ -37,7 +45,7 @@ namespace Delivery.Api.DAL.EF.Repositories
                     .Single(o => o.Id == order.Id);
 
                 mapper.Map(order, existingOrder);
-                
+
                 dbContext.Orders.Update(existingOrder);
                 dbContext.SaveChanges();
 

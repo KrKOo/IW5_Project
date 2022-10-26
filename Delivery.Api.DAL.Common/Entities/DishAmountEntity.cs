@@ -15,6 +15,7 @@ namespace Delivery.Api.DAL.Common.Entities
         public Guid OrderId { get; set; }
         public OrderEntity? Order { get; set; }
 
+        public DishAmountEntity() { }
         public DishAmountEntity(Guid? id, int amount, Guid dishId, Guid orderId)
         {
             Id = id;

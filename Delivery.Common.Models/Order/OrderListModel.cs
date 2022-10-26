@@ -9,5 +9,6 @@ namespace Delivery.Common.Models.Order
         public required string Note { get; set; }
         public required OrderStates State { get; set; }
         public required Guid RestaurantId { get; set; }
+        public Decimal? TotalPrice { get; set; }
     }
 }
