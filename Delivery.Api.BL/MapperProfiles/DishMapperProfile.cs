@@ -1,9 +1,10 @@
 using AutoMapper;
 using Delivery.Api.DAL.Common.Entities;
+using Delivery.Common.Enums;
 using Delivery.Common.Extensions;
+using Delivery.Common.Models;
 using Delivery.Common.Models.Dish;
 using Delivery.Common.Models.OrderDish;
-
 
 namespace Delivery.Api.BL.MapperProfiles
 {
@@ -25,6 +26,10 @@ namespace Delivery.Api.BL.MapperProfiles
                 .ForMember(dst => dst.OrderId, expr => expr.MapFrom(src => src.Id))
                 .Ignore(dst => dst.Dish)
                 .Ignore(dst => dst.Order);
+
+            CreateMap<DishEntity, FilterModel>()
+                .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.ImageUrl))
+                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => FilterType.Dish));
         }
     }
 }

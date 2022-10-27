@@ -21,5 +21,13 @@ namespace Delivery.Api.DAL.EF.Repositories
                 .Include(dish => dish.Allergens)
                 .SingleOrDefault(entity => entity.Id == id);
         }
+
+        public List<DishEntity> GetBySubstring(string substring)
+        {
+            return dbContext.Dishes
+                .Include(dish => dish.Restaurant)
+                .Include(dish => dish.Allergens)
+                .Where(entity => entity.Name.Contains(substring) || entity.Description.Contains(substring)).ToList();
+        }
     }
 }

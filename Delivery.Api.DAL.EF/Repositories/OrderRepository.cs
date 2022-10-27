@@ -20,7 +20,7 @@ namespace Delivery.Api.DAL.EF.Repositories
             this.mapper = mapper;
         }
 
-        public virtual IList<OrderEntity> GetAll()
+        public override IList<OrderEntity> GetAll()
         {
             return dbContext.Orders
             .Include(order => order.DishAmounts)

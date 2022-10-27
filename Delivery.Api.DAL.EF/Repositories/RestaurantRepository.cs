@@ -50,5 +50,15 @@ namespace Delivery.Api.DAL.EF.Repositories
                 return null;
             }
         }
+
+        public List<RestaurantEntity> GetBySubstring(string substring)
+        {
+            return dbContext.Restaurants
+                .Include(restaurant => restaurant.Dishes)
+                .Include(restaurant => restaurant.Orders)
+                .ThenInclude(order => order.DishAmounts)
+                .ThenInclude(dishAmount => dishAmount.Dish)
+                .Where(entity => entity.Name.Contains(substring) || entity.Description.Contains(substring) || entity.Address.Contains(substring)).ToList();
+        }
     }
 }
