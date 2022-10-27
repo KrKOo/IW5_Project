@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Delivery.Common.BL", "Deliv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Delivery.Common.Models", "Delivery.Common.Models\Delivery.Common.Models.csproj", "{9D0A140A-7E4A-41C2-8F4D-79409D8224DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delivery.Api.BL.UnitTests", "Delivery.Api.BL.UnitTests\Delivery.Api.BL.UnitTests.csproj", "{DB1960DD-A0C5-484C-8F78-C8D2E16DB4E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Delivery.Api.BL.UnitTests", "Delivery.Api.BL.UnitTests\Delivery.Api.BL.UnitTests.csproj", "{DB1960DD-A0C5-484C-8F78-C8D2E16DB4E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delivery.Api.App.EndToEndTests", "Delivery.Api.App.EndToEndTests\Delivery.Api.App.EndToEndTests.csproj", "{F4ACCBDB-C27C-4EC5-A193-1DE3C758693A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{DB1960DD-A0C5-484C-8F78-C8D2E16DB4E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB1960DD-A0C5-484C-8F78-C8D2E16DB4E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB1960DD-A0C5-484C-8F78-C8D2E16DB4E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4ACCBDB-C27C-4EC5-A193-1DE3C758693A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4ACCBDB-C27C-4EC5-A193-1DE3C758693A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4ACCBDB-C27C-4EC5-A193-1DE3C758693A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4ACCBDB-C27C-4EC5-A193-1DE3C758693A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

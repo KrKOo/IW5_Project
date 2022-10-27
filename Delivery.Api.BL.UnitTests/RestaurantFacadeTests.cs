@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Delivery.Api.BL.Facades;
 using Delivery.Api.DAL.Common.Repositories;
-using Delivery.Common.Enums;
-using Delivery.Common.Models.Dish;
-using Delivery.Common.Models.Order;
 using Delivery.Common.Models.Restaurant;
 using Moq;
 
@@ -61,7 +53,8 @@ namespace Delivery.Api.BL.UnitTests
             
             facade.Create(restaurant);
             var restaurantFromDb = facade.GetById(restaurantId);
-                
+            
+            Assert.NotNull(restaurantFromDb);
             Assert.Empty(restaurantFromDb.Orders);
         }*/
     }

@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using Delivery.Common.Enums;
+using Delivery.Common.Models.OrderDish;
 using Delivery.Common.Models.Resources;
 
 namespace Delivery.Common.Models.Dish
@@ -17,8 +19,8 @@ namespace Delivery.Common.Models.Dish
         [Required(ErrorMessageResourceName = nameof(DishDetailModelResources.Price_Required_ErrorMessage), ErrorMessageResourceType = typeof(DishDetailModelResources))]
         public required Decimal Price { get; set; }
 
-        // [Required(ErrorMessageResourceName = nameof(DishDetailModelResources.Allergens_Required_ErrorMessage), ErrorMessageResourceType = typeof(DishDetailModelResources))]
-        // public required ICollection<Allergen> Allergens { get; set; }
+        //[Required(ErrorMessageResourceName = nameof(DishDetailModelResources.Allergens_Required_ErrorMessage), ErrorMessageResourceType = typeof(DishDetailModelResources))]  //TODO: Dát to required??
+        public required ICollection<DishAllergenCreateModel> Allergens { get; set; }
 
         public string? ImageUrl { get; set; }
     }

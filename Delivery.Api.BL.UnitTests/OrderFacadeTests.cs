@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using Delivery.Api.BL.Facades;
 using Delivery.Api.BL.UnitTests.Seeds;
-using Delivery.Api.DAL.Common.Entities;
 using Delivery.Api.DAL.Common.Repositories;
 using Delivery.Common.Enums;
-using Delivery.Common.Models.Dish;
 using Delivery.Common.Models.Order;
 using Delivery.Common.Models.OrderDish;
 using Moq;

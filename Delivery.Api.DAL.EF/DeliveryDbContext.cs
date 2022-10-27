@@ -9,6 +9,7 @@ namespace Delivery.Api.DAL.EF
         public DbSet<OrderEntity> Orders { get; set; } = null!;
         public DbSet<RestaurantEntity> Restaurants { get; set; } = null!;
         public DbSet<DishAmountEntity> DishAmounts { get; set; } = null!;
+        public DbSet<DishAmountEntity> DishAllergens { get; set; } = null!;
 
         public DeliveryDbContext(DbContextOptions<DeliveryDbContext> options)
             : base(options)
@@ -35,6 +36,11 @@ namespace Delivery.Api.DAL.EF
             modelBuilder.Entity<DishAmountEntity>()
                 .HasOne(dishAmountEntity => dishAmountEntity.Dish)
                 .WithMany(dishEntity => dishEntity.DishAmounts);
+            
+            modelBuilder.Entity<DishAllergenEntity>()
+                .HasOne(dishAllergenEntity => dishAllergenEntity.Dish)
+                .WithMany(dishEntity => dishEntity.Allergens)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -1,10 +1,6 @@
-﻿using System.Diagnostics;
-using AutoMapper;
+﻿using AutoMapper;
 using Delivery.Api.BL.Facades;
-using Delivery.Api.BL.UnitTests.Seeds;
-using Delivery.Api.DAL.Common.Entities;
 using Delivery.Api.DAL.Common.Repositories;
-using Delivery.Common.Models.Dish;
 using Moq;
 
 namespace Delivery.Api.BL.UnitTests

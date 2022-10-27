@@ -30,7 +30,6 @@ public class OrderRepositoryTests
         Assert.Equal(_dbFixture.OrderGuids[0], order.Id);
         Assert.Equal("Fast please", order.Note);
 
-        Assert.NotNull(order.RestaurantId);
         Assert.Equal(_dbFixture.RestaurantGuids[0], order.RestaurantId);
 
         Assert.Equal(2, order.DishAmounts.Count);

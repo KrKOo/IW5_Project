@@ -12,7 +12,8 @@ namespace Delivery.Api.DAL.Common.Entities
         public Guid RestaurantId { get; set; }
         public RestaurantEntity? Restaurant { get; set; }
         public string? ImageUrl { get; set; }
-        // public ICollection<Allergen> Allergens { get; set; } = new List<Allergen>();
+        
+        public IEnumerable<DishAllergenEntity>? Allergens { get; set; } = new List<DishAllergenEntity>();
         public Collection<DishAmountEntity> DishAmounts { get; set; } = new Collection<DishAmountEntity>();
 
         public DishEntity(Guid id, string name, string description, Decimal price, Guid restaurantId, string? imageUrl = null) : base(id)

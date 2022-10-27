@@ -1,4 +1,6 @@
-﻿using Delivery.Common.Models.Dish;
+﻿using Delivery.Common.Enums;
+using Delivery.Common.Models.Dish;
+using Delivery.Common.Models.OrderDish;
 
 namespace Delivery.Api.BL.UnitTests.Seeds;
 
@@ -18,21 +20,43 @@ public class DishModelSeeds
                 Name = "Test", 
                 Description = "Test",
                 Price = 1,
-                //Allergens = "Test"    //TODO
+                Allergens = new List<DishAllergenCreateModel>()
+                {
+                    new ()
+                    {
+                        Id = Guid.NewGuid(),
+                        DishId = DishGuids[0],
+                        Allergen = Allergen.Milk
+                    }
+                }
             },
             new (){
                 Id = DishGuids[1],
                 Name = "Test2",
                 Description = "Test2",
                 Price = 2,
-                //Allergens = "Test"    //TODO
+                Allergens = new List<DishAllergenCreateModel>() { }
             },
             new(){
                 Id = DishGuids[2],
                 Name = "Test3", 
                 Description = "Test3",
                 Price = 3,
-                //Allergens = "Test"    //TODO
+                Allergens = new List<DishAllergenCreateModel>()
+                {
+                    new ()
+                    {
+                        Id = Guid.NewGuid(),
+                        DishId = DishGuids[2],
+                        Allergen = Allergen.Eggs
+                    },
+                    new ()
+                    {
+                        Id = Guid.NewGuid(),
+                        DishId = DishGuids[2],
+                        Allergen = Allergen.Fish
+                    }
+                }
             }
         };
 }
