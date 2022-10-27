@@ -42,11 +42,11 @@ namespace Delivery.Api.BL.Facades
 
         public DishDetailModel? GetById(Guid id)
         {
-            //var dishEntity = dishRepository.GetById(id);    //TODO: Getting null, its not calling .DAL.Memory.dishRepository and even if it do am not sure it will work because of the storage there
-            var dishEntity = new DishEntity(
-                Guid.NewGuid(),"Test","Test",1, Guid.NewGuid()
-                //Allergens = "Test"    //TODO
-            );
+            var dishEntity = dishRepository.GetById(id);    //TODO: Getting null, its not calling .DAL.Memory.dishRepository and even if it do am not sure it will work because of the storage there
+            // var dishEntity = new DishEntity(
+            //     Guid.NewGuid(),"Test","Test",1, Guid.NewGuid()
+            //     //Allergens = "Test"    //TODO
+            // );
             return mapper.Map<DishDetailModel>(dishEntity);
         }
 

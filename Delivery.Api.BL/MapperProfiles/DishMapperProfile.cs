@@ -12,9 +12,11 @@ namespace Delivery.Api.BL.MapperProfiles
         public DishMapperProfile()
         {
             CreateMap<DishEntity, DishListModel>();
-            CreateMap<DishEntity, DishDetailModel>();
+            CreateMap<DishEntity, DishDetailModel>()
+                .ForMember(dest => dest.Allergens, opt => opt.MapFrom(src => src.Allergens!.Select(x => x.Allergen)));
 
             CreateMap<DishCreateModel, DishEntity>()
+                .ForMember(dest => dest.Allergens, opt => opt.MapFrom(src => src.Allergens!.Select(x => new DishAllergenEntity(null, x, Guid.Empty))))
                 .Ignore(dst => dst.Restaurant)
                 .Ignore(dst => dst.DishAmounts);
 

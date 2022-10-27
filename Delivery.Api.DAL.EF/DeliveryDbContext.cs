@@ -36,11 +36,10 @@ namespace Delivery.Api.DAL.EF
             modelBuilder.Entity<DishAmountEntity>()
                 .HasOne(dishAmountEntity => dishAmountEntity.Dish)
                 .WithMany(dishEntity => dishEntity.DishAmounts);
-            
+
             modelBuilder.Entity<DishAllergenEntity>()
                 .HasOne(dishAllergenEntity => dishAllergenEntity.Dish)
-                .WithMany(dishEntity => dishEntity.Allergens)
-                .OnDelete(DeleteBehavior.NoAction);
+                .WithMany(dishEntity => dishEntity.Allergens);
         }
     }
 }

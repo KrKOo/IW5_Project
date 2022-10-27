@@ -13,5 +13,13 @@ namespace Delivery.Api.DAL.EF.Repositories
             : base(dbContext)
         {
         }
+
+        public override DishEntity? GetById(Guid id)
+        {
+            return dbContext.Dishes
+                .Include(dish => dish.Restaurant)
+                .Include(dish => dish.Allergens)
+                .SingleOrDefault(entity => entity.Id == id);
+        }
     }
 }
