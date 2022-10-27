@@ -57,3 +57,9 @@ void ValidateAutoMapperConfiguration(IServiceProvider serviceProvider)
     var mapper = serviceProvider.GetRequiredService<IMapper>();
     mapper.ConfigurationProvider.AssertConfigurationIsValid();
 }
+
+// Make the implicit Program class public so test projects can access it
+public partial class Program
+{
+}
+
