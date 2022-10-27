@@ -62,5 +62,11 @@ namespace Delivery.Api.DAL.Memory.Repositories
         {
             return restaurants.Any(restaurant => restaurant.Id == id);
         }
+        
+        public List<RestaurantEntity> GetBySubstring(string substring)
+        {
+            return restaurants
+                .Where(entity => entity.Name.Contains(substring) || entity.Description.Contains(substring) || entity.Address.Contains(substring)).ToList();
+        }
     }
 }

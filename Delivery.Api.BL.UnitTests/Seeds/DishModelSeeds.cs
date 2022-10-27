@@ -20,43 +20,21 @@ public class DishModelSeeds
                 Name = "Test", 
                 Description = "Test",
                 Price = 1,
-                Allergens = new List<DishAllergenCreateModel>()
-                {
-                    new ()
-                    {
-                        Id = Guid.NewGuid(),
-                        DishId = DishGuids[0],
-                        Allergen = Allergen.Milk
-                    }
-                }
+                Allergens = new List<Allergen>() { Allergen.Eggs , Allergen.Milk}
             },
             new (){
                 Id = DishGuids[1],
                 Name = "Test2",
                 Description = "Test2",
                 Price = 2,
-                Allergens = new List<DishAllergenCreateModel>() { }
+                Allergens = new List<Allergen>() { }
             },
             new(){
                 Id = DishGuids[2],
                 Name = "Test3", 
                 Description = "Test3",
                 Price = 3,
-                Allergens = new List<DishAllergenCreateModel>()
-                {
-                    new ()
-                    {
-                        Id = Guid.NewGuid(),
-                        DishId = DishGuids[2],
-                        Allergen = Allergen.Eggs
-                    },
-                    new ()
-                    {
-                        Id = Guid.NewGuid(),
-                        DishId = DishGuids[2],
-                        Allergen = Allergen.Fish
-                    }
-                }
+                Allergens = new List<Allergen>() { Allergen.Fish, Allergen.Mustard, Allergen.Peanuts }
             }
         };
 }
