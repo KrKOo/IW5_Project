@@ -1,7 +1,7 @@
 ﻿using Delivery.Common.BL.Facades;
 using Delivery.Common.Models.Restaurant;
 
-namespace Delivery.Api.BL.Facades
+namespace Delivery.Api.BL.Facades.Interfaces
 {
     public interface IRestaurantFacade : IAppFacade
     {

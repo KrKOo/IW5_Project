@@ -41,6 +41,7 @@ namespace Delivery.Api.BL.UnitTests
             repositoryMock.Verify(restaurantRepository => restaurantRepository.Remove(itemId));
         }
 
+        /*TODO: Zjistit jestli se to vůbec dá testovat, podle mě toto jde přes databázy a nee repozitáře..Prodiskutovat!!
         [Fact]
         public void Restaurant_Create()
         {
@@ -62,6 +63,6 @@ namespace Delivery.Api.BL.UnitTests
             var restaurantFromDb = facade.GetById(restaurantId);
                 
             Assert.Empty(restaurantFromDb.Orders);
-        }
+        }*/
     }
 }

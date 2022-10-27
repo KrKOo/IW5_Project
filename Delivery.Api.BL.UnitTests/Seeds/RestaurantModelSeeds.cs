@@ -1,11 +1,10 @@
-﻿using Delivery.Common.Models.Dish;
-using Delivery.Common.Models.Restaurant;
+﻿using Delivery.Common.Models.Restaurant;
 
 namespace Delivery.Api.BL.UnitTests.Seeds;
 
 public class RestaurantModelSeeds
 {
-    private static readonly IList<Guid> RestaurantGuids = new List<Guid>
+    public static readonly IList<Guid> RestaurantGuids = new List<Guid>
     {
         new ("e0e43c41-0528-4271-833b-e16b759e16a8"),
         new ("15fc9c0c-8b50-42c6-b2fa-ccd29f60b1ad"),

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Delivery.Api.BL.Facades;
+using Delivery.Api.BL.UnitTests.Seeds;
+using Delivery.Api.DAL.Common.Entities;
 using Delivery.Api.DAL.Common.Repositories;
 using Delivery.Common.Enums;
 using Delivery.Common.Models.Dish;
@@ -36,49 +38,138 @@ namespace Delivery.Api.BL.UnitTests
             repositoryMock.Verify(orderRepository => orderRepository.Remove(itemId));
         }
 
-        /*[Fact]
-        public void MergeDishAmounts_Merges_Order_With_Multiple_DishAmounts_Of_Same_Dish()
+        /*TODO: Zjistit jak funguje Mock.Setup a zkusit rozjet
+        [Fact] 
+        public void Create_Order_And_Then_Update()
         {
+            //arrange
             var facade = GetFacadeWithForbiddenDependencyCalls();
 
-            var restaurantId  = Guid.NewGuid();
-            var orderId  = Guid.NewGuid();
+            var order = OrderModelSeeds.OrderSeeds[0];
+
+            //act
+            facade.CreateOrUpdate(order);
+
+            order.State = OrderStates.Accepted;
+            facade.CreateOrUpdate(order);
+
+            var orderModel = facade.GetById(order.Id);
+            
+            //assert
+            Assert.Equal(OrderStates.Accepted, orderModel.State);
+
+        }*/
+        
+        [Fact] 
+        public void MergeDishAmounts_Does_Merge_Order_With_Multiple_DishAmounts_Of_Same_Dish()
+        {
+            //arrange
+            var facade = GetFacadeWithForbiddenDependencyCalls();
+
+            var mergedDishId = DishModelSeeds.DishGuids[0];
+            var dishAmount1Id = Guid.NewGuid();
+            var dishAmount2Id = Guid.NewGuid();
             var order = new OrderCreateModel()
             {
-                Id = orderId,
+                Id = Guid.NewGuid(),
                 Address = "TestAddress",
-                DeliveryTime = TimeSpan.FromMinutes(40),
-                DishAmounts = new List<OrderDetailDishModel>{},
-                Note = "note",
-                RestaurantId = restaurantId,
-                State = OrderStates.Created
+                DeliveryTime = TimeSpan.FromMinutes(61),
+                Note = "Bla bla",
+                State = OrderStates.Created,
+                DishAmounts = new List<OrderDishCreateModel>()
+                {
+                    new()
+                    {
+                        Id = dishAmount1Id,
+                        Amount = 4,
+                        DishId = mergedDishId
+                    },
+                    new()
+                    {
+                        Id = dishAmount2Id,
+                        Amount = 1,
+                        DishId = mergedDishId
+                    }
+                }
             };
 
+            //act
             facade.MergeDishAmounts(order);
-
+            
+            //assert
             var mergedDish = Assert.Single(order.DishAmounts);
-            Assert.Equal(3, mergedDish.Amount);
-            Assert.Equal(mergedDishId, mergedDish.Dish.Id);
+            
+            Assert.Equal(1,order.DishAmounts.Count);
+            Assert.Equal(5,mergedDish.Amount);
+            Assert.Equal(mergedDishId,mergedDish.DishId);
+            //TODO: Add allergen assert
+
+        }
+
+        [Fact]
+        public void MergeDishAmounts_Does_Not_Merge_Order_With_Multiple_DishAmounts_Of_Different_Dish()
+        {
+            //arrange
+            var facade = GetFacadeWithForbiddenDependencyCalls();
+            
+            var dishAmount1Id = Guid.NewGuid();
+            var dishAmount2Id = Guid.NewGuid();
+            var order = new OrderCreateModel()
+            {
+                Id = Guid.NewGuid(),
+                Address = "TestAddress",
+                DeliveryTime = TimeSpan.FromMinutes(61),
+                Note = "Bla bla",
+                State = OrderStates.Created,
+                DishAmounts = new List<OrderDishCreateModel>()
+                {
+                    new()
+                    {
+                        Id = dishAmount1Id,
+                        Amount = 4,
+                        DishId = DishModelSeeds.DishGuids[0]
+                    },
+                    new()
+                    {
+                        Id = dishAmount2Id,
+                        Amount = 1,
+                        DishId = DishModelSeeds.DishGuids[1]
+                    }
+                }
+            };
+
+            //act
+            facade.MergeDishAmounts(order);
+            
+            //assert
+            Assert.Equal(2,order.DishAmounts.Count);
+            var dishAmount1 = Assert.Single(order.DishAmounts.Where(t=>t.Id==dishAmount1Id));
+            var dishAmount2 = Assert.Single(order.DishAmounts.Where(t=>t.Id==dishAmount2Id));
+            
+            Assert.Equal(4,dishAmount1.Amount);
+            //TODO: Add allergen assert
+
+            Assert.Equal(1,dishAmount2.Amount);
+            //TODO: Add allergen assert
         }
 
         [Fact]
         public void MergeDishAmounts_Does_Not_Fail_When_Order_Has_No_Dishes()
         {
             var facade = GetFacadeWithForbiddenDependencyCalls();
-            var order = new OrderDetailModel()
+            var order = new OrderCreateModel()
             {
                 Id = Guid.NewGuid(),
-                Address = "Address",
-                DeliveryTime = TimeSpan.FromHours(1),
-                Note = "Note",
+                Address = "TestAddress",
+                DeliveryTime = TimeSpan.FromMinutes(61),
+                Note = "Bla bla",
                 State = OrderStates.Created,
-                RestaurantId = Guid.NewGuid(),
-                DishAmounts = new List<OrderDetailDishModel>() { }
+                DishAmounts = new List<OrderDishCreateModel>() {}
             };
 
             facade.MergeDishAmounts(order);
 
             Assert.Empty(order.DishAmounts);
-        }*/
+        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Delivery.Common.BL.Facades;
 using Delivery.Common.Models.Order;
 
-namespace Delivery.Api.BL.Facades
+namespace Delivery.Api.BL.Facades.Interfaces
 {
     public interface IOrderFacade : IAppFacade
     {

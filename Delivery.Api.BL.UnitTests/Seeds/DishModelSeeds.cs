@@ -4,7 +4,7 @@ namespace Delivery.Api.BL.UnitTests.Seeds;
 
 public class DishModelSeeds
 {
-    private static readonly IList<Guid> DishGuids = new List<Guid>
+    public static readonly IList<Guid> DishGuids = new List<Guid>
     {
         new ("a0e43c41-0528-4271-833b-e16b759e16a8"),
         new ("75fc9c0c-8b50-42c6-b2fa-ccd29f60b1ad"),
