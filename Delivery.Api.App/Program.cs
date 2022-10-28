@@ -5,34 +5,22 @@ using Delivery.Api.BL.Installers;
 using Delivery.Api.DAL.Common.Entities;
 using Delivery.Api.DAL.EF.Extensions;
 using Delivery.Api.DAL.EF.Installers;
+using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+ConfigureControllers(builder.Services);
+ConfigureOpenApiDocuments(builder.Services);
 ConfigureDependencies(builder.Services, builder.Configuration);
 ConfigureAutoMapper(builder.Services);
-
-// Add services to the container.
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
 ValidateAutoMapperConfiguration(app.Services);
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
+UseDevelopmentSettings(app);
+UseSecurityFeatures(app);
+UseRouting(app);
+UseOpenApi(app);
 
 app.Run();
 
@@ -57,6 +45,63 @@ void ValidateAutoMapperConfiguration(IServiceProvider serviceProvider)
     var mapper = serviceProvider.GetRequiredService<IMapper>();
     mapper.ConfigurationProvider.AssertConfigurationIsValid();
 }
+
+void ConfigureControllers(IServiceCollection serviceCollection)
+{
+    serviceCollection.AddControllers()
+        .AddNewtonsoftJson()
+        .AddFluentValidation(options => options.RegisterValidatorsFromAssemblyContaining<ApiBLInstaller>())
+        .AddDataAnnotationsLocalization();
+
+    serviceCollection.AddCors(options =>
+    {
+        options.AddDefaultPolicy(options =>
+            options.AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod());
+    });
+}
+
+void ConfigureOpenApiDocuments(IServiceCollection serviceCollection)
+{
+    serviceCollection.AddEndpointsApiExplorer();
+    serviceCollection.AddOpenApiDocument();
+}
+
+void UseDevelopmentSettings(WebApplication application)
+{
+    var environment = application.Services.GetRequiredService<IWebHostEnvironment>();
+
+    if (environment.IsDevelopment())
+    {
+        application.UseDeveloperExceptionPage();
+    }
+}
+
+void UseSecurityFeatures(IApplicationBuilder application)
+{
+    application.UseCors();
+    application.UseHttpsRedirection();
+}
+
+void UseRouting(IApplicationBuilder application)
+{
+    application.UseRouting();
+    application.UseAuthorization();
+    application.UseEndpoints(endpoints =>
+    {
+        endpoints.MapControllers();
+    });
+}
+
+void UseOpenApi(IApplicationBuilder application)
+{
+    application.UseOpenApi();
+    application.UseSwaggerUi3();
+}
+
+
+
 
 // Make the implicit Program class public so test projects can access it
 public partial class Program
