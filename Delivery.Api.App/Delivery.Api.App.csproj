@@ -26,6 +26,7 @@
     <ProjectReference Include="..\Delivery.Api.BL\Delivery.Api.BL.csproj" />
     <ProjectReference Include="..\Delivery.Api.DAL.Common\Delivery.Api.DAL.Common.csproj" />
     <ProjectReference Include="..\Delivery.Api.DAL.EF\Delivery.Api.DAL.EF.csproj" />
+    <ProjectReference Include="..\Delivery.Api.DAL.Memory\Delivery.Api.DAL.Memory.csproj" />
   </ItemGroup>
 
 </Project>

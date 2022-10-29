@@ -2,9 +2,11 @@
 using AutoMapper.Internal;
 using CookBook.Common.Extensions;
 using Delivery.Api.BL.Installers;
+using Delivery.Api.DAL.Common;
 using Delivery.Api.DAL.Common.Entities;
 using Delivery.Api.DAL.EF.Extensions;
 using Delivery.Api.DAL.EF.Installers;
+using Delivery.Api.DAL.Memory.Installers;
 using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,9 +28,24 @@ app.Run();
 
 void ConfigureDependencies(IServiceCollection serviceCollection, IConfiguration configuration)
 {
-    var connectionString = configuration.GetConnectionString("DefaultConnection")
-        ?? throw new ArgumentException("The connection string is missing");
-    serviceCollection.AddInstaller<ApiDALEFInstaller>(connectionString);
+    if (!Enum.TryParse<DALType>(configuration.GetSection("DALSelectionOptions")["Type"], out var dalType))
+    {
+        throw new ArgumentException("DALSelectionOptions:Type");
+    }
+
+    switch (dalType)
+    {
+        case DALType.Memory:
+            serviceCollection.AddInstaller<ApiDALMemoryInstaller>();
+            break;
+        case DALType.EntityFramework:
+            var connectionString = configuration.GetConnectionString("DefaultConnection")
+                ?? throw new ArgumentException("The connection string is missing");
+            serviceCollection.AddInstaller<ApiDALEFInstaller>(connectionString);
+            break;
+    }
+
+
     serviceCollection.AddInstaller<ApiBLInstaller>();
 }
 
@@ -99,8 +116,6 @@ void UseOpenApi(IApplicationBuilder application)
     application.UseOpenApi();
     application.UseSwaggerUi3();
 }
-
-
 
 
 // Make the implicit Program class public so test projects can access it

@@ -46,7 +46,7 @@ namespace Delivery.Api.DAL.Memory.Repositories
             {
                 mapper.Map(entity, dishExisting);
             }
-            
+
             return dishExisting?.Id;
         }
 
@@ -69,11 +69,12 @@ namespace Delivery.Api.DAL.Memory.Repositories
         {
             return dishes.Any(dish => dish.Id == id);
         }
-        
+
         public List<DishEntity> GetBySubstring(string substring)
         {
             return dishes
                 .Where(entity => entity.Name.Contains(substring) || entity.Description.Contains(substring)).ToList();
         }
+
     }
 }
