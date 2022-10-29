@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Delivery.Api.DAL.Common.Entities;
-using Delivery.Common.Enums;
-using Delivery.Common.Structures;
+﻿using Delivery.Api.DAL.Common.Entities;
 
 namespace Delivery.Api.DAL.Memory
 {
@@ -30,7 +26,8 @@ namespace Delivery.Api.DAL.Memory
         private readonly IList<Guid> restaurantGuids = new List<Guid>
         {
             new ("f295709e-cb91-408b-9daa-408992800954"),
-            new ("cff8b2a5-2ddb-4584-b3fe-101a13956d4c")
+            new ("cff8b2a5-2ddb-4584-b3fe-101a13956d4c"),
+            new ("f7c2ec12-1b9e-451b-9e81-0524569583db")
         };
 
         public IList<OrderEntity> Orders { get; } = new List<OrderEntity>();
@@ -78,7 +75,8 @@ namespace Delivery.Api.DAL.Memory
         private void SeedRestaurants()
         {
             Restaurants.Add(new RestaurantEntity(restaurantGuids[0], "The Pub", "Just pub", "4104 Eichmann Plains", 13.67733, 163.20345));
-            Restaurants.Add(new RestaurantEntity(restaurantGuids[0], "Tacos Truck", "FoodTruck", "5368 Champlin Summit", 78.531199, 15.549264));
+            Restaurants.Add(new RestaurantEntity(restaurantGuids[1], "Tacos Truck", "FoodTruck", "5368 Champlin Summit", 78.531199, 15.549264));
+            Restaurants.Add(new RestaurantEntity(restaurantGuids[2], "Luxury Restaurant", "Best in Town", "5389 Champlin Summit", 78.531188, 15.549250));
         }
     }
 }

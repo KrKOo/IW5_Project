@@ -35,40 +35,5 @@ namespace Delivery.Api.BL.UnitTests
 
             repositoryMock.Verify(dishRepository => dishRepository.Remove(itemId)); 
         }
-        
-        /*TODO: Zjistit jestli se to vůbec dá testovat, podle mě toto jde přes databázy a nee repozitáře..Prodiskutovat!!
-        [Fact]
-        public void Create_Calls_Correct_Method_On_Repository()
-        {
-            var facade = GetFacadeWithForbiddenDependencyCalls();
-            
-            var dishId = Guid.NewGuid();
-            var dish = DishModelSeeds.DishSeeds[0];
-
-            facade.Create(dish);
-            var dishFromDb = facade.GetById(dishId);
-            
-            Assert.NotNull(dishFromDb);
-            Assert.Equal(dish.Name, dishFromDb.Name);
-        }
-
-        [Fact]
-        public void Update_Calls_Correct_Method_On_Repository()
-        {
-            var facade = GetFacadeWithForbiddenDependencyCalls();
-
-            var updatedName = "UpdatedName";
-            var dishId = Guid.NewGuid();
-            var dish = DishModelSeeds.DishSeeds[1];
-
-            facade.Create(dish);
-
-            dish.Name = updatedName;
-
-            facade.Update(dish);
-
-            var dishFromDb = facade.GetById(dishId);
-            Assert.Equal(updatedName, dishFromDb.Name);
-        }*/
     }
 }
