@@ -10,6 +10,8 @@ using Delivery.Common.Enums;
 using Delivery.Common.Models.Dish;
 using Newtonsoft.Json;
 using Xunit;
+using Delivery.Common.Models.OrderDish;
+using Delivery.Common.Models.Restaurant;
 
 namespace Delivery.Api.App.EndToEndTests
 {
@@ -83,33 +85,34 @@ namespace Delivery.Api.App.EndToEndTests
             response.EnsureSuccessStatusCode();
 
             var dishes = await response.Content.ReadFromJsonAsync<ICollection<DishDetailModel>>();
-            var dishUpdate = dishes.First();
-            
-            var updatedDish = new DishCreateModel()
+            if (dishes != null)
             {
-                Id = dishUpdate.Id,
-                Name = "TestDish",
-                Description = dishUpdate.Description,
-                Price = dishUpdate.Price,
-                RestaurantId = null,
-                Allergens = dishUpdate.Allergens
-            };
-            
-            response = await client.Value.GetAsync("/Dish/" + updatedDish.Id.ToString());
-            response.EnsureSuccessStatusCode();
+                var updatedDish = dishes.First();
+        
+                updatedDish.Name = "TestDish";
+                updatedDish.Description = "Testing description of 10 characters";
+                updatedDish.Price = Convert.ToDecimal(150.55);
+                updatedDish.Restaurant = new RestaurantListModel
+                {
+                    Id = new Guid(),
+                    Name = "Test Name",
+                    Description = "Testing description of 10 characters"
+                };
+                
+                var json = JsonConvert.SerializeObject(updatedDish);
+                HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var json = JsonConvert.SerializeObject(updatedDish);
-            HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+                response = await client.Value.PatchAsync("/Dish", httpContent);     //TODO:Returning 400(Bad Request)
+                response.EnsureSuccessStatusCode();
 
-            response = await client.Value.PatchAsync("/Dish", httpContent);     //TODO:Returning 400(Bad Request)
-            response.EnsureSuccessStatusCode();
+                response = await client.Value.GetAsync("/Dish/" + updatedDish.Id);
+                response.EnsureSuccessStatusCode();
 
-            response = await client.Value.GetAsync("/Dish/" + updatedDish.Id.ToString());
-            response.EnsureSuccessStatusCode();
+                var dish = await response.Content.ReadFromJsonAsync<DishDetailModel>();
 
-            var dish = await response.Content.ReadFromJsonAsync<DishListModel>();
-            Assert.NotNull(dish);
-            Assert.Equal(updatedDish.Name, dish.Name);
+                Assert.NotNull(dish);
+                Assert.Equal(updatedDish.Name, dish.Name); 
+            }
         }
         
         [Fact]

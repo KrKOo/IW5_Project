@@ -82,33 +82,34 @@ namespace Delivery.Api.App.EndToEndTests
             response.EnsureSuccessStatusCode();
 
             var restaurants = await response.Content.ReadFromJsonAsync<ICollection<RestaurantDetailModel>>();
-            var restaurantUpdate = restaurants.First();
-            
-            var updatedRestaurant = new RestaurantCreateModel()
+            if (restaurants != null)
             {
-                Id = restaurantUpdate.Id,
-                Name = "TestRestaurant",
-                Address = restaurantUpdate.Address,
-                Description = restaurantUpdate.Description,
-                Latitude = restaurantUpdate.Latitude,
-                Longitude = restaurantUpdate.Longitude
-            };
-            
-            response = await client.Value.GetAsync("/Restaurant/" + updatedRestaurant.Id.ToString());
-            response.EnsureSuccessStatusCode();
+                var updatedRestaurant = restaurants.First();
 
-            var json = JsonConvert.SerializeObject(updatedRestaurant);
-            HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+                updatedRestaurant.Address = "Test address";
+                updatedRestaurant.Description = "Testing description of 10 characters";
+                updatedRestaurant.Latitude = 150.85;
+                updatedRestaurant.Longitude = 75.44646;
+                updatedRestaurant.Name = "New test Name";
 
-            response = await client.Value.PatchAsync("/Restaurant", httpContent);   //TODO:Returning 400(Bad Request)
-            response.EnsureSuccessStatusCode();
+                var json = JsonConvert.SerializeObject(updatedRestaurant);
+                HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-            response = await client.Value.GetAsync("/Restaurant/" + updatedRestaurant.Id.ToString());
-            response.EnsureSuccessStatusCode();
+                response = await client.Value.PatchAsync("/Restaurant", httpContent);   //TODO:Returning 400(Bad Request)
+                response.EnsureSuccessStatusCode();
 
-            var restaurant = await response.Content.ReadFromJsonAsync<RestaurantListModel>();
-            Assert.NotNull(restaurant);
-            Assert.Equal(updatedRestaurant.Name, restaurant.Name);
+                response = await client.Value.GetAsync("/Restaurant/" + updatedRestaurant.Id);
+                response.EnsureSuccessStatusCode();
+
+                var restaurant = await response.Content.ReadFromJsonAsync<RestaurantDetailModel>();
+
+                Assert.NotNull(restaurant);
+                Assert.Equal(updatedRestaurant.Id, restaurant.Id);
+                Assert.Equal(updatedRestaurant.Description, restaurant.Description);
+                Assert.Equal(updatedRestaurant.Latitude, restaurant.Latitude);
+                Assert.Equal(updatedRestaurant.Longitude, restaurant.Longitude);
+                Assert.Equal(updatedRestaurant.Name, restaurant.Name);
+            }
         }
         
         [Fact]
