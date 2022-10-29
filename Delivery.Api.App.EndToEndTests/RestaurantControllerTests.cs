@@ -59,7 +59,7 @@ namespace Delivery.Api.App.EndToEndTests
             response.EnsureSuccessStatusCode();
 
             var restaurants = await response.Content.ReadFromJsonAsync<ICollection<RestaurantListModel>>();
-            var restaurantDelete = restaurants.First();
+            var restaurantDelete = restaurants!.First();
 
             response = await client.Value.DeleteAsync("/Restaurant?id=" + restaurantDelete.Id.ToString());
             response.EnsureSuccessStatusCode();
@@ -68,11 +68,11 @@ namespace Delivery.Api.App.EndToEndTests
             response.EnsureSuccessStatusCode();
 
             var restaurants2 = await response.Content.ReadFromJsonAsync<ICollection<RestaurantListModel>>();
-            var restaurant2 = restaurants2.First();
+            var restaurant2 = restaurants2!.First();
             
             Assert.NotNull(restaurants2);
-            Assert.Equal(restaurants.Count - 1, restaurants2.Count);
-            Assert.NotEqual(restaurantDelete.Id, restaurant2.Id);
+            Assert.Equal(restaurants!.Count - 1, restaurants2!.Count);
+            Assert.NotEqual(restaurantDelete!.Id, restaurant2!.Id);
         }
 
         [Fact]

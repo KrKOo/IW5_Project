@@ -91,13 +91,7 @@ namespace Delivery.Api.App.EndToEndTests
         
                 updatedDish.Name = "TestDish";
                 updatedDish.Description = "Testing description of 10 characters";
-                updatedDish.Price = Convert.ToDecimal(150.55);
-                updatedDish.Restaurant = new RestaurantListModel
-                {
-                    Id = new Guid(),
-                    Name = "Test Name",
-                    Description = "Testing description of 10 characters"
-                };
+                
                 
                 var json = JsonConvert.SerializeObject(updatedDish);
                 HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");

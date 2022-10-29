@@ -35,7 +35,7 @@ namespace Delivery.Api.App.EndToEndTests
                 var orderById = await response.Content.ReadFromJsonAsync<OrderDetailModel>();
 
                 Assert.NotNull(orderById);
-                Assert.Equal(order.Id, orderById.Id);
+                Assert.Equal(order!.Id, orderById!.Id);
             }
         }
 
@@ -58,7 +58,7 @@ namespace Delivery.Api.App.EndToEndTests
             response.EnsureSuccessStatusCode();
 
             var ordersBeforeDeletion = await response.Content.ReadFromJsonAsync<ICollection<OrderListModel>>();
-            var firstOrderBefore = ordersBeforeDeletion.First();
+            var firstOrderBefore = ordersBeforeDeletion!.First();
 
             response = await httpClient.Value.DeleteAsync("/Order?id=" + firstOrderBefore.Id);
             response.EnsureSuccessStatusCode();
@@ -67,10 +67,10 @@ namespace Delivery.Api.App.EndToEndTests
             response.EnsureSuccessStatusCode();
 
             var ordersAfterDeletion = await response.Content.ReadFromJsonAsync<ICollection<OrderListModel>>();
-            var firstOrderAfter = ordersAfterDeletion.First();
+            var firstOrderAfter = ordersAfterDeletion!.First();
 
-            Assert.Equal(ordersBeforeDeletion.Count - 1, ordersAfterDeletion.Count);
-            Assert.NotEqual(firstOrderBefore.Id, firstOrderAfter.Id);   
+            Assert.Equal(ordersBeforeDeletion!.Count - 1, ordersAfterDeletion!.Count);
+            Assert.NotEqual(firstOrderBefore!.Id, firstOrderAfter!.Id);   
         }
 
         [Fact]
@@ -95,10 +95,10 @@ namespace Delivery.Api.App.EndToEndTests
             response.EnsureSuccessStatusCode();
 
             var orders = await response.Content.ReadFromJsonAsync<ICollection<OrderListModel>>();
-            var order = orders.Last();
+            var order = orders!.Last();
 
             Assert.NotNull(order);
-            Assert.Equal(createdOrder.Id, order.Id);
+            Assert.Equal(createdOrder!.Id, order!.Id);
         }
 
         [Fact]
@@ -108,33 +108,32 @@ namespace Delivery.Api.App.EndToEndTests
             response.EnsureSuccessStatusCode();
 
             var orders = await response.Content.ReadFromJsonAsync<ICollection<OrderDetailModel>>();
-            if (orders != null)
-            {
-                var updatedOrder = orders.First();
+            
+            var updatedOrder = orders!.First();
 
-                updatedOrder.Note = "Test";
-                updatedOrder.Address = "Test address";
-                updatedOrder.State = OrderStates.Delivered;
-                updatedOrder.DeliveryTime = TimeSpan.FromMinutes(0);
+            updatedOrder.Note = "Test";
+            updatedOrder.Address = "Test address";
+            updatedOrder.State = OrderStates.Delivered;
+            updatedOrder.DeliveryTime = TimeSpan.FromMinutes(0);
 
-                var json = JsonConvert.SerializeObject(updatedOrder);
-                HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var json = JsonConvert.SerializeObject(updatedOrder);
+            HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-                response = await httpClient.Value.PatchAsync("/Order", httpContent);
-                response.EnsureSuccessStatusCode();
+            response = await httpClient.Value.PatchAsync("/Order", httpContent);
+            response.EnsureSuccessStatusCode();
 
-                response = await httpClient.Value.GetAsync("/Order/" + updatedOrder.Id);
-                response.EnsureSuccessStatusCode();
+            response = await httpClient.Value.GetAsync("/Order/" + updatedOrder.Id);
+            response.EnsureSuccessStatusCode();
 
-                var order = await response.Content.ReadFromJsonAsync<OrderDetailModel>();
+            var order = await response.Content.ReadFromJsonAsync<OrderDetailModel>();
 
-                Assert.NotNull(order);
-                Assert.Equal(updatedOrder.Id, order.Id);
-                //Assert.Equal(updatedOrder.Note, order.Note);
-                Assert.Equal(updatedOrder.Address, order.Address);
-                Assert.Equal(updatedOrder.State, order.State);
-                Assert.Equal(updatedOrder.DeliveryTime, order.DeliveryTime);
-            }
+            Assert.NotNull(order);
+            Assert.Equal(updatedOrder!.Id, order!.Id);
+            Assert.Equal(updatedOrder.Note, order.Note);
+            Assert.Equal(updatedOrder.Address, order.Address);
+            Assert.Equal(updatedOrder.State, order.State);
+            Assert.Equal(updatedOrder.DeliveryTime, order.DeliveryTime);
+            
         }
         
         public async ValueTask DisposeAsync()
