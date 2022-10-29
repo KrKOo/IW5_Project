@@ -19,7 +19,6 @@ namespace Delivery.Common.Models.Dish
         [Required(ErrorMessageResourceName = nameof(DishDetailModelResources.Price_Required_ErrorMessage), ErrorMessageResourceType = typeof(DishDetailModelResources))]
         public required Decimal Price { get; set; }
 
-        //[Required(ErrorMessageResourceName = nameof(DishDetailModelResources.Allergens_Required_ErrorMessage), ErrorMessageResourceType = typeof(DishDetailModelResources))]  //TODO: Dát to required??
         public required ICollection<Allergen> Allergens { get; set; }
 
         public string? ImageUrl { get; set; }

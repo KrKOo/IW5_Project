@@ -35,28 +35,6 @@ namespace Delivery.Api.BL.UnitTests
 
             repositoryMock.Verify(orderRepository => orderRepository.Remove(itemId));
         }
-
-        /*TODO: Zjistit jak funguje Mock.Setup a zkusit rozjet
-        [Fact] 
-        public void Create_Order_And_Then_Update()
-        {
-            //arrange
-            var facade = GetFacadeWithForbiddenDependencyCalls();
-
-            var order = OrderModelSeeds.OrderSeeds[0];
-
-            //act
-            facade.CreateOrUpdate(order);
-
-            order.State = OrderStates.Accepted;
-            facade.CreateOrUpdate(order);
-
-            var orderModel = facade.GetById(order.Id);
-            
-            //assert
-            Assert.Equal(OrderStates.Accepted, orderModel.State);
-
-        }*/
         
         [Fact] 
         public void MergeDishAmounts_Does_Merge_Order_With_Multiple_DishAmounts_Of_Same_Dish()
@@ -100,8 +78,6 @@ namespace Delivery.Api.BL.UnitTests
             Assert.Equal(1,order.DishAmounts.Count);
             Assert.Equal(5,mergedDish.Amount);
             Assert.Equal(mergedDishId,mergedDish.DishId);
-            //TODO: Add allergen assert
-
         }
 
         [Fact]
@@ -145,10 +121,7 @@ namespace Delivery.Api.BL.UnitTests
             var dishAmount2 = Assert.Single(order.DishAmounts.Where(t=>t.Id==dishAmount2Id));
             
             Assert.Equal(4,dishAmount1.Amount);
-            //TODO: Add allergen assert
-
             Assert.Equal(1,dishAmount2.Amount);
-            //TODO: Add allergen assert
         }
 
         [Fact]

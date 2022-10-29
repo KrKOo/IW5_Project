@@ -34,13 +34,17 @@ public class DishRepositoryTests
     {
         //arrange
         var dishRepository = _dbFixture.GetDishRepository();
-
-        var allergenList = new List<Allergen>() { Allergen.Eggs, Allergen.Milk };
-        
         var dishId = Guid.NewGuid();
+
+        var allergenList =
+            new List<DishAllergenEntity>() { 
+                new DishAllergenEntity(Guid.NewGuid(), Allergen.Eggs, dishId),
+                new DishAllergenEntity(Guid.NewGuid(), Allergen.Milk, dishId)
+            };
+
         var dish = new DishEntity(dishId, "Pancakes", "Chocolate", 2, _dbFixture.RestaurantGuids[0])
         {
-            //Allergens = allergenList //TODO
+            Allergens = allergenList
         };
         
         //act
@@ -49,7 +53,7 @@ public class DishRepositoryTests
         //assert
         var dishFromDb = _dbFixture.GetDishDirectly(dishId);
         Assert.NotNull(dishFromDb);
-        //Assert.Equal(allergenList.Count, dishFromDb.Allergens.Count);     //TODO
+        Assert.Equal(allergenList.Count, dishFromDb.Allergens.Count());
     }
     
     [Fact]
