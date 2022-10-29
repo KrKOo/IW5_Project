@@ -84,13 +84,15 @@ namespace Delivery.Api.App.EndToEndTests
             var response = await client.Value.GetAsync("/Dish");
             response.EnsureSuccessStatusCode();
 
-            var dishes = await response.Content.ReadFromJsonAsync<ICollection<DishDetailModel>>();
+            var dishes = await response.Content.ReadFromJsonAsync<ICollection<DishCreateModel>>();
             if (dishes != null)
             {
                 var updatedDish = dishes.First();
         
                 updatedDish.Name = "TestDish";
                 updatedDish.Description = "Testing description of 10 characters";
+                updatedDish.Price = Convert.ToDecimal(10);
+                updatedDish.Allergens = new List<Allergen>() { Allergen.SesameSeeds }; 
                 
                 
                 var json = JsonConvert.SerializeObject(updatedDish);

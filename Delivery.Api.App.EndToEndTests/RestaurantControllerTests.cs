@@ -81,7 +81,7 @@ namespace Delivery.Api.App.EndToEndTests
             var response = await client.Value.GetAsync("/Restaurant");
             response.EnsureSuccessStatusCode();
 
-            var restaurants = await response.Content.ReadFromJsonAsync<ICollection<RestaurantDetailModel>>();
+            var restaurants = await response.Content.ReadFromJsonAsync<ICollection<RestaurantCreateModel>>();
             if (restaurants != null)
             {
                 var updatedRestaurant = restaurants.First();
@@ -135,7 +135,7 @@ namespace Delivery.Api.App.EndToEndTests
             response.EnsureSuccessStatusCode();
             
             var restaurants = await response.Content.ReadFromJsonAsync<ICollection<RestaurantListModel>>();
-            var restaurant = restaurants.Last();
+            var restaurant = restaurants!.Last();
             
             Assert.NotNull(restaurant);
             Assert.Equal(createdRestaurant.Name, restaurant.Name);

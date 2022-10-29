@@ -107,7 +107,7 @@ namespace Delivery.Api.App.EndToEndTests
             var response = await httpClient.Value.GetAsync("/Order");
             response.EnsureSuccessStatusCode();
 
-            var orders = await response.Content.ReadFromJsonAsync<ICollection<OrderDetailModel>>();
+            var orders = await response.Content.ReadFromJsonAsync<ICollection<OrderCreateModel>>();
             
             var updatedOrder = orders!.First();
 
