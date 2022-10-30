@@ -5,7 +5,7 @@ variables:
   buildConfiguration: "Release"
   dotNetFramework: "net7.0"
   dotNetVersion: "7.0.x"
-  targetRuntime: "win-x64"
+  targetRuntime: "win-x86"
 
 pool:
   vmImage: windows-latest
