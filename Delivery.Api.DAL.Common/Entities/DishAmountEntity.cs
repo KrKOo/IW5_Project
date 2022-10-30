@@ -1,12 +1,11 @@
 ﻿using System;
-//using AutoMapper;
+using AutoMapper;
 using Delivery.Common.Enums;
 
 namespace Delivery.Api.DAL.Common.Entities
 {
-    public record DishAmountEntity
+    public record DishAmountEntity : EntityBase
     {
-        public Guid? Id { get; set; }
         public int Amount { get; set; }
 
         public Guid DishId { get; set; }
@@ -16,20 +15,19 @@ namespace Delivery.Api.DAL.Common.Entities
         public OrderEntity? Order { get; set; }
 
         public DishAmountEntity() { }
-        public DishAmountEntity(Guid? id, int amount, Guid dishId, Guid orderId)
+        public DishAmountEntity(Guid id, int amount, Guid dishId, Guid orderId) : base(id)
         {
-            Id = id;
             Amount = amount;
             DishId = dishId;
             OrderId = orderId;
         }
     }
 
-    //public class IngredientAmountEntityMapperProfile : Profile
-    //{
-    //    public IngredientAmountEntityMapperProfile()
-    //    {
-    //        CreateMap<IngredientAmountEntity, IngredientAmountEntity>();
-    //    }
-    //}
+    // public class DishAmountEntityMapperProfile : Profile
+    // {
+    //     public DishAmountEntityMapperProfile()
+    //     {
+    //         CreateMap<DishAmountEntity, DishAmountEntity>();
+    //     }
 }
+

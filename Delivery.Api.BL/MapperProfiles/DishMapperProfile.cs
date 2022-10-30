@@ -17,13 +17,13 @@ namespace Delivery.Api.BL.MapperProfiles
                 .ForMember(dest => dest.Allergens, opt => opt.MapFrom(src => src.Allergens!.Select(x => x.Allergen)));
 
             CreateMap<DishCreateModel, DishEntity>()
-                .ForMember(dest => dest.Allergens, opt => opt.MapFrom(src => src.Allergens!.Select(x => new DishAllergenEntity(null, x, Guid.Empty))))
+                .ForMember(dest => dest.Allergens, opt => opt.MapFrom(src => src.Allergens.Select(x => new DishAllergenEntity(Guid.NewGuid(), x, src.Id))))
                 .Ignore(dst => dst.Restaurant)
                 .Ignore(dst => dst.DishAmounts);
 
             CreateMap<DishAmountEntity, OrderDishDetailModel>();
-            CreateMap<OrderDishCreateModel, DishAmountEntity>().DisableCtorValidation()
-                .ForMember(dst => dst.OrderId, expr => expr.MapFrom(src => src.Id))
+
+            CreateMap<OrderDishCreateModel, DishAmountEntity>()
                 .Ignore(dst => dst.Dish)
                 .Ignore(dst => dst.Order);
 

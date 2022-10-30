@@ -12,7 +12,7 @@ public class DeliveryApiApplicationFactory : WebApplicationFactory<Program>
         builder.ConfigureServices(collection =>
         {
             var controllerAssemblyName = typeof(Program).Assembly.FullName;
-            collection.AddMvc().AddApplicationPart(Assembly.Load(controllerAssemblyName));
+            collection.AddMvc().AddApplicationPart(Assembly.Load(controllerAssemblyName!));
         });
         return base.CreateHost(builder);
     }

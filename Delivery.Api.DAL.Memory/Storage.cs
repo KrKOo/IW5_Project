@@ -1,4 +1,5 @@
 ﻿using Delivery.Api.DAL.Common.Entities;
+using Delivery.Common.Enums;
 
 namespace Delivery.Api.DAL.Memory
 {
@@ -30,10 +31,18 @@ namespace Delivery.Api.DAL.Memory
             new ("f7c2ec12-1b9e-451b-9e81-0524569583db")
         };
 
+        private readonly IList<Guid> alergenGuids = new List<Guid>
+        {
+            new ("b357ffbb-9556-4975-a08f-d9684d72d67f"),
+            new ("b4f836ec-7a3c-46e4-befe-aec79c619117"),
+            new ("eb74e3a3-02c3-4c0b-8a75-73f044444365")
+        };
+
         public IList<OrderEntity> Orders { get; } = new List<OrderEntity>();
         public IList<DishEntity> Dishes { get; } = new List<DishEntity>();
         public IList<DishAmountEntity> DishAmounts { get; } = new List<DishAmountEntity>();
         public IList<RestaurantEntity> Restaurants { get; } = new List<RestaurantEntity>();
+        public IList<DishAllergenEntity> DishAlergens { get; } = new List<DishAllergenEntity>();
 
         public Storage(bool seedData = true)
         {
@@ -43,6 +52,7 @@ namespace Delivery.Api.DAL.Memory
                 SeedDishes();
                 SeedDishAmounts();
                 SeedRestaurants();
+                SeedAlergens();
             }
         }
 
@@ -77,6 +87,13 @@ namespace Delivery.Api.DAL.Memory
             Restaurants.Add(new RestaurantEntity(restaurantGuids[0], "The Pub", "Just pub", "4104 Eichmann Plains", 13.67733, 163.20345));
             Restaurants.Add(new RestaurantEntity(restaurantGuids[1], "Tacos Truck", "FoodTruck", "5368 Champlin Summit", 78.531199, 15.549264));
             Restaurants.Add(new RestaurantEntity(restaurantGuids[2], "Luxury Restaurant", "Best in Town", "5389 Champlin Summit", 78.531188, 15.549250));
+        }
+
+        private void SeedAlergens()
+        {
+            DishAlergens.Add(new DishAllergenEntity(alergenGuids[0], Allergen.Celery, dishGuids[0]));
+            DishAlergens.Add(new DishAllergenEntity(alergenGuids[1], Allergen.Crustaceans, dishGuids[0]));
+            DishAlergens.Add(new DishAllergenEntity(alergenGuids[2], Allergen.Eggs, dishGuids[0]));
         }
     }
 }

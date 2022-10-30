@@ -4,14 +4,14 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
-using Delivery.API.DAL.IntegrationTests;
 using Delivery.Api.DAL.Memory;
+using Delivery.API.DAL.IntegrationTests;
 using Delivery.Common.Enums;
 using Delivery.Common.Models.Dish;
-using Newtonsoft.Json;
-using Xunit;
 using Delivery.Common.Models.OrderDish;
 using Delivery.Common.Models.Restaurant;
+using Newtonsoft.Json;
+using Xunit;
 
 namespace Delivery.Api.App.EndToEndTests
 {
@@ -37,7 +37,7 @@ namespace Delivery.Api.App.EndToEndTests
             Assert.NotNull(dishes);
             Assert.NotEmpty(dishes);
         }
-        
+
         [Fact]
         public async Task GetDishById_Returns_Correct_Dish()
         {
@@ -45,7 +45,7 @@ namespace Delivery.Api.App.EndToEndTests
             response.EnsureSuccessStatusCode();
 
             var dishes = await response.Content.ReadFromJsonAsync<ICollection<DishDetailModel>>();
-            var dishSeed = dishes.First();
+            var dishSeed = dishes!.First();
 
             response = await client.Value.GetAsync("/Dish/" + dishSeed.Id.ToString());
             response.EnsureSuccessStatusCode();
@@ -54,7 +54,7 @@ namespace Delivery.Api.App.EndToEndTests
             Assert.NotNull(dish);
             Assert.Equal(dishSeed.Name, dish.Name);
         }
-        
+
         [Fact]
         public async Task DeleteDishById_Delete_Correct_Dish()
         {
@@ -62,18 +62,20 @@ namespace Delivery.Api.App.EndToEndTests
             response.EnsureSuccessStatusCode();
 
             var dishes = await response.Content.ReadFromJsonAsync<ICollection<DishListModel>>();
+            Assert.NotNull(dishes);
             var dishDelete = dishes.First();
 
             response = await client.Value.DeleteAsync("/Dish?id=" + dishDelete.Id.ToString());
             response.EnsureSuccessStatusCode();
-            
+
             response = await client.Value.GetAsync("/Dish");
             response.EnsureSuccessStatusCode();
 
             var dishes2 = await response.Content.ReadFromJsonAsync<ICollection<DishListModel>>();
-            var dish2 = dishes2.First();
-            
             Assert.NotNull(dishes2);
+
+            var dish2 = dishes2.First();
+
             Assert.Equal(dishes.Count - 1, dishes2.Count);
             Assert.NotEqual(dishDelete.Id, dish2.Id);
         }
@@ -81,36 +83,45 @@ namespace Delivery.Api.App.EndToEndTests
         [Fact]
         public async Task UpdateDish_Update_Correct_Dish()
         {
-            var response = await client.Value.GetAsync("/Dish");
-            response.EnsureSuccessStatusCode();
+            var dishListResponse = await client.Value.GetAsync("/Dish");
+            dishListResponse.EnsureSuccessStatusCode();
 
-            var dishes = await response.Content.ReadFromJsonAsync<ICollection<DishCreateModel>>();
-            if (dishes != null)
+            var dishList = await dishListResponse.Content.ReadFromJsonAsync<ICollection<DishListModel>>();
+            Assert.NotNull(dishList);
+
+            var dishResponse = await client.Value.GetAsync("/Dish/" + dishList.First().Id.ToString());
+            dishResponse.EnsureSuccessStatusCode();
+
+            var dish = await dishResponse.Content.ReadFromJsonAsync<DishDetailModel>();
+            Assert.NotNull(dish);
+
+            var dishToUpdate = new DishCreateModel()
             {
-                var updatedDish = dishes.First();
-        
-                updatedDish.Name = "TestDish";
-                updatedDish.Description = "Testing description of 10 characters";
-                updatedDish.Price = Convert.ToDecimal(10);
-                updatedDish.Allergens = new List<Allergen>() { Allergen.SesameSeeds }; 
-                
-                
-                var json = JsonConvert.SerializeObject(updatedDish);
-                HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+                Id = dish.Id,
+                Name = "Updated Dish",
+                Description = "Updated Description",
+                Price = 100,
+                RestaurantId = dish.Restaurant!.Id,
+                Allergens = dish.Allergens,
+                ImageUrl = dish.ImageUrl
+            };
 
-                response = await client.Value.PatchAsync("/Dish", httpContent);     //TODO:Returning 400(Bad Request)
-                response.EnsureSuccessStatusCode();
+            var json = JsonConvert.SerializeObject(dishToUpdate);
+            HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-                response = await client.Value.GetAsync("/Dish/" + updatedDish.Id);
-                response.EnsureSuccessStatusCode();
+            var updateResponse = await client.Value.PatchAsync("/Dish", httpContent);
+            updateResponse.EnsureSuccessStatusCode();
 
-                var dish = await response.Content.ReadFromJsonAsync<DishDetailModel>();
+            var detailResponse = await client.Value.GetAsync("/Dish/" + dishToUpdate.Id);
+            detailResponse.EnsureSuccessStatusCode();
 
-                Assert.NotNull(dish);
-                Assert.Equal(updatedDish.Name, dish.Name); 
-            }
+            var dishDetail = await detailResponse.Content.ReadFromJsonAsync<DishDetailModel>();
+            Assert.NotNull(dishDetail);
+
+            Assert.Equal(dishToUpdate.Id, dishDetail.Id);
+            Assert.Equal(dishToUpdate.Name, dishDetail.Name);
         }
-        
+
         [Fact]
         public async Task CreateDish_Create_Correctly()
         {
@@ -123,19 +134,19 @@ namespace Delivery.Api.App.EndToEndTests
                 RestaurantId = Guid.Parse("cff8b2a5-2ddb-4584-b3fe-101a13956d4c"),
                 Allergens = new List<Allergen>() { Allergen.Fish }
             };
-            
+
             var json = JsonConvert.SerializeObject(createdDish);
             HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-            
+
             var response = await client.Value.PostAsync("/Dish", httpContent);
             response.EnsureSuccessStatusCode();
 
             response = await client.Value.GetAsync("/Dish");
             response.EnsureSuccessStatusCode();
-            
+
             var dishes = await response.Content.ReadFromJsonAsync<ICollection<DishListModel>>();
-            var dish = dishes.Last();
-            
+            var dish = dishes?.Last();
+
             Assert.NotNull(dish);
             Assert.Equal(createdDish.Name, dish.Name);
         }

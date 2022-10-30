@@ -59,6 +59,7 @@ namespace Delivery.Api.BL.Facades
             MergeDishAmounts(orderModel);
 
             var orderEntity = mapper.Map<OrderEntity>(orderModel);
+
             orderEntity.DishAmounts = orderModel.DishAmounts.Select(t =>
                 new DishAmountEntity
                 (

@@ -13,11 +13,11 @@ public class OrderModelSeeds
         new ("15fc9c0c-8b50-42c6-b2fa-ccd29f60b1ad"),
         new ("292954b5-a499-4cc4-847c-852b6c14eea8")
     };
-    
+
     public static readonly IList<OrderCreateModel> OrderSeeds = new List<OrderCreateModel>
         {
             new (){
-                Id = Guid.NewGuid(),
+                Id = OrderGuids[0],
                 Address = "TestAddress",
                 DeliveryTime = TimeSpan.FromMinutes(61),
                 Note = "Bla bla",
@@ -28,18 +28,20 @@ public class OrderModelSeeds
                     {
                         Id = Guid.NewGuid(),
                         Amount = 5,
-                        DishId = DishModelSeeds.DishGuids[0]
+                        DishId = DishModelSeeds.DishGuids[0],
+                        OrderId = OrderGuids[0],
                     },
                     new()
                     {
                         Id = Guid.NewGuid(),
                         Amount = 3,
-                        DishId = DishModelSeeds.DishGuids[2]
+                        DishId = DishModelSeeds.DishGuids[2],
+                        OrderId = OrderGuids[0],
                     }
                 }
             },
             new (){
-                Id = Guid.NewGuid(),
+                Id = OrderGuids[1],
                 Address = "TestAddress2",
                 DeliveryTime = TimeSpan.FromMinutes(6),
                 Note = "Bla bla2",
@@ -50,13 +52,15 @@ public class OrderModelSeeds
                     {
                         Id = Guid.NewGuid(),
                         Amount = 7,
-                        DishId = DishModelSeeds.DishGuids[1]
+                        DishId = DishModelSeeds.DishGuids[1],
+                        OrderId = OrderGuids[1],
                     },
                     new()
                     {
                         Id = Guid.NewGuid(),
                         Amount = 1,
-                        DishId = DishModelSeeds.DishGuids[0]
+                        DishId = DishModelSeeds.DishGuids[0],
+                        OrderId = OrderGuids[1],
                     }
                 }
             }

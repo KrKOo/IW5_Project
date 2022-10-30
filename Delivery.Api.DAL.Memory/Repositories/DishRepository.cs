@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using AutoMapper;
 using Delivery.Api.DAL.Common.Entities;
@@ -10,7 +11,9 @@ namespace Delivery.Api.DAL.Memory.Repositories
     public class DishRepository : IDishRepository
     {
         private readonly IList<DishEntity> dishes;
+        private readonly IList<RestaurantEntity> restaurants;
         private readonly IList<DishAmountEntity> dishAmounts;
+        private readonly IList<DishAllergenEntity> dishAllergens;
         private readonly IMapper mapper;
 
         public DishRepository(
@@ -18,7 +21,9 @@ namespace Delivery.Api.DAL.Memory.Repositories
             IMapper mapper)
         {
             this.dishes = storage.Dishes;
+            this.restaurants = storage.Restaurants;
             this.dishAmounts = storage.DishAmounts;
+            this.dishAllergens = storage.DishAlergens;
             this.mapper = mapper;
         }
 
@@ -29,12 +34,29 @@ namespace Delivery.Api.DAL.Memory.Repositories
 
         public DishEntity? GetById(Guid id)
         {
-            return dishes.SingleOrDefault(entity => entity.Id == id);
+            var dishEntity = dishes.SingleOrDefault(entity => entity.Id == id);
+
+            if (dishEntity is not null)
+            {
+                dishEntity.Restaurant = GetRestaurantById(dishEntity.RestaurantId);
+                dishEntity.Allergens = GetAllergensByDishId(id);
+            }
+
+            return dishEntity;
         }
 
         public Guid Insert(DishEntity dish)
         {
             dishes.Add(dish);
+            foreach (var dishAmount in dish.DishAmounts)
+            {
+                dishAmounts.Add(dishAmount);
+            }
+
+            foreach (var dishAllergen in dish.Allergens)
+            {
+                dishAllergens.Add(dishAllergen);
+            }
             return dish.Id;
         }
 
@@ -74,6 +96,17 @@ namespace Delivery.Api.DAL.Memory.Repositories
         {
             return dishes
                 .Where(entity => entity.Name.Contains(substring) || entity.Description.Contains(substring)).ToList();
+
+        }
+
+        private RestaurantEntity? GetRestaurantById(Guid id)
+        {
+            return restaurants.SingleOrDefault(restaurant => restaurant.Id == id);
+        }
+
+        private List<DishAllergenEntity> GetAllergensByDishId(Guid dishId)
+        {
+            return dishAllergens.Where(dishAllergen => dishAllergen.DishId == dishId).ToList();
         }
 
     }

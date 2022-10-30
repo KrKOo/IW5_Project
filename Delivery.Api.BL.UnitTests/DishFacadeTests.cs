@@ -37,7 +37,7 @@ namespace Delivery.Api.BL.UnitTests
 
             facade.Delete(itemId);
 
-            repositoryMock.Verify(dishRepository => dishRepository.Remove(itemId)); 
+            repositoryMock.Verify(dishRepository => dishRepository.Remove(itemId));
         }
 
         [Fact]

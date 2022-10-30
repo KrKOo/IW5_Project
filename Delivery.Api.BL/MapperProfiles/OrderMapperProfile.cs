@@ -15,7 +15,8 @@ namespace Delivery.Api.BL.MapperProfiles
                 .ForMember(dst => dst.TotalPrice, expr => expr.MapFrom(src => src.DishAmounts.Sum(x => x.Dish!.Price * x.Amount)));
 
             CreateMap<OrderCreateModel, OrderEntity>()
-            .Ignore(dst => dst.Restaurant);
+            .Ignore(dst => dst.Restaurant)
+            .Ignore(dst => dst.DishAmounts);
         }
     }
 }

@@ -25,23 +25,35 @@ namespace Delivery.Api.DAL.Memory.Repositories
 
         public IList<OrderEntity> GetAll()
         {
-            return this.orders;
+            var orders = this.orders;
+
+            foreach (var order in orders)
+            {
+                order.DishAmounts = GetDishAmountsByOrderId(order.Id);
+                foreach (var dishAmount in order.DishAmounts)
+                {
+                    dishAmount.Dish = GetDishByDishAmountId(dishAmount.Id);
+                }
+            }
+
+            return orders;
         }
 
         public OrderEntity? GetById(Guid id)
         {
-            var orederEntity = orders.SingleOrDefault(order => order.Id == id);
+            var orderEntity = orders.SingleOrDefault(order => order.Id == id);
 
-            if (orederEntity is not null)
+            if (orderEntity is not null)
             {
-                orederEntity.DishAmounts = GetDishAmountsByOrderId(id);
-                foreach (var dishAmount in orederEntity.DishAmounts)
+                orderEntity.Restaurant = GetRestaurantByOrderId(id);
+                orderEntity.DishAmounts = GetDishAmountsByOrderId(orderEntity.Id);
+                foreach (var dishAmount in orderEntity.DishAmounts)
                 {
-                    dishAmount.Dish = dishes.SingleOrDefault(dishEntity => dishEntity.Id == dishAmount.DishId);
+                    dishAmount.Dish = GetDishByDishAmountId(dishAmount.Id);
                 }
             }
 
-            return orederEntity;
+            return orderEntity;
         }
 
         public Guid Insert(OrderEntity entity)
@@ -59,20 +71,21 @@ namespace Delivery.Api.DAL.Memory.Repositories
 
         public Guid? Update(OrderEntity entity)
         {
-            var orderEntityExisting = orders.SingleOrDefault(order => order.Id == entity.Id);
+            var updatedEntity = orders.SingleOrDefault(order => order.Id == entity.Id);
 
-            if (orderEntityExisting is not null)
+            if (updatedEntity is not null)
             {
-                orderEntityExisting.DishAmounts = GetDishAmountsByOrderId(entity.Id);
-                UpdateDishAmounts(entity, orderEntityExisting);
-                return orderEntityExisting.Id;
+                updatedEntity.Address = entity.Address;
+                updatedEntity.DeliveryTime = entity.DeliveryTime;
+                updatedEntity.Note = entity.Note;
+                updatedEntity.State = entity.State;
+                updatedEntity.RestaurantId = entity.RestaurantId;
+                updatedEntity.Restaurant = getRestaurantById(entity.RestaurantId);
+                UpdateDishAmounts(entity, updatedEntity);
             }
-            else
-            {
-                return null;
-            }
+
+            return updatedEntity?.Id;
         }
-
         private void UpdateDishAmounts(OrderEntity updatedEntity, OrderEntity existingEntity)
         {
             var dishAmountsToDelete = existingEntity.DishAmounts.Where(t =>
@@ -128,7 +141,8 @@ namespace Delivery.Api.DAL.Memory.Repositories
             foreach (var dishModel in orderDishModelsToInsert)
             {
                 var dishAmountEntity = new DishAmountEntity(dishModel.Id, dishModel.Amount, dishModel.DishId,
-                    existingEntity.Id) { OrderId = existingEntity.Id };
+                    existingEntity.Id)
+                { OrderId = existingEntity.Id };
 
                 dishAmounts.Add(dishAmountEntity);
             }
@@ -153,7 +167,7 @@ namespace Delivery.Api.DAL.Memory.Repositories
                 var dishAmountToRemove = dishAmountsToRemove.ElementAt(i);
                 dishAmounts.Remove(dishAmountToRemove);
             }
-            
+
             var orderToRemove = orders.SingleOrDefault(orderEntity => orderEntity.Id == id);
             if (orderToRemove is not null)
             {
@@ -164,6 +178,33 @@ namespace Delivery.Api.DAL.Memory.Repositories
         public bool Exists(Guid id)
         {
             return orders.Any(order => order.Id == id);
+        }
+
+        private DishEntity? GetDishByDishAmountId(Guid dishAmountId)
+        {
+            var dishAmount = dishAmounts.SingleOrDefault(dishAmountEntity => dishAmountEntity.Id == dishAmountId);
+            if (dishAmount is not null)
+            {
+                return dishes.SingleOrDefault(dishEntity => dishEntity.Id == dishAmount.DishId);
+            }
+
+            return null;
+        }
+
+        private RestaurantEntity? GetRestaurantByOrderId(Guid orderId)
+        {
+            var order = orders.SingleOrDefault(orderEntity => orderEntity.Id == orderId);
+            if (order is not null)
+            {
+                return restaurants.SingleOrDefault(restaurantEntity => restaurantEntity.Id == order.RestaurantId);
+            }
+
+            return null;
+        }
+
+        private RestaurantEntity? getRestaurantById(Guid restaurantId)
+        {
+            return restaurants.SingleOrDefault(restaurantEntity => restaurantEntity.Id == restaurantId);
         }
     }
 }

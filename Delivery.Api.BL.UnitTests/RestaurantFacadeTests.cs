@@ -9,15 +9,6 @@ namespace Delivery.Api.BL.UnitTests
 {
     public class RestaurantFacadeTests
     {
-        private readonly IMapper mapper;
-        private static RestaurantFacade GetFacadeWithForbiddenDependencyCalls()
-        {
-            var repository = new Mock<IRestaurantRepository>(MockBehavior.Strict).Object;
-            var mapper = new Mock<IMapper>(MockBehavior.Strict).Object;
-            var facade = new RestaurantFacade(repository, mapper);
-            return facade;
-        }
-
         [Fact]
         public void Delete_Calls_Correct_Method_On_Repository()
         {
@@ -59,8 +50,8 @@ namespace Delivery.Api.BL.UnitTests
             var repository = repositoryMock.Object;
             var mapper = new Mock<IMapper>(MockBehavior.Loose).Object;
             var facade = new RestaurantFacade(repository, mapper);
-            
-            var itemId = Guid.NewGuid();    
+
+            var itemId = Guid.NewGuid();
             facade.GetById(itemId);
 
             repositoryMock.Verify(restaurantRepository => restaurantRepository.GetById(itemId));
@@ -85,7 +76,7 @@ namespace Delivery.Api.BL.UnitTests
                 Latitude = 10.11616,
                 Longitude = 4545.5656
             };
-            
+
             facade.Create(restaurantModel);
 
             var restaurantEntity = mapper.Map<RestaurantEntity>(restaurantModel);

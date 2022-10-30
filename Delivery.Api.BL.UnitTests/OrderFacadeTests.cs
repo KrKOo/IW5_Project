@@ -85,7 +85,8 @@ namespace Delivery.Api.BL.UnitTests
                 Address = "Test",
                 DeliveryTime = TimeSpan.FromSeconds(1),
                 Note = "Test",
-                State = OrderStates.Created
+                State = OrderStates.Created,
+                RestaurantId = Guid.Parse("cff8b2a5-2ddb-4584-b3fe-101a13956d4c"),
             };
 
             facade.Create(orderModel);
@@ -95,40 +96,6 @@ namespace Delivery.Api.BL.UnitTests
         }
 
         [Fact]
-        public void Update_Calls_Correct_Method_On_Repository()
-        {
-            var repositoryMock = new Mock<IOrderRepository>(MockBehavior.Loose);
-            repositoryMock.Setup(orderRepository => orderRepository.Update(It.IsAny<OrderEntity>()));
-
-            var repository = repositoryMock.Object;
-            var mapper = new Mock<IMapper>(MockBehavior.Loose).Object;
-            var facade = new OrderFacade(repository, mapper);
-
-            var orderModel = new OrderCreateModel()
-            {
-                Id = Guid.NewGuid(),
-                Address = "Test",
-                DeliveryTime = TimeSpan.FromSeconds(1),
-                Note = "Test",
-                State = OrderStates.Created,
-                DishAmounts = new List<OrderDishCreateModel>()
-                {
-                    new OrderDishCreateModel()
-                    {
-                        Id = Guid.NewGuid(),
-                        Amount = 1,
-                        DishId = Guid.NewGuid()
-                    }
-                }
-            };
-
-            facade.Update(orderModel);
-
-            var orderEntity = mapper.Map<OrderEntity>(orderModel);
-            repositoryMock.Verify(orderRepository => orderRepository.Update(orderEntity));
-        }
-
-        [Fact] 
         public void MergeDishAmounts_Does_Merge_Order_With_Multiple_DishAmounts_Of_Same_Dish()
         {
             //arrange
@@ -137,9 +104,11 @@ namespace Delivery.Api.BL.UnitTests
             var mergedDishId = DishModelSeeds.DishGuids[0];
             var dishAmount1Id = Guid.NewGuid();
             var dishAmount2Id = Guid.NewGuid();
+
+            var orderId = Guid.NewGuid();
             var order = new OrderCreateModel()
             {
-                Id = Guid.NewGuid(),
+                Id = orderId,
                 Address = "TestAddress",
                 DeliveryTime = TimeSpan.FromMinutes(61),
                 Note = "Bla bla",
@@ -150,26 +119,28 @@ namespace Delivery.Api.BL.UnitTests
                     {
                         Id = dishAmount1Id,
                         Amount = 4,
-                        DishId = mergedDishId
+                        DishId = mergedDishId,
+                        OrderId = orderId
                     },
                     new()
                     {
                         Id = dishAmount2Id,
                         Amount = 1,
-                        DishId = mergedDishId
+                        DishId = mergedDishId,
+                        OrderId = orderId
                     }
                 }
             };
 
             //act
             facade.MergeDishAmounts(order);
-            
+
             //assert
             var mergedDish = Assert.Single(order.DishAmounts);
-            
-            Assert.Equal(1,order.DishAmounts.Count);
-            Assert.Equal(5,mergedDish.Amount);
-            Assert.Equal(mergedDishId,mergedDish.DishId);
+
+            Assert.Equal(1, order.DishAmounts.Count);
+            Assert.Equal(5, mergedDish.Amount);
+            Assert.Equal(mergedDishId, mergedDish.DishId);
         }
 
         [Fact]
@@ -177,12 +148,14 @@ namespace Delivery.Api.BL.UnitTests
         {
             //arrange
             var facade = GetFacadeWithForbiddenDependencyCalls();
-            
+
             var dishAmount1Id = Guid.NewGuid();
             var dishAmount2Id = Guid.NewGuid();
+
+            var orderId = Guid.NewGuid();
             var order = new OrderCreateModel()
             {
-                Id = Guid.NewGuid(),
+                Id = orderId,
                 Address = "TestAddress",
                 DeliveryTime = TimeSpan.FromMinutes(61),
                 Note = "Bla bla",
@@ -193,27 +166,29 @@ namespace Delivery.Api.BL.UnitTests
                     {
                         Id = dishAmount1Id,
                         Amount = 4,
-                        DishId = DishModelSeeds.DishGuids[0]
+                        DishId = DishModelSeeds.DishGuids[0],
+                        OrderId = orderId
                     },
                     new()
                     {
                         Id = dishAmount2Id,
                         Amount = 1,
-                        DishId = DishModelSeeds.DishGuids[1]
+                        DishId = DishModelSeeds.DishGuids[1],
+                        OrderId = orderId
                     }
                 }
             };
 
             //act
             facade.MergeDishAmounts(order);
-            
+
             //assert
-            Assert.Equal(2,order.DishAmounts.Count);
-            var dishAmount1 = Assert.Single(order.DishAmounts.Where(t=>t.Id==dishAmount1Id));
-            var dishAmount2 = Assert.Single(order.DishAmounts.Where(t=>t.Id==dishAmount2Id));
-            
-            Assert.Equal(4,dishAmount1.Amount);
-            Assert.Equal(1,dishAmount2.Amount);
+            Assert.Equal(2, order.DishAmounts.Count);
+            var dishAmount1 = Assert.Single(order.DishAmounts.Where(t => t.Id == dishAmount1Id));
+            var dishAmount2 = Assert.Single(order.DishAmounts.Where(t => t.Id == dishAmount2Id));
+
+            Assert.Equal(4, dishAmount1.Amount);
+            Assert.Equal(1, dishAmount2.Amount);
         }
 
         [Fact]
@@ -227,7 +202,7 @@ namespace Delivery.Api.BL.UnitTests
                 DeliveryTime = TimeSpan.FromMinutes(61),
                 Note = "Bla bla",
                 State = OrderStates.Created,
-                DishAmounts = new List<OrderDishCreateModel>() {}
+                DishAmounts = new List<OrderDishCreateModel>() { }
             };
 
             facade.MergeDishAmounts(order);
