@@ -1,4 +1,4 @@
-using Delivery.Api.BL.Facades;
+﻿using Delivery.Api.BL.Facades;
 using Delivery.Api.BL.Facades.Interfaces;
 using Delivery.Api.DAL.Common.Entities;
 using Delivery.Common.Models.Order;
@@ -58,8 +58,11 @@ namespace Delivery.Api.App.Controllers
         [HttpDelete]
         public ActionResult Delete(Guid id)
         {
-            _orderFacade.Delete(id);
-            return Ok();
+            if (_orderFacade.Delete(id))
+            {
+                return Ok();
+            }
+            return NotFound();
         }
     }
 

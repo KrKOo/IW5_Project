@@ -93,10 +93,10 @@ namespace Delivery.Api.DAL.Memory.Repositories
             return restaurantExisting?.Id;
         }
 
-        public void Remove(Guid id)
+        public bool Remove(Guid id)
         {
             var restaurantToRemove = restaurants.Single(restaurant => restaurant.Id.Equals(id));
-            restaurants.Remove(restaurantToRemove);
+            return restaurants.Remove(restaurantToRemove);
         }
 
         public bool Exists(Guid id)

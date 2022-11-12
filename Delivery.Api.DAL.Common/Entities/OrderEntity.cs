@@ -7,7 +7,7 @@ namespace Delivery.Api.DAL.Common.Entities
         public string Address { get; set; }
         public TimeSpan DeliveryTime { get; set; }
         public string Note { get; set; }
-        public OrderStates State { get; set; }
+        public OrderState State { get; set; }
         public Guid RestaurantId { get; set; }
         public RestaurantEntity? Restaurant { get; set; }
 
@@ -18,16 +18,8 @@ namespace Delivery.Api.DAL.Common.Entities
             Address = address;
             DeliveryTime = deliveryTime;
             Note = note;
-            State = OrderStates.Created;
+            State = OrderState.Created;
             RestaurantId = restaurantId;
         }
     }
-
-    //public class IngredientEntityMapperProfile : Profile
-    //{
-    //    public IngredientEntityMapperProfile()
-    //    {
-    //        CreateMap<IngredientEntity, IngredientEntity>();
-    //    }
-    //}
 }

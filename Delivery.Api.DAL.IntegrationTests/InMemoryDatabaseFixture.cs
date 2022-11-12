@@ -7,7 +7,6 @@ using Delivery.Api.DAL.Common.Repositories;
 using Delivery.Api.DAL.Memory;
 using Delivery.Api.DAL.Memory.Repositories;
 using Delivery.Common.Enums;
-using Delivery.Common.Structures;
 using Newtonsoft.Json;
 
 namespace Delivery.API.DAL.IntegrationTests;

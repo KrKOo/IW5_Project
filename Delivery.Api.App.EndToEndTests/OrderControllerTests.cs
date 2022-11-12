@@ -84,7 +84,7 @@ namespace Delivery.Api.App.EndToEndTests
                 Address = "Test address",
                 DeliveryTime = TimeSpan.FromMinutes(30),
                 Note = "Test note",
-                State = OrderStates.Accepted
+                State = OrderState.Accepted
             };
 
             var json = JsonConvert.SerializeObject(createdOrder);

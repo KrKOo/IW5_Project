@@ -72,7 +72,7 @@ namespace Delivery.Api.DAL.Memory.Repositories
             return dishExisting?.Id;
         }
 
-        public void Remove(Guid id)
+        public bool Remove(Guid id)
         {
             var dishAmountsToRemove =
                 dishAmounts.Where(dishAmount => dishAmount.DishId == id).ToList();
@@ -84,7 +84,7 @@ namespace Delivery.Api.DAL.Memory.Repositories
             }
 
             var dishToRemove = dishes.Single(dish => dish.Id.Equals(id));
-            dishes.Remove(dishToRemove);
+            return dishes.Remove(dishToRemove);
         }
 
         public bool Exists(Guid id)

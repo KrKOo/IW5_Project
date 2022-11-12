@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Delivery.Api.DAL.Common.Entities;
 using Delivery.Common.Enums;
-using Delivery.Common.Structures;
 using Xunit;
 
 namespace Delivery.API.DAL.IntegrationTests;

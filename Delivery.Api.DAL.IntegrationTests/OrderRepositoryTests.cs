@@ -69,7 +69,7 @@ public class OrderRepositoryTests
         //assert
         var order = _dbFixture.GetOrderDirectly(orderId);
         Assert.NotNull(order);
-        Assert.Equal(OrderStates.Created, order.State);
+        Assert.Equal(OrderState.Created, order.State);
         Assert.Equal(deliveryTime, order.DeliveryTime);
 
         var dishAmount = _dbFixture.GetDishAmountDirectly(dishAmountId);

@@ -158,7 +158,7 @@ namespace Delivery.Api.DAL.Memory.Repositories
             return dishAmounts.SingleOrDefault(entity => entity.OrderId == orderId && entity.DishId == dishId);
         }
 
-        public void Remove(Guid id)
+        public bool Remove(Guid id)
         {
             var dishAmountsToRemove = dishAmounts.Where(dishAmount => dishAmount.OrderId == id).ToList();
 
@@ -171,8 +171,10 @@ namespace Delivery.Api.DAL.Memory.Repositories
             var orderToRemove = orders.SingleOrDefault(orderEntity => orderEntity.Id == id);
             if (orderToRemove is not null)
             {
-                orders.Remove(orderToRemove);
+                return orders.Remove(orderToRemove);
             }
+
+            return false;
         }
 
         public bool Exists(Guid id)

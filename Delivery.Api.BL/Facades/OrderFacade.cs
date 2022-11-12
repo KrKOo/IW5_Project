@@ -37,9 +37,9 @@ namespace Delivery.Api.BL.Facades
                 : Create(orderModel);
         }
 
-        public void Delete(Guid id)
+        public bool Delete(Guid id)
         {
-            orderRepository.Remove(id);
+            return orderRepository.Remove(id);
         }
 
         public List<OrderListModel> GetAll()

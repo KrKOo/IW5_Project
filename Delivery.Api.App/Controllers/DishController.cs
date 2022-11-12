@@ -58,8 +58,11 @@ namespace Delivery.Api.App.Controllers
         [HttpDelete]
         public ActionResult Delete(Guid id)
         {
-            _dishFacade.Delete(id);
-            return Ok();
+            if (_dishFacade.Delete(id))
+            {
+                return Ok();
+            }
+            return NotFound();
         }
     }
 }

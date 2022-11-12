@@ -30,9 +30,9 @@ namespace Delivery.Api.BL.Facades
                 : Create(restaurantModel);
         }
 
-        public void Delete(Guid id)
+        public bool Delete(Guid id)
         {
-            restaurantRepository.Remove(id);
+            return restaurantRepository.Remove(id);
         }
 
         public List<RestaurantListModel> GetAll()

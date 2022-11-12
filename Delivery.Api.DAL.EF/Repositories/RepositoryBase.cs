@@ -51,14 +51,16 @@ namespace Delivery.Api.DAL.EF.Repositories
             }
         }
 
-        public virtual void Remove(Guid id)
+        public virtual bool Remove(Guid id)
         {
             var entity = GetById(id);
             if (entity is not null)
             {
                 dbContext.Set<TEntity>().Remove(entity);
                 dbContext.SaveChanges();
+                return true;
             }
+            return false;
         }
 
         public virtual bool Exists(Guid id)

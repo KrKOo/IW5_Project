@@ -11,7 +11,7 @@ namespace Delivery.Api.DAL.Common.Repositories
         TEntity? GetById(Guid id);
         Guid Insert(TEntity entity);
         Guid? Update(TEntity entity);
-        void Remove(Guid id);
+        bool Remove(Guid id);
         bool Exists(Guid id);
     }
 }

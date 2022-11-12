@@ -22,12 +22,5 @@ namespace Delivery.Api.DAL.Common.Entities
             OrderId = orderId;
         }
     }
-
-    // public class DishAmountEntityMapperProfile : Profile
-    // {
-    //     public DishAmountEntityMapperProfile()
-    //     {
-    //         CreateMap<DishAmountEntity, DishAmountEntity>();
-    //     }
 }
 

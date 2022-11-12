@@ -85,7 +85,7 @@ namespace Delivery.Api.BL.UnitTests
                 Address = "Test",
                 DeliveryTime = TimeSpan.FromSeconds(1),
                 Note = "Test",
-                State = OrderStates.Created,
+                State = OrderState.Created,
                 RestaurantId = Guid.Parse("cff8b2a5-2ddb-4584-b3fe-101a13956d4c"),
             };
 
@@ -112,7 +112,7 @@ namespace Delivery.Api.BL.UnitTests
                 Address = "TestAddress",
                 DeliveryTime = TimeSpan.FromMinutes(61),
                 Note = "Bla bla",
-                State = OrderStates.Created,
+                State = OrderState.Created,
                 DishAmounts = new List<OrderDishCreateModel>()
                 {
                     new()
@@ -159,7 +159,7 @@ namespace Delivery.Api.BL.UnitTests
                 Address = "TestAddress",
                 DeliveryTime = TimeSpan.FromMinutes(61),
                 Note = "Bla bla",
-                State = OrderStates.Created,
+                State = OrderState.Created,
                 DishAmounts = new List<OrderDishCreateModel>()
                 {
                     new()
@@ -201,7 +201,7 @@ namespace Delivery.Api.BL.UnitTests
                 Address = "TestAddress",
                 DeliveryTime = TimeSpan.FromMinutes(61),
                 Note = "Bla bla",
-                State = OrderStates.Created,
+                State = OrderState.Created,
                 DishAmounts = new List<OrderDishCreateModel>() { }
             };
 

@@ -1,6 +1,6 @@
 ﻿namespace Delivery.Common.Enums
 {
-    public enum OrderStates
+    public enum OrderState
     {
         Created,
         Accepted,

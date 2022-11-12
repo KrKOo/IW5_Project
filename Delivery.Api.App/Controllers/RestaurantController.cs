@@ -1,4 +1,4 @@
-using System.Web;
+﻿using System.Web;
 using Delivery.Api.BL.Facades;
 using Delivery.Api.BL.Facades.Interfaces;
 using Delivery.Api.DAL.Common.Entities;
@@ -60,8 +60,11 @@ namespace Delivery.Api.App.Controllers
         [HttpDelete]
         public ActionResult Delete(Guid id)
         {
-            _restaurantFacade.Delete(id);
-            return Ok();
+            if (_restaurantFacade.Delete(id))
+            {
+                return Ok();
+            }
+            return NotFound();
         }
     }
 }

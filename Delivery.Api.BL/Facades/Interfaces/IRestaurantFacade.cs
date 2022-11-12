@@ -10,6 +10,6 @@ namespace Delivery.Api.BL.Facades.Interfaces
         Guid CreateOrUpdate(RestaurantCreateModel restaurantModel);
         Guid Create(RestaurantCreateModel restaurantModel);
         Guid? Update(RestaurantCreateModel restaurantModel);
-        void Delete(Guid id);
+        bool Delete(Guid id);
     }
 }

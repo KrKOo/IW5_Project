@@ -30,9 +30,9 @@ namespace Delivery.Api.BL.Facades
                 : Create(dishModel);
         }
 
-        public void Delete(Guid id)
+        public bool Delete(Guid id)
         {
-            dishRepository.Remove(id);
+            return dishRepository.Remove(id);
         }
 
         public List<DishListModel> GetAll()

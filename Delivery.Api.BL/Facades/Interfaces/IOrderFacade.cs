@@ -10,6 +10,6 @@ namespace Delivery.Api.BL.Facades.Interfaces
         Guid CreateOrUpdate(OrderCreateModel orderModel);
         Guid Create(OrderCreateModel orderModel);
         Guid? Update(OrderCreateModel orderModel);
-        void Delete(Guid id);
+        bool Delete(Guid id);
     }
 }

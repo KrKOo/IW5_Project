@@ -21,7 +21,7 @@ public class OrderModelSeeds
                 Address = "TestAddress",
                 DeliveryTime = TimeSpan.FromMinutes(61),
                 Note = "Bla bla",
-                State = OrderStates.Created,
+                State = OrderState.Created,
                 DishAmounts = new List<OrderDishCreateModel>()
                 {
                     new()
@@ -45,7 +45,7 @@ public class OrderModelSeeds
                 Address = "TestAddress2",
                 DeliveryTime = TimeSpan.FromMinutes(6),
                 Note = "Bla bla2",
-                State = OrderStates.Created,
+                State = OrderState.Created,
                 DishAmounts = new List<OrderDishCreateModel>()
                 {
                     new()
