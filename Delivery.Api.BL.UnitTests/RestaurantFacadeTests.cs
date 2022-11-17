@@ -12,11 +12,11 @@ namespace Delivery.Api.BL.UnitTests
         [Fact]
         public void Delete_Calls_Correct_Method_On_Repository()
         {
-            var repositoryMock = new Mock<IRestaurantRepository>(MockBehavior.Strict);
+            var repositoryMock = new Mock<IRestaurantRepository>(MockBehavior.Loose);
             repositoryMock.Setup(restaurantRepository => restaurantRepository.Remove(It.IsAny<Guid>()));
 
             var repository = repositoryMock.Object;
-            var mapper = new Mock<IMapper>(MockBehavior.Strict).Object;
+            var mapper = new Mock<IMapper>(MockBehavior.Loose).Object;
             var facade = new RestaurantFacade(repository, mapper);
 
             var itemId = Guid.NewGuid();

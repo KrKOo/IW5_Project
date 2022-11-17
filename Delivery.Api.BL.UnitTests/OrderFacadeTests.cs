@@ -24,11 +24,11 @@ namespace Delivery.Api.BL.UnitTests
         [Fact]
         public void Delete_Calls_Correct_Method_On_Repository()
         {
-            var repositoryMock = new Mock<IOrderRepository>(MockBehavior.Strict);
+            var repositoryMock = new Mock<IOrderRepository>(MockBehavior.Loose);
             repositoryMock.Setup(orderRepository => orderRepository.Remove(It.IsAny<Guid>()));
 
             var repository = repositoryMock.Object;
-            var mapper = new Mock<IMapper>(MockBehavior.Strict).Object;
+            var mapper = new Mock<IMapper>(MockBehavior.Loose).Object;
             var facade = new OrderFacade(repository, mapper);
 
             var itemId = Guid.NewGuid();
