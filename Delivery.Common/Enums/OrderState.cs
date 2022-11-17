@@ -4,6 +4,7 @@
     {
         Created,
         Accepted,
+        Paid,
         Sent,
         Delivered
     }
