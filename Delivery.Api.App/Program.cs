@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.Internal;
-using CookBook.Common.Extensions;
+using Delivery.Common.Extensions;
 using Delivery.Api.BL.Installers;
 using Delivery.Api.DAL.Common;
 using Delivery.Api.DAL.Common.Entities;

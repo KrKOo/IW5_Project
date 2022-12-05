@@ -4,7 +4,7 @@ using System.Text;
 using Delivery.Common.Installers;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CookBook.Common.Extensions
+namespace Delivery.Common.Extensions
 {
     public static class ServiceCollectionExtensions
     {

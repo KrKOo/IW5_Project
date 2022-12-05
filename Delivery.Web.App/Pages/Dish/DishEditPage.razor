@@ -1,0 +1,8 @@
+﻿@page "/ingredients/create"
+@page "/ingredients/{Id:guid}"
+@namespace Delivery.Web.App.Pages
+@inherits PageBase
+
+<h1 class="mb-4">Page_Title</h1>
+
+<DishEditForm Id="@Id" OnModification="NavigateBack" />

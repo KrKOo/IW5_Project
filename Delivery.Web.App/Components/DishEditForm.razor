@@ -1,0 +1,51 @@
+﻿@namespace Delivery.Web.App
+@inherits Delivery.Web.App.Pages.PageBase
+
+<EditForm Model="@Data">
+    <DataAnnotationsValidator />
+
+    <div class="form-group">
+        <label class="w-100">
+            Name_FormLabel
+            <InputText @bind-Value="@Data.Name" class="form-control" />
+            <small class="form-text text-danger">
+                <ValidationMessage For="@(() => Data.Name)"/>
+            </small>
+        </label>
+    </div>
+
+    <div class="form-group">
+        <label class="w-100">
+            Description_FormLabel
+            <InputTextArea @bind-Value="@Data.Description" class="form-control" />
+            <small class="form-text text-danger">
+                <ValidationMessage For="@(() => Data.Description)"/>
+            </small>
+        </label>
+    </div>
+	
+    <div class="form-group">
+        <label class="w-100">
+            ImageUrl_FormLabel
+            <InputText @bind-Value="@Data.ImageUrl" class="form-control" />
+            <small class="form-text text-danger">
+                <ValidationMessage For="@(() => Data.ImageUrl)"/>
+            </small>
+        </label>
+        <img src="@Data.ImageUrl" height="100px"/>
+        <small class="form-text text-danger">
+            <ValidationMessage For="@(() => Data.ImageUrl)"/>
+        </small>
+    </div>
+
+    <button type="submit" class="btn btn-success" @onclick="@Save">
+        Save_Button
+    </button>
+
+    @if (Id != Guid.Empty)
+    {
+        <button @onclick="@Delete" class="btn btn-danger ml-1">
+            Delete_Button
+        </button>
+    }
+</EditForm>

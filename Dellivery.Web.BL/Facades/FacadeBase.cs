@@ -9,6 +9,7 @@ using Delivery.Common;
 using Delivery.Common.BL.Facades;
 using Delivery.Web.BL.Options;
 using Delivery.Web.DAL.Repositories;
+using Microsoft.Extensions.Options;
 
 namespace Delivery.Web.BL.Facades
 {
@@ -18,32 +19,33 @@ namespace Delivery.Web.BL.Facades
         private readonly RepositoryBase<TDetailModel> repository;
         private readonly IMapper mapper;
         private readonly LocalDbOptions localDbOptions;
-        protected virtual string apiVersion => "1";
-        protected virtual string culture => CultureInfo.DefaultThreadCurrentCulture?.Name ?? "cs";
+        protected virtual string apiVersion => "3";
 
-        protected FacadeBase(RepositoryBase<TDetailModel> repository, IMapper mapper, LocalDbOptions localDbOptions)
+        protected FacadeBase(
+            RepositoryBase<TDetailModel> repository,
+            IMapper mapper,
+            IOptions<LocalDbOptions> localDbOptions)
         {
             this.repository = repository;
             this.mapper = mapper;
-            this.localDbOptions = localDbOptions;
+            this.localDbOptions = localDbOptions.Value;
         }
 
         public virtual async Task<List<TListModel>> GetAllAsync()
         {
             var itemsAll = new List<TListModel>();
 
-            if(localDbOptions.isLocalDbEnabled)
+            if (localDbOptions.IsLocalDbEnabled)
             {
                 itemsAll.AddRange(await GetAllFromLocalDbAsync());
             }
-
             return itemsAll;
         }
 
         protected async Task<IList<TListModel>> GetAllFromLocalDbAsync()
         {
-            var itmesLocal = await repository.GetAllAsync();
-            return mapper.Map<IList<TListModel>>(itmesLocal);
+            var recipesLocal = await repository.GetAllAsync();
+            return mapper.Map<IList<TListModel>>(recipesLocal);
         }
 
         public abstract Task<TDetailModel> GetByIdAsync(Guid id);
@@ -54,9 +56,9 @@ namespace Delivery.Web.BL.Facades
             {
                 await SaveToApiAsync(data);
             }
-            catch (HttpRequestException ex) when (ex.Message.Contains("Failed to fetch")) 
+            catch (HttpRequestException exception) when (exception.Message.Contains("Failed to fetch"))
             {
-                if (localDbOptions.isLocalDbEnabled)
+                if (localDbOptions.IsLocalDbEnabled)
                 {
                     await repository.InsertAsync(data);
                 }
@@ -64,18 +66,18 @@ namespace Delivery.Web.BL.Facades
         }
 
         protected abstract Task<Guid> SaveToApiAsync(TDetailModel data);
-        public abstract Task DeleteAsync(Guid id);  
+        public abstract Task DeleteAsync(Guid id);
 
         public async Task<bool> SynchronizeLocalDataAsync()
         {
-            var itemsLocal = await repository.GetAllAsync();
-            foreach(var item in itemsLocal)
+            var localItems = await repository.GetAllAsync();
+            foreach (var localItem in localItems)
             {
-                await SaveToApiAsync(item);
-                await repository.RemoveAsync(item.Id);
+                await SaveToApiAsync(localItem);
+                await repository.RemoveAsync(localItem.Id);
             }
 
-            return itemsLocal.Any();
+            return localItems.Any();
         }
     }
 }

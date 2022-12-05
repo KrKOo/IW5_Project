@@ -12,32 +12,43 @@ namespace Delivery.Web.BL.Facades
 {
     public class DishFacade : FacadeBase<DishDetailModel, DishListModel>
     {
-        private readonly DishClient dishClient;
+        private readonly DishClient apiClient;
 
-        // TODO: fix RepositoryBase
-
-        /*public DishFacade(
-            DishClient dishClient,
-            DishRepository repository, 
-            IMapper mapper, LocalDbOptions localDbOptions) 
-            : base(repository, mapper, localDbOptions)
+        public DishFacade(
+            DishClient apiClient,
+            DishRepository dishRepository,
+            IMapper mapper,
+            IOptions<LocalDbOptions> localDbOptions)
+            : base(dishRepository, mapper, localDbOptions)
         {
-            this.dishClient = dishClient;
-        }*/
+            this.apiClient = apiClient;
+        }
+        
+        //TODO přepsat funkce aby seděli na ApiClienta
 
-        public override Task DeleteAsync(Guid id)
+        public override async Task<List<DishListModel>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var dishesAll = await base.GetAllAsync();
+
+            var dishesFromApi = await apiClient.GetAsync(apiVersion);
+            dishesAll.AddRange(dishesFromApi);
+
+            return dishesAll;
         }
 
-        public override Task<DishDetailModel> GetByIdAsync(Guid id)
+        public override async Task<DishDetailModel> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await apiClient.GetAsync(id, apiVersion);
         }
 
-        protected override Task<Guid> SaveToApiAsync(DishDetailModel data)
+        protected override async Task<Guid> SaveToApiAsync(DishDetailModel data)
         {
-            throw new NotImplementedException();
+            return await apiClient.UpsertAsync(apiVersion, data);
+        }
+
+        public override async Task DeleteAsync(Guid id)
+        {
+            await apiClient.DishDeleteAsync(id, apiVersion);
         }
     }
 }
