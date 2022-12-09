@@ -20,7 +20,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Delivery.Common.Models\Delivery.Common.Models.csproj" />
       <ProjectReference Include="..\Delivery.Web.DAL\Delivery.Web.DAL.csproj" />
-      <ProjectReference Include="..\Dellivery.Web.BL\Delivery.Web.BL.csproj" />
+      <ProjectReference Include="..\Delivery.Web.BL\Delivery.Web.BL.csproj" />
     </ItemGroup>
 
 </Project>
