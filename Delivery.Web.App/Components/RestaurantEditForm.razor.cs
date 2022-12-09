@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Delivery.Common.Enums;
-
-using Delivery.Common.Models.Dish;
+using Delivery.Common.Models.Restaurant;
 using Delivery.Web.BL.Facades;
 using Microsoft.AspNetCore.Components;
 
 namespace Delivery.Web.App
 {
-    public partial class DishEditForm
+    public partial class RestaurantEditForm
     {
-        //TODO add RestaurantId parameter for create event
+
         [Inject]
-        public DishFacade DishFacade { get; set; } = null!;
+        public RestaurantFacade RestaurantFacade { get; set; } = null!;
 
         [Parameter]
         public Guid Id { get; init; }
@@ -20,13 +18,13 @@ namespace Delivery.Web.App
         [Parameter]
         public EventCallback OnModification { get; set; }
 
-        public DishDetailModel Data { get; set; } = GetNewDishModel();
+        public RestaurantDetailModel Data { get; set; } = GetNewRestaurantModel();
 
         protected override async Task OnInitializedAsync()
         {
             if (Id != Guid.Empty)
             {
-                Data = await DishFacade.GetByIdAsync(Id);
+                Data = await RestaurantFacade.GetByIdAsync(Id);
             }
 
             await base.OnInitializedAsync();
@@ -50,15 +48,16 @@ namespace Delivery.Web.App
             }
         }
 
-        private static DishDetailModel GetNewDishModel()
+        private static RestaurantDetailModel GetNewRestaurantModel()
             => new()
             {
                 Id = Guid.NewGuid(),
                 Name = string.Empty,
                 Description = string.Empty,
-                ImageUrl = string.Empty,
-                Allergens = new List<Allergen>(),
-                Price = 0
+                LogoUrl = string.Empty,
+                Address = string.Empty,
+                Latitude = 0,
+                Longitude = 0,
             };
     }
 }

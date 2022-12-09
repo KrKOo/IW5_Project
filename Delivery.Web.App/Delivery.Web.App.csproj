@@ -28,4 +28,24 @@
       <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
     </ItemGroup>
 
+    <ItemGroup>
+      <AdditionalFiles Include="Components\RestaurantEditForm.razor" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="Pages\RestaurantEditPage.razor.cs">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <DependentUpon>RestaurantEditPage.razor</DependentUpon>
+      </Content>
+      <Content Include="Pages\RestaurantListPage.razor.cs">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <DependentUpon>RestaurantListPage.razor</DependentUpon>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Pages\RestaurantDetailPage.razor.cs">
+        <DependentUpon>RestaurantDetailPage.razor</DependentUpon>
+      </Compile>
+    </ItemGroup>
 </Project>

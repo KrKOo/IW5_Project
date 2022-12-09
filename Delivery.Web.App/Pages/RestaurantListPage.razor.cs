@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
-using Delivery.Common.Models.Dish;
+using System.Threading.Tasks;
+using Delivery.Common.Models.Restaurant;
 using Delivery.Web.BL.Facades;
 using Microsoft.AspNetCore.Components;
 
 namespace Delivery.Web.App.Pages
 {
-    public partial class DishListPage
+    public partial class RestaurantListPage
     {
         [Inject]
-        private DishFacade DishFacade { get; set; } = null!;
+        public RestaurantFacade RestaurantFacade { get; set; } = null!;
 
-        private ICollection<DishListModel> Dishes { get; set; } = new List<DishListModel>();
+        private ICollection<RestaurantListModel> Restaurants { get; set; } = new List<RestaurantListModel>();
 
         protected override async Task OnInitializedAsync()
         {
@@ -21,7 +22,7 @@ namespace Delivery.Web.App.Pages
 
         private async Task LoadData()
         {
-            Dishes = await DishFacade.GetAllAsync();
+            Restaurants = await RestaurantFacade.GetAllAsync();
         }
     }
 }

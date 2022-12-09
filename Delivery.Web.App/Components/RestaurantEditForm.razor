@@ -26,27 +26,17 @@
 	
     <div class="form-group">
         <label class="w-100">
-            ImageUrl
-            <InputText @bind-Value="@Data.ImageUrl" class="form-control" />
+            LogoUrl
+            <InputText @bind-Value="@Data.LogoUrl" class="form-control" />
             <small class="form-text text-danger">
-                <ValidationMessage For="@(() => Data.ImageUrl)"/>
+                <ValidationMessage For="@(() => Data.LogoUrl)"/>
             </small>
         </label>
-        <img src="@Data.ImageUrl" height="100px" alt=".."/>
+        <img src="@Data.LogoUrl" height="100px" alt=".."/>
         <small class="form-text text-danger">
-            <ValidationMessage For="@(() => Data.ImageUrl)"/>
+            <ValidationMessage For="@(() => Data.LogoUrl)"/>
         </small>
     </div>
-    
-    <div class="form-group">
-            <label class="w-100">
-                Price
-                <InputNumber @bind-Value="@Data.Price" class="form-control" />
-                <small class="form-text text-danger">
-                    <ValidationMessage For="@(() => Data.Price)"/>
-                </small>
-            </label>
-        </div>
 
     <button type="submit" class="btn btn-success" @onclick="@Save">
         Save_Button

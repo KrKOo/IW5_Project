@@ -1,0 +1,30 @@
+﻿@page "/dish/{Id:guid}"
+@using Delivery.Common.Models.Dish
+@inherits Delivery.Web.App.Pages.PageBase
+
+<PageTitle>Dish Detail</PageTitle>
+
+<h1>Dish Detail</h1>
+
+@if (Dish == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{
+    <div class="row">
+        <div class="col-2">
+            <img class="rounded mx-auto d-block w-100" src="@Dish.ImageUrl">
+        </div>
+        <div class="col-6">
+            <h3>@Dish.Name</h3>
+            <p>@Dish.Description</p>
+        </div>
+    </div>
+    <NavLink class="nav-link" href="@($"dish/{Id}/edit")">
+        <button type="button" class="btn btn-primary">Edit</button>
+    </NavLink> 
+    // TODO add allergens
+}

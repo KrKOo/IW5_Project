@@ -1,0 +1,29 @@
+﻿@namespace Delivery.Web.App
+@inherits Delivery.Web.App.Pages.PageBase
+
+<div class="col-md">
+        <div class="bg-sec h-100 rounded">
+            @if (Dishes.Count != 0)
+            {
+                @foreach (var dish in Dishes)
+                    {
+                            <div class="card mb-3" style="max-width: 540px;">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <img src="@dish.ImageUrl" alt="@dish.Name" class="img-fluid rounded-start">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <NavLink class="nav-link" href="@($"dish/{dish.Id}")">
+                                                <h5 class="card-title">@dish.Name</h5>
+                                            </NavLink>
+                                            <p class="card-text">@dish.Description</p>
+                                            <p class="card-text">Price: @dish.Price €</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    }
+            }
+        </div>
+    </div>
