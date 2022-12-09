@@ -13,16 +13,18 @@ using Microsoft.Extensions.Options;
 
 namespace Delivery.Web.BL.Facades
 {
-    public abstract class FacadeBase<TDetailModel, TListModel> : IAppFacade
+    public abstract class FacadeBase<TCreateModel, TDetailModel, TListModel> : IAppFacade
+        where TCreateModel : IWithId
         where TDetailModel : IWithId
+        where TListModel : IWithId
     {
-        private readonly RepositoryBase<TDetailModel> repository;
+        private readonly RepositoryBase<TCreateModel, TDetailModel, TListModel> repository;
         private readonly IMapper mapper;
         private readonly LocalDbOptions localDbOptions;
         protected virtual string apiVersion => "3";
 
         protected FacadeBase(
-            RepositoryBase<TDetailModel> repository,
+            RepositoryBase<TCreateModel, TDetailModel, TListModel> repository,
             IMapper mapper,
             IOptions<LocalDbOptions> localDbOptions)
         {
@@ -50,7 +52,7 @@ namespace Delivery.Web.BL.Facades
 
         public abstract Task<TDetailModel> GetByIdAsync(Guid id);
 
-        public virtual async Task SaveAsync(TDetailModel data)
+        public virtual async Task SaveAsync(TCreateModel data)
         {
             try
             {
@@ -65,19 +67,19 @@ namespace Delivery.Web.BL.Facades
             }
         }
 
-        protected abstract Task<Guid> SaveToApiAsync(TDetailModel data);
+        protected abstract Task<Guid> SaveToApiAsync(TCreateModel data);
         public abstract Task DeleteAsync(Guid id);
 
-        public async Task<bool> SynchronizeLocalDataAsync()
-        {
-            var localItems = await repository.GetAllAsync();
-            foreach (var localItem in localItems)
-            {
-                await SaveToApiAsync(localItem);
-                await repository.RemoveAsync(localItem.Id);
-            }
+        // public async Task<bool> SynchronizeLocalDataAsync()
+        // {
+        //     var localItems = await repository.GetAllAsync();
+        //     foreach (var localItem in localItems)
+        //     {
+        //         await SaveToApiAsync(localItem);
+        //         await repository.RemoveAsync(localItem.Id);
+        //     }
 
-            return localItems.Any();
-        }
+        //     return localItems.Any();
+        // }
     }
 }

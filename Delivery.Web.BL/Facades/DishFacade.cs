@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
+using Delivery.Common.Models.Dish;
 using Delivery.Web.BL.Options;
 using Delivery.Web.DAL.Repositories;
 using Microsoft.Extensions.Options;
 
 namespace Delivery.Web.BL.Facades
 {
-    public class DishFacade : FacadeBase<DishDetailModel, DishListModel>
+    public class DishFacade : FacadeBase<DishCreateModel, DishDetailModel, DishListModel>
     {
-        private readonly DishClient apiClient;
+        private readonly IDishApiClient apiClient;
 
         public DishFacade(
-            DishClient apiClient,
+            IDishApiClient apiClient,
             DishRepository dishRepository,
             IMapper mapper,
             IOptions<LocalDbOptions> localDbOptions)
@@ -23,14 +19,14 @@ namespace Delivery.Web.BL.Facades
         {
             this.apiClient = apiClient;
         }
-        
+
         //TODO přepsat funkce aby seděli na ApiClienta
 
         public override async Task<List<DishListModel>> GetAllAsync()
         {
             var dishesAll = await base.GetAllAsync();
 
-            var dishesFromApi = await apiClient.GetAsync(apiVersion);
+            var dishesFromApi = await apiClient.DishGetAsync();
             dishesAll.AddRange(dishesFromApi);
 
             return dishesAll;
@@ -38,17 +34,17 @@ namespace Delivery.Web.BL.Facades
 
         public override async Task<DishDetailModel> GetByIdAsync(Guid id)
         {
-            return await apiClient.GetAsync(id, apiVersion);
+            return await apiClient.DishGetAsync(id);
         }
 
-        protected override async Task<Guid> SaveToApiAsync(DishDetailModel data)
+        protected override async Task<Guid> SaveToApiAsync(DishCreateModel data)
         {
-            return await apiClient.UpsertAsync(apiVersion, data);
+            return await apiClient.DishPostAsync(data);
         }
 
         public override async Task DeleteAsync(Guid id)
         {
-            await apiClient.DishDeleteAsync(id, apiVersion);
+            await apiClient.DishDeleteAsync(id);
         }
     }
 }

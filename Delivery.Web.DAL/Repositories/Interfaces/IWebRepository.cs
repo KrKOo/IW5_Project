@@ -2,13 +2,15 @@
 
 namespace Delivery.Web.DAL.Repositories.Interfaces
 {
-    public interface IWebRepository<T>
-        where T : IWithId
+    public interface IWebRepository<TCreateModel, TDetailModel, TListModel>
+        where TCreateModel : IWithId
+        where TDetailModel : IWithId
+        where TListModel : IWithId
     {
         string TableName { get; }
-        Task<IList<T>> GetAllAsync();
-        Task<T> GetByIdAsync(Guid id);
-        Task InsertAsync(T entity);
+        Task<IList<TListModel>> GetAllAsync();
+        Task<TDetailModel> GetByIdAsync(Guid id);
+        Task InsertAsync(TCreateModel entity);
         Task RemoveAsync(Guid id);
     }
 }

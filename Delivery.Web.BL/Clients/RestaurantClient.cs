@@ -1,8 +1,8 @@
 ﻿namespace Delivery.Web.BL
 {
-    public partial class RestaurantClient
+    public partial class RestaurantApiClient
     {
-        public RestaurantClient(HttpClient httpClient, string baseUrl)
+        public RestaurantApiClient(HttpClient httpClient, string baseUrl)
             : this(httpClient)
         {
             BaseUrl = baseUrl;

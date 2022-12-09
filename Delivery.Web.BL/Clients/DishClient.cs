@@ -1,8 +1,8 @@
 ﻿namespace Delivery.Web.BL
 {
-    public partial class DishClient
+    public partial class DishApiClient
     {
-        public DishClient(HttpClient httpClient, string baseUrl) 
+        public DishApiClient(HttpClient httpClient, string baseUrl)
             : this(httpClient)
         {
             BaseUrl = baseUrl;

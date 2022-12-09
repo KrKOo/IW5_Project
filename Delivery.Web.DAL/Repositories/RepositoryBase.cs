@@ -3,8 +3,10 @@ using Delivery.Web.DAL.Repositories.Interfaces;
 
 namespace Delivery.Web.DAL.Repositories
 {
-    public abstract class RepositoryBase<T> : IWebRepository<T>
-        where T : IWithId
+    public abstract class RepositoryBase<TCreateModel, TDetailModel, TListModel> : IWebRepository<TCreateModel, TDetailModel, TListModel>
+        where TCreateModel : IWithId
+        where TDetailModel : IWithId
+        where TListModel : IWithId
     {
         private readonly LocalDb localDb;
         public abstract string TableName { get; }
@@ -14,17 +16,17 @@ namespace Delivery.Web.DAL.Repositories
             this.localDb = localDb;
         }
 
-        public async Task<IList<T>> GetAllAsync()
+        public async Task<IList<TListModel>> GetAllAsync()
         {
-            return await localDb.GetAllAsync<T>(TableName);
+            return await localDb.GetAllAsync<TListModel>(TableName);
         }
 
-        public async Task<T> GetByIdAsync(Guid id)
+        public async Task<TDetailModel> GetByIdAsync(Guid id)
         {
-            return await localDb.GetByIdAsync<T>(TableName, id);
+            return await localDb.GetByIdAsync<TDetailModel>(TableName, id);
         }
 
-        public async Task InsertAsync(T entity)
+        public async Task InsertAsync(TCreateModel entity)
         {
             await localDb.InsertAsync(TableName, entity);
         }

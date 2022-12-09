@@ -2,7 +2,7 @@
 
 namespace Delivery.Web.DAL.Repositories
 {
-    public class OrderRepository : RepositoryBase<OrderDetailModel>
+    public class OrderRepository : RepositoryBase<OrderCreateModel, OrderDetailModel, OrderListModel>
     {
         public override string TableName { get; } = "orders";
 

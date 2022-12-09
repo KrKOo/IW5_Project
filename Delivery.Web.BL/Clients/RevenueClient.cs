@@ -1,8 +1,8 @@
 ﻿namespace Delivery.Web.BL
 {
-    public partial class RevenueClient
+    public partial class RevenueApiClient
     {
-        public RevenueClient(HttpClient httpClient, string baseUrl)
+        public RevenueApiClient(HttpClient httpClient, string baseUrl)
             : this(httpClient)
         {
             BaseUrl = baseUrl;

@@ -1,5 +1,6 @@
 ﻿
 using Delivery.Common.BL.Facades;
+using Delivery.Web.BL;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Delivery.Web.BL.Installers
@@ -8,34 +9,34 @@ namespace Delivery.Web.BL.Installers
     {
         public void Install(IServiceCollection serviceCollection, string apiBaseUrl)
         {
-            serviceCollection.AddTransient<DishClient>(provider =>
+            serviceCollection.AddTransient<DishApiClient>(provider =>
             {
                 var client = CreateApiHttpClient(provider, apiBaseUrl);
-                return new DishClient(client, apiBaseUrl);
+                return new DishApiClient(client, apiBaseUrl);
             });
 
-            serviceCollection.AddTransient<OrderClient>(provider =>
+            serviceCollection.AddTransient<OrderApiClient>(provider =>
             {
                 var client = CreateApiHttpClient(provider, apiBaseUrl);
-                return new OrderClient(client, apiBaseUrl);
+                return new OrderApiClient(client, apiBaseUrl);
             });
 
-            serviceCollection.AddTransient<RestaurantClient>(provider =>
+            serviceCollection.AddTransient<RestaurantApiClient>(provider =>
             {
                 var client = CreateApiHttpClient(provider, apiBaseUrl);
-                return new RestaurantClient(client, apiBaseUrl);
+                return new RestaurantApiClient(client, apiBaseUrl);
             });
 
-            serviceCollection.AddTransient<FilterClient>(provider =>
+            serviceCollection.AddTransient<FilterApiClient>(provider =>
             {
                 var client = CreateApiHttpClient(provider, apiBaseUrl);
-                return new FilterClient(client, apiBaseUrl);
+                return new FilterApiClient(client, apiBaseUrl);
             });
 
-            serviceCollection.AddTransient<RevenueClient>(provider =>
+            serviceCollection.AddTransient<RevenueApiClient>(provider =>
             {
                 var client = CreateApiHttpClient(provider, apiBaseUrl);
-                return new RevenueClient(client, apiBaseUrl);
+                return new RevenueApiClient(client, apiBaseUrl);
             });
 
             serviceCollection.Scan(selector =>

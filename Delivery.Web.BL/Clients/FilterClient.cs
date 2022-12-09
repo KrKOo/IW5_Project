@@ -1,8 +1,8 @@
 ﻿namespace Delivery.Web.BL
 {
-    public partial class FilterClient
+    public partial class FilterApiClient
     {
-        public FilterClient(HttpClient httpClient, string baseUrl)
+        public FilterApiClient(HttpClient httpClient, string baseUrl)
             : this(httpClient)
         {
             BaseUrl = baseUrl;

@@ -1,8 +1,8 @@
 ﻿namespace Delivery.Web.BL
 {
-    public partial class OrderClient
+    public partial class OrderApiClient
     {
-        public OrderClient(HttpClient httpClient, string baseUrl)
+        public OrderApiClient(HttpClient httpClient, string baseUrl)
             : this(httpClient)
         {
             BaseUrl = baseUrl;

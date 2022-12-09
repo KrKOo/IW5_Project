@@ -52,10 +52,10 @@ namespace Delivery.Web.App
         }
 
         private static DishDetailModel GetNewDishModel()
-            => new() 
+            => new()
             {
                 //TODO Zkontrolovat!
-                
+
                 Id = Guid.NewGuid(),
                 Name = string.Empty,
                 Description = string.Empty,
