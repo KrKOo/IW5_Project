@@ -21,6 +21,11 @@ namespace Delivery.Web.DAL.Repositories
             return await localDb.GetAllAsync<TListModel>(TableName);
         }
 
+        public async Task<IList<TDetailModel>> GetAllDetailAsync()
+        {
+            return await localDb.GetAllAsync<TDetailModel>(TableName);
+        }
+
         public async Task<TDetailModel> GetByIdAsync(Guid id)
         {
             return await localDb.GetByIdAsync<TDetailModel>(TableName, id);

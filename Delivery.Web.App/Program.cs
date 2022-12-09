@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using System.Net.Http;
+using AutoMapper;
 using AutoMapper.Internal;
 using Delivery.Common.Extensions;
 using Delivery.Web.App;
@@ -23,10 +24,9 @@ builder.Services.AddInstaller<WebBLInstaller>(apiBaseUrl);
 builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddAutoMapper(configuration =>
 {
-    // This is a temporary fix - should be able to remove this when version 11.0.2 comes out
-    // More information here: https://github.com/AutoMapper/AutoMapper/issues/3988
     configuration.Internal().MethodMappingEnabled = false;
 }, typeof(WebBLInstaller));
+
 builder.Services.AddLocalization();
 
 builder.Services.Configure<LocalDbOptions>(options =>

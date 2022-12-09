@@ -52,5 +52,18 @@ namespace Delivery.Web.BL.Facades
         {
             await apiClient.RestaurantDeleteAsync(id);
         }
+
+        public override async Task<bool> SynchronizeLocalDataAsync()
+        {
+            var localItems = await repository.GetAllDetailAsync();
+            // foreach (var localItem in localItems)
+            // {
+            //     await SaveToApiAsync(localItem);
+            //     await repository.RemoveAsync(localItem.Id);
+            // }
+
+            // return localItems.Any();
+            return true;
+        }
     }
 }

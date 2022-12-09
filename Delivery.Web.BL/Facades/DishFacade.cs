@@ -20,8 +20,6 @@ namespace Delivery.Web.BL.Facades
             this.apiClient = apiClient;
         }
 
-        //TODO přepsat funkce aby seděli na ApiClienta
-
         public override async Task<List<DishListModel>> GetAllAsync()
         {
             var dishesAll = await base.GetAllAsync();
@@ -45,6 +43,18 @@ namespace Delivery.Web.BL.Facades
         public override async Task DeleteAsync(Guid id)
         {
             await apiClient.DishDeleteAsync(id);
+        }
+
+        public override async Task<bool> SynchronizeLocalDataAsync()
+        {
+            var localItems = await repository.GetAllDetailAsync();
+            foreach (var localItem in localItems)
+            {
+                await SaveToApiAsync(localItem);
+                await repository.RemoveAsync(localItem.Id);
+            }
+
+            return localItems.Any();
         }
     }
 }

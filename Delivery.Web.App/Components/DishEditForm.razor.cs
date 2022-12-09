@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Threading.Tasks;
-using Delivery.Common.Models;
+using Delivery.Common.Enums;
+
+using Delivery.Common.Models.Dish;
 using Delivery.Web.BL;
 using Delivery.Web.BL.Facades;
 using Microsoft.AspNetCore.Components;
@@ -18,7 +21,7 @@ namespace Delivery.Web.App
         [Parameter]
         public EventCallback OnModification { get; set; }
 
-        public DishDetailModel Data { get; set; } = GetNewDishModel();
+        public DishCreateModel Data { get; set; } = GetNewDishModel();
 
         protected override async Task OnInitializedAsync()
         {
@@ -51,8 +54,9 @@ namespace Delivery.Web.App
             }
         }
 
-        private static DishDetailModel GetNewDishModel()
-            => new()
+        private static DishCreateModel GetNewDishModel()
+        {
+            return new()
             {
                 //TODO Zkontrolovat!
 
@@ -60,9 +64,10 @@ namespace Delivery.Web.App
                 Name = string.Empty,
                 Description = string.Empty,
                 Price = 0,
-                Allergens = null,
+                Allergens = new List<Allergen>(),
                 ImageUrl = string.Empty,
-                Restaurant = null
+                RestaurantId = null,
             };
+        }
     }
 }

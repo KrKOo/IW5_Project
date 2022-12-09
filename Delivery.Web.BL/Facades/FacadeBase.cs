@@ -18,7 +18,7 @@ namespace Delivery.Web.BL.Facades
         where TDetailModel : IWithId
         where TListModel : IWithId
     {
-        private readonly RepositoryBase<TCreateModel, TDetailModel, TListModel> repository;
+        protected readonly RepositoryBase<TCreateModel, TDetailModel, TListModel> repository;
         private readonly IMapper mapper;
         private readonly LocalDbOptions localDbOptions;
         protected virtual string apiVersion => "3";
@@ -70,16 +70,6 @@ namespace Delivery.Web.BL.Facades
         protected abstract Task<Guid> SaveToApiAsync(TCreateModel data);
         public abstract Task DeleteAsync(Guid id);
 
-        // public async Task<bool> SynchronizeLocalDataAsync()
-        // {
-        //     var localItems = await repository.GetAllAsync();
-        //     foreach (var localItem in localItems)
-        //     {
-        //         await SaveToApiAsync(localItem);
-        //         await repository.RemoveAsync(localItem.Id);
-        //     }
-
-        //     return localItems.Any();
-        // }
+        public abstract Task<bool> SynchronizeLocalDataAsync();
     }
 }

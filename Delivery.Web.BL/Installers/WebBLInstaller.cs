@@ -9,31 +9,31 @@ namespace Delivery.Web.BL.Installers
     {
         public void Install(IServiceCollection serviceCollection, string apiBaseUrl)
         {
-            serviceCollection.AddTransient<DishApiClient>(provider =>
+            serviceCollection.AddTransient<IDishApiClient, DishApiClient>(provider =>
             {
                 var client = CreateApiHttpClient(provider, apiBaseUrl);
                 return new DishApiClient(client, apiBaseUrl);
             });
 
-            serviceCollection.AddTransient<OrderApiClient>(provider =>
+            serviceCollection.AddTransient<IOrderApiClient, OrderApiClient>(provider =>
             {
                 var client = CreateApiHttpClient(provider, apiBaseUrl);
                 return new OrderApiClient(client, apiBaseUrl);
             });
 
-            serviceCollection.AddTransient<RestaurantApiClient>(provider =>
+            serviceCollection.AddTransient<IRestaurantApiClient, RestaurantApiClient>(provider =>
             {
                 var client = CreateApiHttpClient(provider, apiBaseUrl);
                 return new RestaurantApiClient(client, apiBaseUrl);
             });
 
-            serviceCollection.AddTransient<FilterApiClient>(provider =>
+            serviceCollection.AddTransient<IFilterApiClient, FilterApiClient>(provider =>
             {
                 var client = CreateApiHttpClient(provider, apiBaseUrl);
                 return new FilterApiClient(client, apiBaseUrl);
             });
 
-            serviceCollection.AddTransient<RevenueApiClient>(provider =>
+            serviceCollection.AddTransient<IRevenueApiClient, RevenueApiClient>(provider =>
             {
                 var client = CreateApiHttpClient(provider, apiBaseUrl);
                 return new RevenueApiClient(client, apiBaseUrl);

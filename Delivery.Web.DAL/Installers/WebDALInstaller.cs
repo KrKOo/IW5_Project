@@ -12,7 +12,7 @@ namespace Delivery.Web.DAL.Installers
             serviceCollection.AddSingleton<LocalDb>();
             serviceCollection.Scan(scan =>
                 scan.FromAssemblyOf<WebDALInstaller>()
-                    .AddClasses(classes => classes.AssignableTo(typeof(IWebRepository<IWithId, IWithId, IWithId>)))
+                    .AddClasses(classes => classes.AssignableTo(typeof(IWebRepository<,,>)))
                     .AsSelf()
                     .WithSingletonLifetime());
         }
