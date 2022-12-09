@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Delivery.Api.App.EndToEndTe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Delivery.Web.DAL", "Delivery.Web.DAL\Delivery.Web.DAL.csproj", "{51C08176-8247-4CFC-B534-8D36400085FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delivery.Web.BL", "Dellivery.Web.BL\Delivery.Web.BL.csproj", "{D5F345CC-02B9-4C0B-9E33-12861F69F74D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delivery.Web.BL", "Delivery.Web.BL\Delivery.Web.BL.csproj", "{D5F345CC-02B9-4C0B-9E33-12861F69F74D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delivery.Web.App", "Delivery.Web.App\Delivery.Web.App.csproj", "{A98D483E-6B9E-4A1E-897C-ECDE77BBC488}"
 EndProject
