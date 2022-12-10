@@ -20,8 +20,6 @@ namespace Delivery.Web.BL.Facades
             this.apiClient = apiClient;
         }
 
-        //TODO přepsat funkce aby seděli na ApiClienta
-
         public override async Task<List<RestaurantListModel>> GetAllAsync()
         {
             var restaurantsAll = await base.GetAllAsync();

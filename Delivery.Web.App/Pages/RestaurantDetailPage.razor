@@ -1,4 +1,4 @@
-﻿@page "/restaurant/{Id:guid}"
+﻿@page "/restaurants/{Id:guid}"
 @inherits Delivery.Web.App.Pages.PageBase
 
 <PageTitle>Restaurant Detail</PageTitle>
@@ -12,15 +12,16 @@
     <div class="col-6">
         <h3>@Restaurant.Name</h3>
         <p>@Restaurant.Address [@Restaurant.Latitude, @Restaurant.Longitude]</p>
+        <p>Revenue: @Restaurant.Revenue</p>
         <p>@Restaurant.Description</p>
     </div>
 </div>
 <br/>
 <div class="row">
-    <NavLink class="nav-link" href="@($"restaurant/{Id}/edit")">
+    <NavLink class="nav-link" href="@($"restaurants/{Id}/edit")">
         <button type="button" class="btn btn-primary btn-warning">Edit</button>
     </NavLink>
-    <NavLink class="nav-link" href="@($"restaurant/{Id}/orders")">
+    <NavLink class="nav-link" href="@($"restaurants/{Id}/orders")">
         <button type="button" class="btn btn-primary">Restaurant orders</button>
     </NavLink>
 </div>

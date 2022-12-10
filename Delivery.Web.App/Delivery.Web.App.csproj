@@ -41,11 +41,18 @@
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         <DependentUpon>RestaurantListPage.razor</DependentUpon>
       </Content>
+      <Content Remove="wwwroot\images\background.png" />
     </ItemGroup>
 
     <ItemGroup>
       <Compile Update="Pages\RestaurantDetailPage.razor.cs">
         <DependentUpon>RestaurantDetailPage.razor</DependentUpon>
       </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\images\delivery_background.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\sample-data\ingredients.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\sample-data\recipes.json" />
     </ItemGroup>
 </Project>

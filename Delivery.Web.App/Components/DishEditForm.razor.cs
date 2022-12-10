@@ -11,6 +11,9 @@ namespace Delivery.Web.App
     public partial class DishEditForm
     {
         [Inject]
+        private NavigationManager NavigationManager { get; set; } = null!;
+        
+        [Inject]
         public DishFacade DishFacade { get; set; } = null!;
 
         [Parameter]
@@ -67,11 +70,21 @@ namespace Delivery.Web.App
                 Data.RestaurantId = RestaurantId;
             }
             await DishFacade.SaveAsync(Data);
+            
+            if (RestaurantId != Guid.Empty)
+                NavigationManager.NavigateTo("/restaurants/"+RestaurantId);
+            else
+                NavigationManager.NavigateTo("/restaurants");
         }
 
         public async Task Delete()
         {
             await DishFacade.DeleteAsync(Data.Id);
+            
+            if (RestaurantId != Guid.Empty)
+                NavigationManager.NavigateTo("/restaurants/"+RestaurantId);
+            else
+                NavigationManager.NavigateTo("/restaurants");
         }
 
         private async Task NotifyOnModification()

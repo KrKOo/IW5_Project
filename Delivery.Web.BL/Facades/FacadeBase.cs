@@ -46,8 +46,8 @@ namespace Delivery.Web.BL.Facades
 
         protected async Task<IList<TListModel>> GetAllFromLocalDbAsync()
         {
-            var recipesLocal = await repository.GetAllAsync();
-            return mapper.Map<IList<TListModel>>(recipesLocal);
+            var itemsLocal = await repository.GetAllAsync();
+            return mapper.Map<IList<TListModel>>(itemsLocal);
         }
 
         public abstract Task<TDetailModel> GetByIdAsync(Guid id);

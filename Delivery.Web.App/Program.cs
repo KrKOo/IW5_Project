@@ -27,8 +27,6 @@ builder.Services.AddAutoMapper(configuration =>
     configuration.Internal().MethodMappingEnabled = false;
 }, typeof(WebBLInstaller));
 
-builder.Services.AddLocalization();
-
 builder.Services.Configure<LocalDbOptions>(options =>
 {
     options.IsLocalDbEnabled = bool.Parse(builder.Configuration.GetSection(nameof(LocalDbOptions))[nameof(LocalDbOptions.IsLocalDbEnabled)]);

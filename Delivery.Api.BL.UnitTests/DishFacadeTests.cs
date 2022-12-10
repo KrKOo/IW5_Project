@@ -11,10 +11,6 @@ namespace Delivery.Api.BL.UnitTests
 {
     public class DishFacadeTests
     {
-        // TODO: prepisat testy aby presli s mockbehavior strict
-        // Zatial prejdu s loose
-        // zistis ako nastavit rovnaky mock setup pre volane metody
-        // Prepisat do prace s repositarmi
         private static DishFacade GetFacadeWithForbiddenDependencyCalls()
         {
             var repository = new Mock<IDishRepository>(MockBehavior.Strict).Object;

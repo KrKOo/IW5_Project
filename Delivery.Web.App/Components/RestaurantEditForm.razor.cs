@@ -8,7 +8,9 @@ namespace Delivery.Web.App
 {
     public partial class RestaurantEditForm
     {
-
+        [Inject]
+        private NavigationManager NavigationManager { get; set; } = null!;
+        
         [Inject]
         public RestaurantFacade RestaurantFacade { get; set; } = null!;
 
@@ -47,11 +49,13 @@ namespace Delivery.Web.App
         public async Task Save()
         {
             await RestaurantFacade.SaveAsync(Data);
+            NavigationManager.NavigateTo("/restaurants");
         }
 
         public async Task Delete()
         {
             await RestaurantFacade.DeleteAsync(Data.Id);
+            NavigationManager.NavigateTo("/restaurants");
         }
 
         private async Task NotifyOnModification()

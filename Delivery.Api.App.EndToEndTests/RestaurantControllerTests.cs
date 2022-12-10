@@ -95,7 +95,7 @@ namespace Delivery.Api.App.EndToEndTests
                 var json = JsonConvert.SerializeObject(updatedRestaurant);
                 HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-                response = await client.Value.PatchAsync("/Restaurant", httpContent);   //TODO:Returning 400(Bad Request)
+                response = await client.Value.PatchAsync("/Restaurant", httpContent);
                 response.EnsureSuccessStatusCode();
 
                 response = await client.Value.GetAsync("/Restaurant/" + updatedRestaurant.Id);

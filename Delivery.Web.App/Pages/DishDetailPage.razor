@@ -1,4 +1,4 @@
-﻿@page "/dish/{Id:guid}"
+﻿@page "/dishes/{Id:guid}"
 @inherits Delivery.Web.App.Pages.PageBase
 
 <PageTitle>Dish Detail</PageTitle>
@@ -20,7 +20,7 @@
 </div>
 
 <br/>
-<NavLink class="nav-link" href="@($"dish/{Id}/edit")">
+<NavLink class="nav-link" href="@($"dishes/{Id}/edit")">
     <button type="button" class="btn btn-primary">Edit</button>
 </NavLink>
 
