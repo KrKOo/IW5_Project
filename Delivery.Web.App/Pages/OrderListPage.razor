@@ -1,0 +1,37 @@
+﻿@page "/orders"
+@namespace Delivery.Web.App.Pages
+@inherits PageBase
+@layout ListLayout
+
+<h1 class="mb-4">Orders List</h1>
+
+<div class="row">
+    <div class="col-md">
+        <div class="bg-sec h-100 rounded">
+            @if (Orders.Count != 0)
+            {
+                @foreach (var order in Orders)
+                {
+                    <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p class="card-text">@order.State</p>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <NavLink class="nav-link" href="@($"order/{order.Id}")">
+                                        <h5 class="card-title">@order.Note</h5>
+                                    </NavLink>
+                                    <p class="card-text">@order.DeliveryTime</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    <div class="col-md">
+        <OrderEditForm OnModification="@LoadData" />
+    </div>
+</div>
