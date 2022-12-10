@@ -35,9 +35,13 @@ namespace Delivery.Web.BL.Facades
             return await apiClient.DishGetAsync(id);
         }
 
-        protected override async Task<Guid> SaveToApiAsync(DishCreateModel data)
+        public override async Task<Guid> SaveToApiAsync(DishCreateModel data)
         {
-            return await apiClient.DishPostAsync(data);
+            var alreadyExist = await Exist(data.Id);
+            if(alreadyExist)
+                return await apiClient.DishPatchAsync(data);
+            else
+                return await apiClient.DishPostAsync(data);
         }
 
         public override async Task DeleteAsync(Guid id)
@@ -55,6 +59,17 @@ namespace Delivery.Web.BL.Facades
             }
 
             return localItems.Any();
+        }
+        
+        public override async Task<bool> Exist(Guid id)
+        {
+            var items = await GetAllAsync();
+            foreach (var item in items)
+            {
+                if (item.Id == id)
+                    return true;
+            }
+            return false;
         }
     }
 }

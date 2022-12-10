@@ -15,6 +15,7 @@
         SesameSeeds,
         Sulphites,
         Lupin,
-        Molluscs
+        Molluscs,
+        None
     }
 }

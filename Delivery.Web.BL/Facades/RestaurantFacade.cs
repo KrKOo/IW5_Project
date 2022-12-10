@@ -43,9 +43,13 @@ namespace Delivery.Web.BL.Facades
             return await apiClient.RestaurantGetAsync(id);
         }
 
-        protected override async Task<Guid> SaveToApiAsync(RestaurantCreateModel data)
+        public override async Task<Guid> SaveToApiAsync(RestaurantCreateModel data)
         {
-            return await apiClient.RestaurantPostAsync(data);
+            var alreadyExist = await Exist(data.Id);
+            if(alreadyExist)
+                return await apiClient.RestaurantPatchAsync(data);
+            else
+                return await apiClient.RestaurantPostAsync(data);
         }
 
         public override async Task DeleteAsync(Guid id)
@@ -64,6 +68,17 @@ namespace Delivery.Web.BL.Facades
 
             // return localItems.Any();
             return true;
+        }
+        
+        public override async Task<bool> Exist(Guid id)
+        {
+            var items = await GetAllAsync();
+            foreach (var item in items)
+            {
+                if (item.Id == id)
+                    return true;
+            }
+            return false;
         }
     }
 }

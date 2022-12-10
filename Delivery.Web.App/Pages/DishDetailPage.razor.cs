@@ -1,6 +1,7 @@
 ﻿using System;
 using Delivery.Common.Enums;
 using Delivery.Common.Models.Dish;
+using Delivery.Common.Models.DishAllergen;
 using Delivery.Web.BL.Facades;
 using Microsoft.AspNetCore.Components;
 
@@ -12,7 +13,10 @@ namespace Delivery.Web.App.Pages
         public DishFacade DishFacade { get; set; } = null!;
 
         public DishDetailModel Dish { get; set; } = GetNewDishModel();
-
+        
+        
+        public bool IdExist { get; set; }
+        public bool DishIdExist { get; set; }
 
         [Parameter]
         public Guid Id { get; set; }
@@ -20,7 +24,8 @@ namespace Delivery.Web.App.Pages
         protected override async Task OnInitializedAsync()
         {
             await LoadData();
-
+            IdExist = await DishFacade.Exist(Id);
+            DishIdExist = await DishFacade.Exist(Dish.Id);
             await base.OnInitializedAsync();
         }
 

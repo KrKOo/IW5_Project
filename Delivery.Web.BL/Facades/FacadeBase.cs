@@ -67,9 +67,10 @@ namespace Delivery.Web.BL.Facades
             }
         }
 
-        protected abstract Task<Guid> SaveToApiAsync(TCreateModel data);
+        public abstract Task<Guid> SaveToApiAsync(TCreateModel data);
         public abstract Task DeleteAsync(Guid id);
 
         public abstract Task<bool> SynchronizeLocalDataAsync();
+        public abstract Task<bool> Exist(Guid id);
     }
 }

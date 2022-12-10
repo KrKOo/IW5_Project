@@ -18,13 +18,27 @@ namespace Delivery.Web.App
         [Parameter]
         public EventCallback OnModification { get; set; }
 
-        public RestaurantDetailModel Data { get; set; } = GetNewRestaurantModel();
+        public RestaurantCreateModel Data { get; set; } = GetNewRestaurantModel();
 
         protected override async Task OnInitializedAsync()
         {
             if (Id != Guid.Empty)
             {
-                Data = await RestaurantFacade.GetByIdAsync(Id);
+                //TODO This is DEBUG
+                var detailModel = await RestaurantFacade.GetByIdAsync(Id);
+                RestaurantCreateModel createModel = new RestaurantCreateModel()
+                {
+                    Id = detailModel.Id,
+                    Name = detailModel.Name,
+                    Description = detailModel.Description,
+                    LogoUrl = detailModel.LogoUrl,
+                    Address = detailModel.Address,
+                    Latitude = detailModel.Latitude,
+                    Longitude = detailModel.Longitude,
+                };
+                Data = createModel;
+                
+                //Data = await RestaurantFacade.GetByIdAsync(Id); //TODO This is correct
             }
 
             await base.OnInitializedAsync();
@@ -32,12 +46,12 @@ namespace Delivery.Web.App
 
         public async Task Save()
         {
-
+            await RestaurantFacade.SaveAsync(Data);
         }
 
         public async Task Delete()
         {
-
+            await RestaurantFacade.DeleteAsync(Data.Id);
         }
 
         private async Task NotifyOnModification()
@@ -48,7 +62,7 @@ namespace Delivery.Web.App
             }
         }
 
-        private static RestaurantDetailModel GetNewRestaurantModel()
+        private static RestaurantCreateModel GetNewRestaurantModel()
             => new()
             {
                 Id = Guid.NewGuid(),

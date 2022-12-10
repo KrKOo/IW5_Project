@@ -1,38 +1,45 @@
 ﻿@page "/restaurant/{Id:guid}"
-@using Delivery.Common.Models.Dish
 @inherits Delivery.Web.App.Pages.PageBase
 
 <PageTitle>Restaurant Detail</PageTitle>
 
 <h1>Restaurant Detail</h1>
 
-@if (Restaurant == null)
-{
-    <p>
-        <em>Loading...</em>
-    </p>
-}
-else
-{
-    <div class="row">
-        <div class="col-2">
-            <img class="rounded mx-auto d-block w-100" src="@Restaurant.LogoUrl">
-        </div>
-        <div class="col-6">
-            <h3>@Restaurant.Name</h3>
-            <p>@Restaurant.Description</p>
-        </div>
+<div class="row">
+    <div class="col-2">
+        <img class="rounded mx-auto d-block w-100" src="@Restaurant.LogoUrl">
     </div>
+    <div class="col-6">
+        <h3>@Restaurant.Name</h3>
+        <p>@Restaurant.Address [@Restaurant.Latitude, @Restaurant.Longitude]</p>
+        <p>@Restaurant.Description</p>
+    </div>
+</div>
+<br/>
+<div class="row">
     <NavLink class="nav-link" href="@($"restaurant/{Id}/edit")">
-        <button type="button" class="btn btn-primary">Edit</button>
+        <button type="button" class="btn btn-primary btn-warning">Edit</button>
     </NavLink>
-    <h2>Restaurant dishes</h2>
-    <div class="row">
-        <div class="col-md">
-            <DishList Dishes="@Dishes"/>
-        </div>
-        <div class="col-md">
-            <DishEditForm OnModification="NavigateBack" />
-        </div>
+    <NavLink class="nav-link" href="@($"restaurant/{Id}/orders")">
+        <button type="button" class="btn btn-primary">Restaurant orders</button>
+    </NavLink>
+</div>
+
+<br/>
+<h2>Restaurant dishes</h2>
+<div class="row">
+    <div class="col-md">
+        @if (Restaurant.Dishes.Count != 0)
+        {
+            <DishList Dishes="@Restaurant.Dishes"/>
+        }
+        else
+        {
+            <p>This restaurant does not offer any dishes!</p>
+        }
     </div>
-}
+    <div class="col-md">
+        <h3>Create new dish</h3>
+        <DishEditForm RestaurantId="@Id" OnModification="NavigateBack"/>
+    </div>
+</div>

@@ -1,7 +1,7 @@
 using Delivery.Common.Enums;
 using Delivery.Common.Models.Dish;
 
-namespace Delivery.Common.Models.OrderDish
+namespace Delivery.Common.Models.DishAllergen
 {
     public record DishAllergenDetailModel : DishAllergenBaseModel
     {

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Delivery.Common;
 
-namespace Delivery.Common.Models.OrderDish
+namespace Delivery.Common.Models.DishAllergen
 {
     public record DishAllergenBaseModel : IWithId
     {

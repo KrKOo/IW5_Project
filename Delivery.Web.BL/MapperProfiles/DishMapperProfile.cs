@@ -11,7 +11,7 @@ namespace Delivery.Web.BL.MapperProfiles
         public DishMapperProfile()
         {
             CreateMap<DishDetailModel, DishCreateModel>();
-            CreateMap<RestaurantDetailModel, RestaurantCreateModel>();
+            CreateMap<DishCreateModel, DishDetailModel>();
         }
     }
 }
