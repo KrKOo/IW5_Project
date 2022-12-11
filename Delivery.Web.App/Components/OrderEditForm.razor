@@ -25,17 +25,18 @@
     </div>
 
     
-        <div class="col-md-6 p-3 ">
+        <div class="p-3 ">
             <div class="bg-sec p-3 rounded">
                 <h2>Add dishes</h2>
 
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <InputSelect @bind-Value="SelectedDishId" class="form-control">
+                        <InputSelect @bind-Value="@SelectedDishId" class="form-control">
+                            <option value="@Guid.Empty" selected>----</option>
                             @foreach (var dish in RestaurantDishes)
-                                {
-                                    <option value="@dish.Id">@dish.Name</option>
-                                }
+                            {   
+                                <option value="@dish.Id">@dish.Name</option>
+                            }
                         </InputSelect>
                     </div>
                 <InputNumber min="0" @bind-Value="NewDishModel.Amount" class="form-control" />
@@ -49,9 +50,9 @@
                 <ul class="list-group mb-4">
                     @foreach (var dishAmount in Data.DishAmounts)
                     {
-                        var dish = RestaurantDishes.Where(i => i.Id == dishAmount.Id).FirstOrDefault();
+                        var dish = RestaurantDishes.Where(i => i.Id == dishAmount.DishId).FirstOrDefault();
                         <li class="d-flex justify-content-between align-items-center list-group-item list-group-item-secondary">
-                            <img src="@dish!.ImageUrl" height="50px"/>
+                            <img src="@dish.ImageUrl" height="50px"/>
                             <span>
                                 @dish.Name @dishAmount.Amount
                                 <button class="btn btn-danger btn-sm" type="button" @onclick="() => DeleteDish(dishAmount)">DeleteDish</button>

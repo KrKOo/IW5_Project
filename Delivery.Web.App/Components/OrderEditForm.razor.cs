@@ -14,7 +14,7 @@ namespace Delivery.Web.App
         private OrderFacade orderFacade { get; set; } = null!;
 
         [Inject]
-        private DishFacade dishFacade { get; set;} = null!; 
+        private DishFacade dishFacade { get; set; } = null!;
 
         [Parameter]
         public Guid Id { get; init; }
@@ -28,17 +28,25 @@ namespace Delivery.Web.App
         [Parameter]
         public IList<DishListModel> RestaurantDishes { get; set; } = new List<DishListModel>();
 
-        public Guid SelectedDishId { get; set; }
-
         private OrderCreateModel Data { get; set; } = GetNewOrderModel();
 
-        private OrderDishCreateModel NewDishModel { get; set; } = GetNewOrderDishModel();
+        public OrderDishCreateModel NewDishModel { get; set; } = GetNewOrderDishModel();
 
-        
+        private Guid SelectedDishId
+        {
+            get
+            {
+                return NewDishModel.DishId;
+            }
+            set
+            {
+                NewDishModel.DishId = RestaurantDishes.First(t => t.Id == value).Id;
+            }
+        }
 
         protected override async Task OnInitializedAsync()
         {
-            if(Id != Guid.Empty)
+            if (Id != Guid.Empty)
             {
                 OrderDetailModel orderDetail = await orderFacade.GetByIdAsync(Id);
 
@@ -68,6 +76,11 @@ namespace Delivery.Web.App
                 Data.RestaurantId = RestaurantId;
             }
 
+            foreach (var dishAmount in Data.DishAmounts)
+            {
+                dishAmount.OrderId = Data.Id;
+            }
+
             await orderFacade.SaveAsync(Data);
             await NotifyOnModification();
         }
@@ -86,8 +99,17 @@ namespace Delivery.Web.App
 
         public void AddDish()
         {
+            if (NewDishModel.DishId == Guid.Empty || NewDishModel.Amount == 0)
+            {
+                return;
+            }
+
+            Console.WriteLine(NewDishModel.DishId);
+            Console.WriteLine(NewDishModel.Amount);
+
             Data.DishAmounts.Add(NewDishModel);
             NewDishModel = GetNewOrderDishModel();
+
         }
 
         private async Task NotifyOnModification()
@@ -113,6 +135,7 @@ namespace Delivery.Web.App
         private static OrderDishCreateModel GetNewOrderDishModel()
             => new()
             {
+                Id = Guid.NewGuid(),
                 OrderId = Guid.Empty,
                 DishId = Guid.Empty,
                 Amount = 0
