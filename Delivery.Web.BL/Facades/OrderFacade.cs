@@ -61,5 +61,10 @@ namespace Delivery.Web.BL.Facades
         {
             return await apiClient.OrderPostAsync(data);
         }
+
+        public override Task<bool> Exist(Guid id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
