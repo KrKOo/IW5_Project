@@ -1,4 +1,6 @@
-﻿using Delivery.Common.Models.Order;
+﻿using Delivery.Common.Enums;
+using Delivery.Common.Models.Order;
+using Delivery.Common.Models.OrderDish;
 using Delivery.Web.BL.Facades;
 using Microsoft.AspNetCore.Components;
 
@@ -15,13 +17,25 @@ namespace Delivery.Web.App
         [Parameter]
         public EventCallback OnModification { get; set; }
 
-        public OrderDetailModel Data { get; set; } = GetNewOrderModel();
+        public OrderCreateModel Data { get; set; } = GetNewOrderModel();
 
         protected override async Task OnInitializedAsync()
         {
             if(Id != Guid.Empty)
             {
-                Data = await orderFacade.GetByIdAsync(Id);
+                OrderDetailModel orderDetail = await orderFacade.GetByIdAsync(Id);
+                OrderCreateModel orderCreate = new OrderCreateModel()
+                {
+                    Id = orderDetail.Id,
+                    Address = orderDetail.Address,
+                    DeliveryTime = orderDetail.DeliveryTime,
+                    Note = orderDetail.Note,
+                    State = orderDetail.State,
+                    RestaurantId = orderDetail.Restaurant!.Id,
+                    DishAmounts = (IList<OrderDishCreateModel>)orderDetail.DishAmounts
+                };
+
+                Data = orderCreate;
             }
 
             await base.OnInitializedAsync();
@@ -29,8 +43,7 @@ namespace Delivery.Web.App
 
         public async Task Save()
         {
-            //await orderFacade.SaveAsync(createModel);
-            Data = GetNewOrderModel();
+            await orderFacade.SaveAsync(Data);
             await NotifyOnModification();
         }
 
@@ -48,13 +61,16 @@ namespace Delivery.Web.App
             }
         }
 
-        private static OrderDetailModel GetNewOrderModel()
+        private static OrderCreateModel GetNewOrderModel()
             => new()
             {
+                Id = Guid.NewGuid(),
                 Address = String.Empty,
-                DeliveryTime = TimeSpan.MinValue,
+                DeliveryTime = TimeSpan.Zero,
                 Note = String.Empty,
-                State = Common.Enums.OrderState.Created
+                State = OrderState.Created,
+                RestaurantId = Guid.Empty,
+                DishAmounts = new List<OrderDishCreateModel>()
             };
     }
 }
