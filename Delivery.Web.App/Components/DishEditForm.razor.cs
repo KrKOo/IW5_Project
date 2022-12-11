@@ -47,7 +47,7 @@ namespace Delivery.Web.App
                     ImageUrl = detailModel.ImageUrl,
                     Allergens = detailModel.Allergens,
                     Price = detailModel.Price,
-                    RestaurantId = detailModel.Restaurant.Id
+                    RestaurantId = detailModel.Restaurant!.Id
                 };
                 Data = createModel;
                 

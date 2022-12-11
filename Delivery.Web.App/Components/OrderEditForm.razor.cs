@@ -1,4 +1,6 @@
 ﻿using Delivery.Common.Enums;
+using Delivery.Common.Models;
+using Delivery.Common.Models.Dish;
 using Delivery.Common.Models.Order;
 using Delivery.Common.Models.OrderDish;
 using Delivery.Web.BL.Facades;
@@ -9,7 +11,10 @@ namespace Delivery.Web.App
     public partial class OrderEditForm
     {
         [Inject]
-        public OrderFacade orderFacade { get; set; } = null!;
+        private OrderFacade orderFacade { get; set; } = null!;
+
+        [Inject]
+        private DishFacade dishFacade { get; set;} = null!; 
 
         [Parameter]
         public Guid Id { get; init; }
@@ -17,13 +22,27 @@ namespace Delivery.Web.App
         [Parameter]
         public EventCallback OnModification { get; set; }
 
-        public OrderCreateModel Data { get; set; } = GetNewOrderModel();
+        [Parameter]
+        public Guid RestaurantId { get; set; }
+
+        [Parameter]
+        public IList<DishListModel> RestaurantDishes { get; set; } = new List<DishListModel>();
+
+        public Guid SelectedDishId { get; set; }
+
+        private OrderCreateModel Data { get; set; } = GetNewOrderModel();
+
+        private OrderDishCreateModel NewDishModel { get; set; } = GetNewOrderDishModel();
+
+        
 
         protected override async Task OnInitializedAsync()
         {
             if(Id != Guid.Empty)
             {
                 OrderDetailModel orderDetail = await orderFacade.GetByIdAsync(Id);
+
+                // RestId, DishId, amount
                 OrderCreateModel orderCreate = new OrderCreateModel()
                 {
                     Id = orderDetail.Id,
@@ -41,8 +60,14 @@ namespace Delivery.Web.App
             await base.OnInitializedAsync();
         }
 
+
         public async Task Save()
         {
+            if (RestaurantId != Guid.Empty)
+            {
+                Data.RestaurantId = RestaurantId;
+            }
+
             await orderFacade.SaveAsync(Data);
             await NotifyOnModification();
         }
@@ -51,6 +76,18 @@ namespace Delivery.Web.App
         {
             await orderFacade.DeleteAsync(Id);
             await NotifyOnModification();
+        }
+
+        public void DeleteDish(OrderDishCreateModel dish)
+        {
+            var dishIndex = Data.DishAmounts.IndexOf(dish);
+            Data.DishAmounts.RemoveAt(dishIndex);
+        }
+
+        public void AddDish()
+        {
+            Data.DishAmounts.Add(NewDishModel);
+            NewDishModel = GetNewOrderDishModel();
         }
 
         private async Task NotifyOnModification()
@@ -71,6 +108,14 @@ namespace Delivery.Web.App
                 State = OrderState.Created,
                 RestaurantId = Guid.Empty,
                 DishAmounts = new List<OrderDishCreateModel>()
+            };
+
+        private static OrderDishCreateModel GetNewOrderDishModel()
+            => new()
+            {
+                OrderId = Guid.Empty,
+                DishId = Guid.Empty,
+                Amount = 0
             };
     }
 }

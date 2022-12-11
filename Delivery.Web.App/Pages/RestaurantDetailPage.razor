@@ -41,6 +41,10 @@
     </div>
     <div class="col-md">
         <h3>Create new dish</h3>
-        <DishEditForm RestaurantId="@Id" OnModification="NavigateBack"/>
+        <DishEditForm RestaurantId="@Id" OnModification="NavigateBack" />
+    </div>
+    <div class="col-md">
+        <h3>Create new order</h3>
+        <OrderEditForm RestaurantId="@Id" RestaurantDishes="@Restaurant.Dishes" OnModification="NavigateBack" />
     </div>
 </div>
