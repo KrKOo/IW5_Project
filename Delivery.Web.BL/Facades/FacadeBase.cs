@@ -71,6 +71,15 @@ namespace Delivery.Web.BL.Facades
         public abstract Task DeleteAsync(Guid id);
 
         public abstract Task<bool> SynchronizeLocalDataAsync();
-        public abstract Task<bool> Exist(Guid id);
+        public async Task<bool> Exist(Guid id)
+        {
+            var items = await GetAllAsync();
+            foreach (var item in items)
+            {
+                if (item.Id == id)
+                    return true;
+            }
+            return false;
+        }
     }
 }

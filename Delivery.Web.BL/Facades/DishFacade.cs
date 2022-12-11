@@ -38,7 +38,7 @@ namespace Delivery.Web.BL.Facades
         public override async Task<Guid> SaveToApiAsync(DishCreateModel data)
         {
             var alreadyExist = await Exist(data.Id);
-            if(alreadyExist)
+            if (alreadyExist)
                 return await apiClient.DishPatchAsync(data);
             else
                 return await apiClient.DishPostAsync(data);
@@ -59,17 +59,6 @@ namespace Delivery.Web.BL.Facades
             }
 
             return localItems.Any();
-        }
-        
-        public override async Task<bool> Exist(Guid id)
-        {
-            var items = await GetAllAsync();
-            foreach (var item in items)
-            {
-                if (item.Id == id)
-                    return true;
-            }
-            return false;
         }
     }
 }

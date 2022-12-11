@@ -18,7 +18,7 @@ namespace Delivery.Web.BL.Facades
             IOptions<LocalDbOptions> localDbOptions)
                 : base(orderRepository, mapper, localDbOptions)
         {
-            this.apiClient = apiClient; 
+            this.apiClient = apiClient;
             this.mapper = mapper;
         }
 
@@ -57,7 +57,7 @@ namespace Delivery.Web.BL.Facades
             return localItems.Any();
         }
 
-        protected override async Task<Guid> SaveToApiAsync(OrderCreateModel data)
+        public override async Task<Guid> SaveToApiAsync(OrderCreateModel data)
         {
             return await apiClient.OrderPostAsync(data);
         }
