@@ -40,10 +40,10 @@ public class OrderRepositoryTests
         Assert.Equal(_dbFixture.OrderGuids[0], dishAmount2.OrderId);
 
         Assert.NotNull(dishAmount1.Dish);
-        Assert.Equal("Salami", dishAmount1.Dish.Description);
+        Assert.Equal("Salami", dishAmount1.Dish!.Description);
 
         Assert.NotNull(dishAmount2.Dish);
-        Assert.Equal("Funghi", dishAmount2.Dish.Description);
+        Assert.Equal("Funghi", dishAmount2.Dish!.Description);
     }
 
     [Fact]

@@ -50,7 +50,7 @@ public class RestaurantRepositoryTests
         //assert
         var restaurantFromDb = _dbFixture.GetRestaurantDirectly(restaurantId);
         Assert.NotNull(restaurantFromDb);
-        Assert.Equal(restaurantDishes.Count, restaurantFromDb.Dishes.Count);
+        Assert.Equal(restaurantDishes.Count, restaurantFromDb!.Dishes.Count);
     }
     
     [Fact]
@@ -74,7 +74,7 @@ public class RestaurantRepositoryTests
         //assert
         var restaurantFromDb = _dbFixture.GetRestaurantDirectly(restaurantId);
         Assert.NotNull(restaurantFromDb);
-        Assert.Equal(restaurantDishes.Count, restaurantFromDb.Dishes.Count);
+        Assert.Equal(restaurantDishes.Count, restaurantFromDb!.Dishes.Count);
         
         //act
         restaurantRepository.Remove(restaurantId);

@@ -45,7 +45,7 @@ namespace Delivery.Api.BL.Facades
         public List<OrderListModel> GetAll()
         {
             var orderEntities = orderRepository.GetAll();
-            return mapper.Map<List<OrderListModel>>(orderEntities); // Type Exception: OrderEntity -> OrderListModel 
+            return mapper.Map<List<OrderListModel>>(orderEntities); 
         }
 
         public OrderDetailModel? GetById(Guid id)

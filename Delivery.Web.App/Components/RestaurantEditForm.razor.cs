@@ -26,7 +26,6 @@ namespace Delivery.Web.App
         {
             if (Id != Guid.Empty)
             {
-                //TODO This is DEBUG
                 var detailModel = await RestaurantFacade.GetByIdAsync(Id);
                 RestaurantCreateModel createModel = new RestaurantCreateModel()
                 {
@@ -39,8 +38,6 @@ namespace Delivery.Web.App
                     Longitude = detailModel.Longitude,
                 };
                 Data = createModel;
-                
-                //Data = await RestaurantFacade.GetByIdAsync(Id); //TODO This is correct
             }
 
             await base.OnInitializedAsync();

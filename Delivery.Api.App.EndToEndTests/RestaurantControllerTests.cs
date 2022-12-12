@@ -42,7 +42,7 @@ namespace Delivery.Api.App.EndToEndTests
             response.EnsureSuccessStatusCode();
 
             var restaurants = await response.Content.ReadFromJsonAsync<ICollection<RestaurantDetailModel>>();
-            var restaurantSeed = restaurants.First();
+            var restaurantSeed = restaurants!.First();
 
             response = await client.Value.GetAsync("/Restaurant/" + restaurantSeed.Id.ToString());
             response.EnsureSuccessStatusCode();

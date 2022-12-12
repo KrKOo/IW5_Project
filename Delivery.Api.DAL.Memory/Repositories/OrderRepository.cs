@@ -107,7 +107,7 @@ namespace Delivery.Api.DAL.Memory.Repositories
             foreach (var orderUpdateDishModel in orderDishModelsToUpdate)
             {
                 DishAmountEntity? dishAmountEntity;
-                if (orderUpdateDishModel.Id == null)
+                if (orderUpdateDishModel.Id == Guid.Empty)
                 {
                     dishAmountEntity = GetDishAmountOrderIdAndDishId(orderEntity.Id,
                         orderUpdateDishModel.DishId);
