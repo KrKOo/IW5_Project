@@ -34,6 +34,11 @@ namespace Delivery.Web.App.Pages
             Restaurant = await RestaurantFacade.GetByIdAsync(Id);
         }
 
+        protected override async Task OnParametersSetAsync()
+        {
+            await OnInitializedAsync();
+        }
+
         private static RestaurantDetailModel GetNewRestaurantModel()
             => new()
             {

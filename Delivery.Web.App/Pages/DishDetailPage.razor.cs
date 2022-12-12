@@ -13,8 +13,8 @@ namespace Delivery.Web.App.Pages
         public DishFacade DishFacade { get; set; } = null!;
 
         public DishDetailModel Dish { get; set; } = GetNewDishModel();
-        
-        
+
+
         public bool IdExist { get; set; }
         public bool DishIdExist { get; set; }
 
@@ -32,6 +32,11 @@ namespace Delivery.Web.App.Pages
         private async Task LoadData()
         {
             Dish = await DishFacade.GetByIdAsync(Id);
+        }
+
+        protected override async Task OnParametersSetAsync()
+        {
+            await OnInitializedAsync();
         }
 
         private static DishDetailModel GetNewDishModel()
