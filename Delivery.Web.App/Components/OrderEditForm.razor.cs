@@ -13,13 +13,13 @@ namespace Delivery.Web.App
     {
         [Inject]
         private NavigationManager NavigationManager { get; set; } = null!;
-        
+
         [Inject]
         private OrderFacade orderFacade { get; set; } = null!;
 
         [Inject]
         private DishFacade dishFacade { get; set; } = null!;
-        
+
         [Inject]
         private IMapper mapper { get; set; } = null!;
 
@@ -53,7 +53,7 @@ namespace Delivery.Web.App
                 NewDishModel.DishId = RestaurantDishes.First(t => t.Id == value).Id;
             }
         }
-        
+
         private int DurationHours
         {
             get => Data.DeliveryTime.Hours;
@@ -102,13 +102,13 @@ namespace Delivery.Web.App
             }
 
             await orderFacade.SaveAsync(Data);
-            NavigationManager.NavigateTo("/restaurants/"+Data.RestaurantId);
+            NavigationManager.NavigateTo("/restaurants/" + Data.RestaurantId);
         }
 
         public async Task Delete()
         {
             await orderFacade.DeleteAsync(Id);
-            NavigationManager.NavigateTo("/restaurants/"+Data.RestaurantId);
+            NavigationManager.NavigateTo("/restaurants/" + Data.RestaurantId);
         }
 
         public void DeleteDish(OrderDishCreateModel dish)
@@ -119,7 +119,7 @@ namespace Delivery.Web.App
 
         public void AddDish()
         {
-            if (NewDishModel.DishId == Guid.Empty || NewDishModel.Amount == 0)
+            if (NewDishModel.DishId == Guid.Empty || NewDishModel.Amount <= 0)
             {
                 return;
             }

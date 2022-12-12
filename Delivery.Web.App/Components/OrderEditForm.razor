@@ -76,9 +76,10 @@
             </div>
             <hr/>
             <div class="container">
-
-                @{ decimal totalPrice;
-                    totalPrice = 0; }
+                @{ 
+                    decimal totalPrice;
+                    totalPrice = 0; 
+                }
                 @foreach (var dishAmount in Data.DishAmounts)
                 {
                     var dish = RestaurantDishes.Where(i => i.Id == dishAmount.DishId).FirstOrDefault();
@@ -88,7 +89,7 @@
                         totalPrice += totalDishPrice;
                         <div class="card mb-3" style="max-width: 540px;">
                             <div class="row g-0">
-                                <div class="col-md-4">
+                                <div class="col-md-4 d-flex align-items-center">
                                     <img src="@dish.ImageUrl" class="img-fluid rounded-start" alt="@dish.Name">
                                 </div>
                                 <div class="col-md-8">
