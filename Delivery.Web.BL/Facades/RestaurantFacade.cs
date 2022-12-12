@@ -9,6 +9,7 @@ namespace Delivery.Web.BL.Facades
     public class RestaurantFacade : FacadeBase<RestaurantCreateModel, RestaurantDetailModel, RestaurantListModel>
     {
         private readonly IRestaurantApiClient apiClient;
+        private readonly IMapper mapper;
 
         public RestaurantFacade(
             IRestaurantApiClient apiClient,
@@ -18,6 +19,7 @@ namespace Delivery.Web.BL.Facades
             : base(restaurantRepository, mapper, localDbOptions)
         {
             this.apiClient = apiClient;
+            this.mapper = mapper;
         }
 
         public override async Task<List<RestaurantListModel>> GetAllAsync()
@@ -58,7 +60,15 @@ namespace Delivery.Web.BL.Facades
         public override async Task<bool> SynchronizeLocalDataAsync()
         {
             var localItems = await repository.GetAllDetailAsync();
-            return true;
+            foreach(var localItem in localItems)
+            {
+                RestaurantCreateModel createItem = mapper.Map<RestaurantCreateModel>(localItem);
+                await SaveToApiAsync(createItem);
+                await repository.RemoveAsync(localItem.Id);
+
+            }
+
+            return localItems.Any();
         }
     }
 }
