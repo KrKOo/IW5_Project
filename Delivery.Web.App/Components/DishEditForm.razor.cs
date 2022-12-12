@@ -1,4 +1,5 @@
 ﻿using System;
+using AutoMapper;
 using System.Threading.Tasks;
 using Delivery.Common.Enums;
 using Delivery.Common.Models.Dish;
@@ -15,6 +16,9 @@ namespace Delivery.Web.App
         
         [Inject]
         public DishFacade DishFacade { get; set; } = null!;
+        
+        [Inject]
+        private IMapper mapper { get; set; } = null!;
 
         [Parameter]
         public Guid Id { get; init; }
@@ -37,21 +41,8 @@ namespace Delivery.Web.App
         {
             if (Id != Guid.Empty)
             {
-                //TODO HotFix
-                var detailModel = await DishFacade.GetByIdAsync(Id);
-                DishCreateModel createModel = new DishCreateModel()
-                {
-                    Id = detailModel.Id,
-                    Name = detailModel.Name,
-                    Description = detailModel.Description,
-                    ImageUrl = detailModel.ImageUrl,
-                    Allergens = detailModel.Allergens,
-                    Price = detailModel.Price,
-                    RestaurantId = detailModel.Restaurant!.Id
-                };
-                Data = createModel;
-                
-                //Data = await DishFacade.GetByIdAsync(Id); //TODO This is correct
+                DishDetailModel detailModel = await DishFacade.GetByIdAsync(Id);
+                Data  = mapper.Map<DishCreateModel>(detailModel);
                 
                 foreach (var a in Data.Allergens)
                 {
@@ -71,20 +62,13 @@ namespace Delivery.Web.App
             }
             await DishFacade.SaveAsync(Data);
             
-            if (RestaurantId != Guid.Empty)
-                NavigationManager.NavigateTo("/restaurants/"+RestaurantId);
-            else
-                NavigationManager.NavigateTo("/restaurants");
+            NavigationManager.NavigateTo("/restaurants/"+Data.RestaurantId);
         }
 
         public async Task Delete()
         {
             await DishFacade.DeleteAsync(Data.Id);
-            
-            if (RestaurantId != Guid.Empty)
-                NavigationManager.NavigateTo("/restaurants/"+RestaurantId);
-            else
-                NavigationManager.NavigateTo("/restaurants");
+            NavigationManager.NavigateTo("/restaurants/"+Data.RestaurantId);
         }
 
         private async Task NotifyOnModification()
@@ -99,8 +83,8 @@ namespace Delivery.Web.App
         {
             if (NewDishAllergenModel.Allergen != Allergen.None)
             {
-                Allergen allergen = NewDishAllergenModel.Allergen; //TODO HotFix
-                Data.Allergens.Add(allergen); //TODO Převod DishDetailModel nemá DishAllergenCreate ale jen Allergen
+                Allergen allergen = NewDishAllergenModel.Allergen;
+                Data.Allergens.Add(allergen);
                 NotUsedAllergens.Remove(allergen);
                 NewDishAllergenModel = GetNewNewDishAllergenModel();
             }
@@ -110,8 +94,8 @@ namespace Delivery.Web.App
         {
             if (RemovedAllergen != Allergen.None)
             {
-                Allergen allergen = RemovedAllergen; //TODO HotFix
-                Data.Allergens.Remove(allergen); //TODO Převod DishDetailModel nemá DishAllergenCreate ale jen Allergen
+                Allergen allergen = RemovedAllergen;
+                Data.Allergens.Remove(allergen);
                 NotUsedAllergens.Add(allergen);
                 RemovedAllergen = Allergen.None;
             }

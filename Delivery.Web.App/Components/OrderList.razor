@@ -6,19 +6,16 @@
     <div class="bg-sec rounded">
         @foreach (var order in Orders)
         {
-            <div class="card mb-3" style="max-width: 540px;">
-                <div class="row">
-                    <div class="col-md-4">
-                        <p class="card-text">@order.State</p>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <NavLink class="nav-link" href="@($"order/{order.Id}")">
-                                <h5 class="card-title">@order.Note</h5>
-                            </NavLink>
-                            <p class="card-text">@order.DeliveryTime</p>
-                        </div>
-                    </div>
+            <div class="card my-2" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">@order.Note</h5>
+                    <table>
+                        <tr><td><p class="card-text">Delivery time: </p></td><td><p class="card-text">@order.DeliveryTime</p></td></tr>
+                        <tr><td><p class="card-text">State: </p></td><td><p class="card-text">@order.State</p></td></tr>
+                        <tr><td><p class="card-text">Total price: </p></td><td><p class="card-text">@order.TotalPrice €</p></td></tr>
+                    </table>
+                    <a href="@($"orders/{order.Id}")" class="btn btn-primary">See detail</a>
+                    <a href="@($"orders/{order.Id}/edit")" class="btn btn-warning">Edit</a>
                 </div>
             </div>
         }

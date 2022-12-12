@@ -21,10 +21,11 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-body">
-                                            <NavLink class="nav-link" href="@($"restaurants/{restaurant.Id}")">
+                                            <div class="card-body">
                                                 <h5 class="card-title">@restaurant.Name</h5>
-                                            </NavLink>
-                                            <p class="card-text">@restaurant.Description</p>
+                                                <p class="card-text">@restaurant.Description</p>
+                                                <a href="@($"restaurants/{restaurant.Id}")" class="btn btn-primary">See detail</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -34,6 +35,7 @@
         </div>
     </div>
     <div class="col-md">
+        <h3>Create restaurant</h3>
         <RestaurantEditForm OnModification="@LoadData" />
     </div>
 </div>

@@ -12,10 +12,14 @@ namespace Delivery.Web.App
     public partial class OrderEditForm
     {
         [Inject]
+        private NavigationManager NavigationManager { get; set; } = null!;
+        
+        [Inject]
         private OrderFacade orderFacade { get; set; } = null!;
 
         [Inject]
         private DishFacade dishFacade { get; set; } = null!;
+        
         [Inject]
         private IMapper mapper { get; set; } = null!;
 
@@ -29,7 +33,7 @@ namespace Delivery.Web.App
         public EventCallback OnModification { get; set; }
 
         [Parameter]
-        public Guid? RestaurantId { get; set; }
+        public Guid RestaurantId { get; init; }
 
         [Parameter]
         public IList<DishListModel> RestaurantDishes { get; set; } = new List<DishListModel>();
@@ -49,6 +53,18 @@ namespace Delivery.Web.App
                 NewDishModel.DishId = RestaurantDishes.First(t => t.Id == value).Id;
             }
         }
+        
+        private int DurationHours
+        {
+            get => Data.DeliveryTime.Hours;
+            set => Data.DeliveryTime = new TimeSpan(value, DurationMinutes, 0);
+        }
+
+        private int DurationMinutes
+        {
+            get => Data.DeliveryTime.Minutes;
+            set => Data.DeliveryTime = new TimeSpan(DurationHours, value, 0);
+        }
 
         protected override async Task OnInitializedAsync()
         {
@@ -56,12 +72,16 @@ namespace Delivery.Web.App
             {
                 OrderDetailModel orderDetail = await orderFacade.GetByIdAsync(Id);
                 OrderCreateModel orderCreate = mapper.Map<OrderCreateModel>(orderDetail);
-
                 Data = orderCreate;
 
-                RestaurantId = orderCreate.RestaurantId;
+                var restaurant = await restaurantFacade.GetByIdAsync(Data.RestaurantId ?? Guid.Empty);
+                RestaurantDishes = restaurant.Dishes;
+            }
+            else if (RestaurantId != Guid.Empty)
+            {
+                Data.RestaurantId = RestaurantId;
 
-                var restaurant = await restaurantFacade.GetByIdAsync(RestaurantId ?? Guid.Empty);
+                var restaurant = await restaurantFacade.GetByIdAsync(Data.RestaurantId ?? Guid.Empty);
                 RestaurantDishes = restaurant.Dishes;
             }
 
@@ -82,13 +102,13 @@ namespace Delivery.Web.App
             }
 
             await orderFacade.SaveAsync(Data);
-            await NotifyOnModification();
+            NavigationManager.NavigateTo("/restaurants/"+Data.RestaurantId);
         }
 
         public async Task Delete()
         {
             await orderFacade.DeleteAsync(Id);
-            await NotifyOnModification();
+            NavigationManager.NavigateTo("/restaurants/"+Data.RestaurantId);
         }
 
         public void DeleteDish(OrderDishCreateModel dish)

@@ -13,11 +13,13 @@
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <NavLink class="nav-link" href="@($"dishes/{dish.Id}")">
-                                <h5 class="card-title">@dish.Name</h5>
-                            </NavLink>
-                            <p class="card-text">@dish.Description</p>
-                            <p class="card-text">Price: @dish.Price €</p>
+                            <h5 class="card-title">@dish.Name</h5>
+                            <table>
+                                <tr><td><p class="card-text">Description: </p></td><td><p class="card-text">@dish.Description</p></td></tr>
+                                <tr><td><p class="card-text">Price: </p></td><td><p class="card-text">@dish.Price €</p></td></tr>
+                            </table>
+                            <a href="@($"dishes/{dish.Id}")" class="btn btn-primary">See detail</a>
+                            <a href="@($"dishes/{dish.Id}/edit")" class="btn btn-warning">Edit</a>
                         </div>
                     </div>
                 </div>

@@ -17,8 +17,6 @@ namespace Delivery.Web.App.Pages
         [Inject]
         public DishFacade DishFacade { get; set; } = null!;
 
-        public ICollection<DishListModel> Dishes { get; set; } = new List<DishListModel>(); //Delete
-
         private RestaurantDetailModel Restaurant { get; set; } = GetNewRestaurantModel();
 
         [Parameter]

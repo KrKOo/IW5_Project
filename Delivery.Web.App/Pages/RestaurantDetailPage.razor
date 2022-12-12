@@ -21,22 +21,16 @@
     <NavLink class="nav-link" href="@($"restaurants/{Id}/edit")">
         <button type="button" class="btn btn-primary btn-warning">Edit</button>
     </NavLink>
-    <NavLink class="nav-link" href="@($"restaurants/{Id}/orders")">
-        <button type="button" class="btn btn-primary">Restaurant orders</button>
+    <NavLink class="nav-link" href="@($"dishes/create/{Id}")">
+        <button type="button" class="btn btn-primary">Create dish</button>
+    </NavLink>
+    <NavLink class="nav-link" href="@($"orders/create/{Id}")">
+        <button type="button" class="btn btn-primary">Create order</button>
     </NavLink>
 </div>
 
 <br/>
-<div class="row mb-3">
-    <div class="col-md">
-        <h3>Create new dish</h3>
-        <DishEditForm RestaurantId="@Id" OnModification="NavigateBack" />
-    </div>
-    <div class="col-md">
-        <h3>Create new order</h3>
-        <OrderEditForm RestaurantId="@Id" RestaurantDishes="@Restaurant.Dishes" OnModification="NavigateBack" />
-    </div>
-</div>
+
 <div class="row">
     @if (Restaurant.Dishes.Count != 0)
     {
@@ -53,6 +47,6 @@
     }
     else
     {
-        <p>This restaurant does not offer any dishes!</p>
+        <p>This restaurant has no orders!</p>
     }
 </div>
