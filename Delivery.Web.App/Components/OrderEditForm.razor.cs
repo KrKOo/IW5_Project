@@ -1,4 +1,5 @@
-﻿using Delivery.Common.Enums;
+﻿using AutoMapper;
+using Delivery.Common.Enums;
 using Delivery.Common.Models;
 using Delivery.Common.Models.Dish;
 using Delivery.Common.Models.Order;
@@ -15,6 +16,11 @@ namespace Delivery.Web.App
 
         [Inject]
         private DishFacade dishFacade { get; set; } = null!;
+        [Inject]
+        private IMapper mapper { get; set; } = null!;
+
+        [Inject]
+        private RestaurantFacade restaurantFacade { get; set; } = null!;
 
         [Parameter]
         public Guid Id { get; init; }
@@ -23,7 +29,7 @@ namespace Delivery.Web.App
         public EventCallback OnModification { get; set; }
 
         [Parameter]
-        public Guid RestaurantId { get; set; }
+        public Guid? RestaurantId { get; set; }
 
         [Parameter]
         public IList<DishListModel> RestaurantDishes { get; set; } = new List<DishListModel>();
@@ -49,20 +55,14 @@ namespace Delivery.Web.App
             if (Id != Guid.Empty)
             {
                 OrderDetailModel orderDetail = await orderFacade.GetByIdAsync(Id);
-
-                // RestId, DishId, amount
-                OrderCreateModel orderCreate = new OrderCreateModel()
-                {
-                    Id = orderDetail.Id,
-                    Address = orderDetail.Address,
-                    DeliveryTime = orderDetail.DeliveryTime,
-                    Note = orderDetail.Note,
-                    State = orderDetail.State,
-                    RestaurantId = orderDetail.Restaurant!.Id,
-                    DishAmounts = (IList<OrderDishCreateModel>)orderDetail.DishAmounts
-                };
+                OrderCreateModel orderCreate = mapper.Map<OrderCreateModel>(orderDetail);
 
                 Data = orderCreate;
+
+                RestaurantId = orderCreate.RestaurantId;
+
+                var restaurant = await restaurantFacade.GetByIdAsync(RestaurantId ?? Guid.Empty);
+                RestaurantDishes = restaurant.Dishes;
             }
 
             await base.OnInitializedAsync();

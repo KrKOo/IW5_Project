@@ -1,37 +1,21 @@
-﻿@page "/orders/{Id:guid}"
+﻿@page "/order/{Id:guid}"
 @inherits Delivery.Web.App.Pages.PageBase
 
 <h1>Order Detail</h1>
 
+@if(Order == null)
+{
+    return;
+}
+
 <div class="row">
     <div class="col-2">
-        <p>@Order.!Restaurant.Name</p>
+        <p>@Order.Restaurant.Name</p>
         <p>@Order.Note</p>
     </div>
 </div>
 <br/>
 
 <div class="row">
-    <NavLink class="nav-link" href="@($"order/{Id}/edit")">
-        <button type="button" class="btn btn-primary btn-warning">Edit</button>
-    </NavLink>
-</div>
-<br/>
-
-<h2>Dishes</h2>
-<div class="row">
-    <div class="col-md">
-        @if (Order.DishAmounts.Count != 0)
-        {
-            <ListLayout data-bind="@Order.DishAmounts"></ListLayout>
-        }
-        else
-        {
-            <p>There are no dishes in an order.</p>
-        }
-    </div>
-    <div class="col-md">
-        <h3>Create new order</h3>
-        <OrderEditForm Id="@Id" OnModification="NavigateBack"></OrderEditForm>
-    </div>
+    <OrderEditForm Id="@Id" OnModification="NavigateBack"></OrderEditForm>
 </div>

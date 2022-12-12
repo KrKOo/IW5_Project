@@ -27,7 +27,7 @@
 </div>
 
 <br/>
-<div class="row">
+<div class="row mb-3">
     <div class="col-md">
         <h3>Create new dish</h3>
         <DishEditForm RestaurantId="@Id" OnModification="NavigateBack" />
@@ -37,16 +37,22 @@
         <OrderEditForm RestaurantId="@Id" RestaurantDishes="@Restaurant.Dishes" OnModification="NavigateBack" />
     </div>
 </div>
-<h2>Restaurant dishes</h2>
 <div class="row">
-    <div class="col-md">
-        @if (Restaurant.Dishes.Count != 0)
-        {
-            <DishList Dishes="@Restaurant.Dishes"/>
-        }
-        else
-        {
-            <p>This restaurant does not offer any dishes!</p>
-        }
-    </div>
+    @if (Restaurant.Dishes.Count != 0)
+    {
+        <DishList Dishes="@Restaurant.Dishes"/>
+    }
+    else
+    {
+        <p>This restaurant does not offer any dishes!</p>
+    }
+
+    @if (Restaurant.Orders.Count != 0)
+    {
+        <OrderList Orders="@Restaurant.Orders"/>
+    }
+    else
+    {
+        <p>This restaurant does not offer any dishes!</p>
+    }
 </div>

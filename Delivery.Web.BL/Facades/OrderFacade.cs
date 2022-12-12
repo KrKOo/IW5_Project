@@ -59,6 +59,9 @@ namespace Delivery.Web.BL.Facades
 
         public override async Task<Guid> SaveToApiAsync(OrderCreateModel data)
         {
+            if (await Exist(data.Id))
+                return await apiClient.OrderPatchAsync(data);
+
             return await apiClient.OrderPostAsync(data);
         }
     }
