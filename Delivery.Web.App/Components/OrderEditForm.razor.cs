@@ -124,12 +124,8 @@ namespace Delivery.Web.App
                 return;
             }
 
-            Console.WriteLine(NewDishModel.DishId);
-            Console.WriteLine(NewDishModel.Amount);
-
             Data.DishAmounts.Add(NewDishModel);
             NewDishModel = GetNewOrderDishModel();
-
         }
 
         private async Task NotifyOnModification()
