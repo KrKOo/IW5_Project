@@ -32,7 +32,7 @@ namespace Delivery.Web.App
         private async Task<IList<FilterModel>> fetchFilter()
         {
             var apiBaseUrl = Configuration.GetValue<string>("ApiBaseUrl");
-            var httpResponse = await Http.GetAsync($"{apiBaseUrl}filter/{FilterString}");
+            var httpResponse = await Http.GetAsync($"{apiBaseUrl}/filter/{FilterString}");
 
             if (!httpResponse.IsSuccessStatusCode)
             {
